@@ -98,11 +98,12 @@ input .s-bar:focus {
   gap: 70px;
   align-items: center;
 
+
 }
 
 .form-inputs input {
-  width: 400px;
-  padding: 3px 300px 3px 20px;
+  width: 50%;
+  padding: 5px 150px 3px 20px;
   border: 1px rgb(200, 199, 199) solid;
 
 }

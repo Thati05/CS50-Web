@@ -29,37 +29,43 @@
     <form action="https://www.google.com/search">
       <div class="form-content">
         <p>Find pages with...</p>
+
         <div class="form-inputs">
           <p>all these words:</p>
-          <input type="text" name="q">
+          <input type="text" name="as_q">
         </div>
+
         <div class="form-inputs">
           <p>this exact word or phrase:</p>
-          <input type="text" name="q">
+          <input type="text" name="as_epq">
         </div>
+
         <div class="form-inputs">
-          <p>all of these words:</p>
-          <input type="text" name="q">
+          <p>any of these words:</p>
+          <input type="text" name="as_oq">
         </div>
+
         <div class="form-inputs">
           <p>none of these words:</p>
-          <input type="text" name="q">
+          <input type="text" name="as_eq">
         </div>
+
         <div class="s-form-input">
           <p class="s-p">numbers ranging from:</p>
           <div class="s-div-input">
-            <input class="s-input" type="text" name="q">
+            <input class="s-input" type="text" name="as_nlo">
             <span>to</span>
-            <input class="s-input" type="text" name="q">
+            <input class="s-input" type="text" name="as_nhi">
           </div>
         </div>
-        <input type="hidden" name="q" value="Google Search">
+
+        <input type="hidden" name="tbm" value="Google Search">
 
         <button class="btn btn-light" type="submit">Advanced Search</button>
         <hr />
-
       </div>
     </form>
+
 
 
   </section>
