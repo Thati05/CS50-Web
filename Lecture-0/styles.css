@@ -1,0 +1,27 @@
+.google-img {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  padding: 200px;
+  flex-direction: column;
+}
+
+.s-bar {
+  margin: 20px;
+  padding: 18px 400px 18px 20px;
+  border: 1px rgb(200, 199, 199) solid;
+  border-radius: 50px;
+
+
+}
+
+.google-form {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.s-btn input {
+  margin-right: 15px;
+}
