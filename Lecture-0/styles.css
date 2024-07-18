@@ -97,16 +97,19 @@ input .s-bar:focus {
   flex-direction: row;
   gap: 70px;
   align-items: center;
+  width: 100%;
 
 
 }
 
-.form-inputs input {
-  width: 50%;
+.form-inputs input,
+.select-option {
+  width: 500px;
   padding: 5px 150px 3px 20px;
   border: 1px rgb(200, 199, 199) solid;
 
 }
+
 
 .form-inputs p {
   margin: 0px;
@@ -114,8 +117,8 @@ input .s-bar:focus {
 }
 
 .s-input {
-  width: 190px;
-  padding: 3px 150px 3px 20px;
+  width: 240px;
+  padding: 5px 150px 3px 20px;
   border: 1px rgb(200, 199, 199) solid;
 
 }
