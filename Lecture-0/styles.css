@@ -11,6 +11,10 @@
 
 }
 
+input:focus {
+  outline: none;
+}
+
 .google-img {
   display: flex;
   align-items: center;
@@ -50,6 +54,7 @@
 
 input .s-bar:focus {
   outline: none;
+
 }
 
 
