@@ -50,7 +50,7 @@ Use a `button` element with a JavaScript function or change to an anchor tag sty
   <option value="English">
 ```
 **Solution**:
-Ensure data list has an ID and the `input` references it:
+Ensure `datalist` has an `id` and the `input` references it:
 ```html
 <input name="lr" list="languages" placeholder="any language">
 <datalist id="languages">
