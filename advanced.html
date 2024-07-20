@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <title>Advanced Search</title>
+</head>
+
+<body>
+  <section class="">
+    <div class="a-nav container-1">
+      <img width="100px" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png">
+      <div class="links">
+        <a href="index.html">Google Search</a>
+        <a href="images.html">Image Search</a>
+      </div>
+
+
+    </div>
+    <p class="a-p">Advanced Search</p>
+
+    <hr />
+    <form action="https://www.google.com/search">
+      <div class="form-content">
+        <p>Find pages with...</p>
+
+        <div class="form-inputs">
+          <p>all these words:</p>
+          <input autocomplete="off" type="text" name="as_q">
+
+        </div>
+
+        <div class="form-inputs">
+          <p>this exact word or phrase:</p>
+          <input autocomplete="off" type="text" name="as_epq">
+        </div>
+
+        <div class="form-inputs">
+          <p>any of these words:</p>
+          <input autocomplete="off" type="text" name="as_oq">
+        </div>
+
+        <div class="form-inputs">
+          <p>none of these words:</p>
+          <input autocomplete="off" type="text" name="as_eq">
+        </div>
+
+        <div class="s-form-input">
+          <p class="s-p">numbers ranging from:</p>
+          <div class="s-div-input">
+            <input autocomplete="off" class="s-input" type="text" name="as_nlo">
+            <span>to</span>
+            <input autocomplete="off" class="s-input" type="text" name="as_nhi">
+          </div>
+        </div>
+
+        <input type="hidden" name="tbm" value="Google Search">
+
+        <hr />
+
+
+
+        <p>Then narrow your results by...</p>
+        <div class="form-inputs">
+          <p>languages:</p>
+
+          <select name="lr" class="select-option">
+            <option role="option" value="al">any language</option>
+            <option role="option" value="af">Afrikaans</option>
+            <option role="option" value="en">English</option>
+            <option role="option" value="ses">Sesotho</option>
+            <option role="option" value="zulu">Zulu</option>
+
+
+
+          </select>
+
+        </div>
+        <div class="form-inputs">
+          <p>region:</p>
+
+          <select name="gl" class="select-option">
+            <option role="option" value="al">any region</option>
+            <option role="option" value="sa">South Africa</option>
+            <option role="option" value="uk">United Kingdom</option>
+            <option role="option" value="spain">Spain</option>
+            <option role="option" value="tur">Turkey</option>
+
+
+
+          </select>
+
+        </div>
+        <div class="form-inputs">
+          <p>last update:</p>
+
+          <select name="tbs" class="select-option">
+            <option role="option" value="at">any time</option>
+            <option role="option" value="qdr:hr">last 24 hours</option>
+            <option role="option" value="qdr:w">upto a week ago</option>
+            <option role="option" value="qdr:m">upto a month ago</option>
+            <option role="option" value="qdr:y">upto a year ago</option>
+
+
+
+          </select>
+
+        </div>
+        <div class="form-inputs">
+          <p>site or domain:</p>
+          <input autocomplete="off" type="text" name="source">
+        </div>
+
+        <div class="form-inputs">
+          <p>terms appearing:</p>
+
+          <select name="source" class="select-option">
+            <option role="option" value="">anywhere in the page</option>
+            <option role="option" value="">in the title page</option>
+          </select>
+
+        </div>
+
+        <div class="form-inputs">
+          <p>file type:</p>
+
+          <select name="tbs" class="select-option">
+            <option role="option" value="at">any format</option>
+          </select>
+
+        </div>
+        <div class="form-inputs">
+          <p>usage rights:</p>
+
+          <select name="safe" class="select-option">
+            <option role="option" value="">not filtered by licence</option>
+            <option role="option" value="">free to use</option>
+          </select>
+          <button class="btn btn-primary" type="submit">Advanced Search</button>
+        </div>
+
+      </div>
+
+    </form>
+
+
+
+  </section>
+
+</body>
+
+</html>
