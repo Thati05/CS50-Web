@@ -2,12 +2,19 @@ from django.shortcuts import render, redirect
 from . import util
 import markdown
 from .forms import CreateForm
+import random
+from random import choice
 
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
+
+
+
+
+
 
 def title(request, title):
     entry = util.get_entry(title)
@@ -62,4 +69,13 @@ def edit(request,title):
         'title':title,
         "form":form
     })
-        
+
+
+def randomEntry(request):
+    entries = util.list_entries()
+    if not entries:
+        return render(request, "encyclopedia/not_found.html", {
+            "title": "No entries available"
+        })
+    random_title = choice(entries)
+    return redirect('title', title=random_title)
