@@ -37,7 +37,15 @@ textarea {
     margin-top: 5px;
 }
 
-.small-textarea {
-    width: 50px;
-    height: 50px;
+.textarea {
+    width: 800px;
+    height: 100px;
+}
+
+.form {
+    padding: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
 }
