@@ -17,3 +17,6 @@ def title(request, title):
         "title": title,
         "entry": markdown.markdown(entry)
     })
+
+def createPage(request):
+    return render(request, 'encyclopedia/create-form.html')
