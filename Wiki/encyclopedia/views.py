@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from . import util
 import markdown
-from util import CreateForm
+from .forms import CreateForm
 
 
 def index(request):
@@ -22,11 +22,22 @@ def title(request, title):
 
 
 def createPage(request):
-    form = CreateForm()
-    context = {'form': form}
-    if request == "POST":
-        request.POST.get('title', 'description')
+    if request.method == 'POST':
+        form = CreateForm(request.POST)
         if form.is_valid():
-            form.save()
-            return render(request, 'encyclopedia/create-html', context)
-    return redirect('index')
+            title = form.cleaned_data['title']
+            description = form.cleaned_data['description']
+           
+            if util.get_entry(title):
+                return render(request,  "encyclopedia/create-form.html",{
+                "form": form,
+                "error": "Page with this title already exists"}
+                )
+
+            util.save_entry(title,description)
+            return redirect('title', title=title)
+    else:
+        form = CreateForm()
+        return render(request, "encyclopedia/create-form.html", {
+            "form":form
+        })

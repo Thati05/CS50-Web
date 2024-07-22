@@ -36,9 +36,3 @@ def get_entry(title):
     except FileNotFoundError:
         return None
 
-from django.forms import ModelForm
-
-class CreateForm(ModelForm):
-    class Meta:
-        model = Create
-        fields = ['title', 'description']
