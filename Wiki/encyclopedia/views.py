@@ -1,12 +1,19 @@
 from django.shortcuts import render
-
 from . import util
-
+import markdown
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
 
-def title(request,title):
-    return render(request)
+def title(request, title):
+    entry = util.get_entry(title)
+    if entry is None:
+        return render(request, "encyclopedia/not_found.html", {
+            "title": title
+        })
+    return render(request, "encyclopedia/entry.html", {
+        "title": title,
+        "entry": markdown.markdown(entry)
+    })
