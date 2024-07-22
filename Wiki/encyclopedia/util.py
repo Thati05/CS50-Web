@@ -37,8 +37,10 @@ def get_entry(title):
         return None
 
 
-"""def edit_entry(title,content):
-   
-    edit = save_entry(title,content)"""
+def edit_entry(title,content):
+    """ 
+    Edits existing entry by saving new information
+    """
+    save_entry(title,content)
    
 
