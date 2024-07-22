@@ -35,3 +35,10 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+from django.forms import ModelForm
+
+class CreateForm(ModelForm):
+    class Meta:
+        model = Create
+        fields = ['title', 'description']

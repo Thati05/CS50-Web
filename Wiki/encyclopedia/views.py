@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import util
 import markdown
+from util import CreateForm
+
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -18,5 +20,13 @@ def title(request, title):
         "entry": markdown.markdown(entry)
     })
 
+
 def createPage(request):
-    return render(request, 'encyclopedia/create-form.html')
+    form = CreateForm()
+    context = {'form': form}
+    if request == "POST":
+        request.POST.get('title', 'description')
+        if form.is_valid():
+            form.save()
+            return render(request, 'encyclopedia/create-html', context)
+    return redirect('index')
