@@ -21,6 +21,7 @@ def title(request, title):
     })
 
 
+
 def createPage(request):
     if request.method == 'POST':
         form = CreateForm(request.POST)

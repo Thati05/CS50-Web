@@ -36,3 +36,9 @@ def get_entry(title):
     except FileNotFoundError:
         return None
 
+
+"""def edit_entry(title,content):
+   
+    edit = save_entry(title,content)"""
+   
+
