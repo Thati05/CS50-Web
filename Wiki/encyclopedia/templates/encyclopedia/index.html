@@ -7,6 +7,7 @@ Encyclopedia
 {% block body %}
 <h1>All Pages</h1>
 
+
 <ul>
     {% for entry in entries %}
     <a href="{% url 'title' entry %}">
@@ -14,5 +15,8 @@ Encyclopedia
     </a>
     {% endfor %}
 </ul>
+
+
+
 
 {% endblock %}

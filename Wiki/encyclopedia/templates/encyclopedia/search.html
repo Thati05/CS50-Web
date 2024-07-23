@@ -1,25 +1,21 @@
-{% exyends "encyclopedia/layout.html" %}
+{% extends "encyclopedia/layout.html" %}
 
 {% block title %}
 Search Results
 {% endblock %}
 
 {% block body %}
-<h1>Search Results for "{{query}}" </h1>
+<h1>Search Results for "{{ query }}"</h1>
 
-{% if enties %}
+{% if entries %}
 <ul>
   {% for entry in entries %}
   <li>
-    <a href="{% url 'title' entry %}">{{entry}}</a>
+    <a href="{% url 'title' entry %}">{{ entry }}</a>
   </li>
-
-  {% endfor % }
+  {% endfor %}
 </ul>
 {% else %}
-
-<h1>Sorry, No results found</h1>
-
+<h1>Sorry, No results found.</h1>
 {% endif %}
-
 {% endblock %}
