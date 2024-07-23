@@ -79,3 +79,13 @@ def randomEntry(request):
         })
     random_title = choice(entries)
     return redirect('title', title=random_title)
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        entries = [entry for entry in util.list_entries() if query.lower() in entry.lower()]
+        return render(request, "encyclopedia/search.html",{
+            'entries':entries,
+            'query':query
+        })
+        return redirect('index')
