@@ -7,9 +7,9 @@ from random import choice
 
 
 def index(request):
-    return render(request, "encyclopedia/index.html", {
+    return render(request, "encyclopedia/index.html",{
         "entries": util.list_entries()
-    })
+        })
 
 
 

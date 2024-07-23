@@ -1,1 +1,0 @@
-The greatest Man to live, and He loves you so much :)
