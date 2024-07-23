@@ -14,7 +14,9 @@ Create Page
     <input class="btn btn-primary" type="submit" value="Create Page" />
 
     {% if error %}
-    <p style="color: red;">{{error}}</p>
+    <div style="margin-top: 10px;" class="alert alert-danger" role="alert">
+      {{error}}
+    </div>
     {% endif %}
 
   </form>
