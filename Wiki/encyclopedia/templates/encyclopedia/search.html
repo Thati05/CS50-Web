@@ -8,11 +8,13 @@ Search Results
 <h1>Search Results for "{{ query }}"</h1>
 
 {% if entries %}
-<ul>
+<ul style="width: 500px;" class="list-group">
   {% for entry in entries %}
-  <li>
-    <a href="{% url 'title' entry %}">{{ entry }}</a>
-  </li>
+
+  <a class="list-group-item list-group-item-action list-group-item-primary" href="{% url 'title' entry %}">
+    <li>{{ entry }}</li>
+  </a>
+
   {% endfor %}
 </ul>
 {% else %}
