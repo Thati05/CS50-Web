@@ -9,8 +9,7 @@ Create Listings
 <form method="post" action="">
 
   {% csrf_token %}
-  <div>{{form.asp}}</div>
-
+  {{form.as_p}}
   <input type="submit" value="Create Listing">
 
 
