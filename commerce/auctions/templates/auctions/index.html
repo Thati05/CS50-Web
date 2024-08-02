@@ -6,10 +6,14 @@ Auctions
 
 {% block body %}
 <h2>Active Listings</h2>
-{for list in lits }
-<img>{{list.image_url}}</img>
-<h3>{{list.title}}</h3>
-<h4><span>Price</span> {{list.price}}</h4>
-
-<p>Created {{list.created_at}}</p>
+{% for auction in lists %}
+{% for listing in auction.auction_list.all %}
+<div>
+    <img src="{{listing.image_url}}" alt="{{listing.image_url}}">
+    <h3>{{listing.title}}</h3>
+    <h4><span>Price:</span>{{listing.price}}</h4>
+    <p>Created on {{listing.created_at}}</p>
+</div>
+{% endfor %}
+{% endfor %}
 {% endblock %}

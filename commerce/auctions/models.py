@@ -15,5 +15,8 @@ class CreateListing (models.Model):
         return self.title
 
 class AuctionList(models.Model):
-    auction_list = ManyToManyField (CreateListing, blank=True, relate_name="Listing")
+    auction_list = models.ManyToManyField(CreateListing, blank=True, related_name="listings")
+
+    def __str__(self):
+        return ",".join(listing.title for listing in self.auction_list.all())
 
