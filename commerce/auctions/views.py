@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, CreateListing, AuctionList
+from .models import User, CreateListing, AuctionList, Listings
 from .forms import AuctionListingForm
 
 
@@ -80,6 +80,12 @@ def create_listings(request):
         "form": form
     
     })
+
+def listings(request):
+    return render(request, "auctions/listing.html", {
+        "list_detail" : Listings.objects.all()
+    })
+
 
    
 
