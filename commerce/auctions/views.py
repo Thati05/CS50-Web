@@ -64,7 +64,13 @@ def register(request):
 
 def create_listings(request):
     if request.method == 'POST':
-        listing = AuctionListing.objects.all(request.POST)
-    return render(request, "auctions/create-list.html",
-         {"listing": listing}
-    )
+        form = AuctionListingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("successful")
+        else:
+            form = AuctionListingForm()
+            return render(request, "auctions/create-listing.html",
+            {"form":form}
+            )
+    
