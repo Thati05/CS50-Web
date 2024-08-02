@@ -4,13 +4,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, AuctionListing
+from .models import User, CreateListing, AuctionList
 from .forms import AuctionListingForm
 
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        "lists" : AuctionList.objects.all()
+    })
 
 
 def login_view(request):
@@ -73,5 +75,12 @@ def create_listings(request):
     else:
         form = AuctionListingForm()
     
-    return render(request, "auctions/create-list.html", {"form": form})
+    return render(request, "auctions/create-list.html", {
+        
+        "form": form
+    
+    })
+
+   
+
     

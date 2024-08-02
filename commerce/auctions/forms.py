@@ -1,7 +1,7 @@
 from  django import forms
-from .models import AuctionListing
+from .models import CreateListing
 
 class AuctionListingForm(forms.ModelForm):
   class Meta:
-    model = AuctionListing
+    model = CreateListing
     fields = ['image_url', 'title', 'price']

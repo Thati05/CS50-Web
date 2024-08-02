@@ -1,7 +1,15 @@
 {% extends "auctions/layout.html" %}
 
-{% block body %}
-    <h2>Active Listings</h2>
+{% block title %}
+Auctions
+{ % endblock %}
 
-    TODO
+{% block body %}
+<h2>Active Listings</h2>
+{for list in lits }
+<img>{{list.image_url}}</img>
+<h3>{{list.title}}</h3>
+<h4><span>Price</span> {{list.price}}</h4>
+
+<p>Created {{list.created_at}}</p>
 {% endblock %}
