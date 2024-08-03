@@ -4,4 +4,4 @@ from .models import CreateListing
 class AuctionListingForm(forms.ModelForm):
   class Meta:
     model = CreateListing
-    fields = ['image_url', 'title', 'price']
+    fields = ['image_url', 'title', 'description', 'price']

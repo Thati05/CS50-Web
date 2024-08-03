@@ -8,6 +8,7 @@ class User(AbstractUser):
 class CreateListing (models.Model):
     image_url = models.URLField( max_length=500)
     title = models.CharField(max_length=64)
+    description = models.CharField(max_length=64)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -22,9 +23,8 @@ class AuctionList(models.Model):
 
 class Listing(models.Model):
     details_auctionlist = models.ForeignKey(AuctionList, on_delete=models.CASCADE)
-    description = models.CharField(max_length=64)
     bid = models.DecimalField(max_digits=10, decimal_places=2)
-    user = models.ManyToManyField(User,related_name="username")
+    user = models.ManyToManyField(User, related_name="listings")
 
     def __str__(self):
-        return self.bid
+        return f"{self.details_auctionlist}"

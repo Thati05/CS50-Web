@@ -8,7 +8,7 @@ Auctions
 <h2>Active Listings</h2>
 {% for auction in lists %}
 {% for listing in auction.auction_list.all %}
-<a href="{% url 'listing' title %}">
+<a href="{% url 'listing' listing.title %}">
     <div class="listing">
         <img src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
         <h3>{{ listing.title }}</h3>

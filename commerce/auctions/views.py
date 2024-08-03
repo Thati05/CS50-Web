@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import User, CreateListing, AuctionList, Listings
+from .models import User, CreateListing, AuctionList, Listing
 from .forms import AuctionListingForm
 
 
@@ -82,9 +82,10 @@ def create_listings(request):
     })
 
 def listings(request):
-    return render(request, "auctions/listing.html", {
-        "list_detail" : Listings.objects.all()
-    })
+   list_detail= get_object_or_404(Listing, details_auctionlist__auction_list__title=title)
+   return render(request, "auctions/listing.html", {
+    "list_detail":list_detail
+   })
 
 
    
