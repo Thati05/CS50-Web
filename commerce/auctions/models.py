@@ -21,10 +21,10 @@ class AuctionList(models.Model):
         return ",".join(listing.title for listing in self.auction_list.all())
 
 class Listing(models.Model):
-    listing = AuctionList(auction_list)
+    details_auctionlist = models.ForeignKey(AuctionList, on_delete=models.CASCADE)
     description = models.CharField(max_length=64)
     bid = models.DecimalField(max_digits=10, decimal_places=2)
     user = models.ManyToManyField(User,related_name="username")
 
-    def __class__(self):
+    def __str__(self):
         return self.bid
