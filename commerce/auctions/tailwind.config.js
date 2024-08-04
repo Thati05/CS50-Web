@@ -5,7 +5,11 @@ module.exports = {
     './static/js/**/*.js',  // Include this if you're using Tailwind in your JS files
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        nun: ['Nunito', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

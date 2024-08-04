@@ -1,8 +1,43 @@
 /* static/css/tailwind.css */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  padding: 10px;
+
+
+
+.nav-link {
+  text-decoration: none;
+  padding: 5px 10px;
+
+}
+
+
+
+
+.nav-link:hover {
+  border-bottom: 2px solid crimson;
+  padding-bottom: 2px;
+  background-color: rgb(250, 245, 246);
+}
+
+li {
+  text-decoration: none;
+}
+
+.highlight {
+
+  padding: 5px 10px;
+  color: white;
+
+}
+
+button {
+  padding: 5px 20px;
+  color: white;
+  background-color: #b91c1c;
+  font-weight: 600;
+
 }

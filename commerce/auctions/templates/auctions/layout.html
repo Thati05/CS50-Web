@@ -5,41 +5,90 @@
 
 <head>
     <title>{% block title %}Auctions{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">--->
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
 </head>
 
 <body>
-    <h1 class=" text-4xl underline text-blue-500">Auctions</h1>
-    <div>
-        {% if user.is_authenticated %}
-        Signed in as <strong>{{ user.username }}</strong>.
-        {% else %}
-        Not signed in.
-        {% endif %}
-    </div>
-    <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-        </li>
-        {% if user.is_authenticated %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-        </li>
-        <li class="nav-link"><a href="{% url 'create-listing' %}"> Create Listing</a></li>
-        {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Log In</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}">Register</a>
-        </li>
-        {% endif %}
-    </ul>
+    <nav class=" font-nun flex flex-row justify-between items-center p-2">
+
+        <div class=" flex flex-col font-nun font-extrabold text-2xl">
+            <h1 class=" text-red-700">CS50W</h1>
+            <h2>COMMERCE</h2>
+        </div>
+
+        <div class=" flex flex-row justify-between ">
+            <ul class=" text-[18px] flex flex-row  gap-10 justify-between items-center">
+                <li>
+                    <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="">Categories</a>
+                </li>
+
+
+
+                {% if user.is_authenticated %}
+                <li><a class="nav-link" href="{% url 'create-listing' %}"> Create Listing</a></li>
+                <li>
+                    <a class="nav-link" href="">Watchlist</a>
+                </li>
+
+                <li>
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                </li>
+                {% else %}
+                <li>
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+
+        </div>
+
+
+    </nav>
+
+
+
+
     <hr>
+
+
+
+
+
     {% block body %}
     {% endblock %}
+
+
+    <hr>
+
+    <footer class=" font-nun flex flex-row justify-between items-center p-2">
+        <div class=" flex flex-col font-nun font-extrabold text-xl">
+            <p class="CS50W">CS50W</p>
+            <p>COMMERCE</p>
+        </div>
+        <div class=" flex flex-row justify-between ">
+            {% if user.is_authenticated %}
+            Signed in as <strong class="ml-1">{{ user.username }}</strong>.
+            {% else %}
+            <ul class=" text-[18px] flex flex-row  gap-10 justify-between items-center">
+                <li>
+                    <a href="{% url 'login' %}">Log In</a>
+                </li>
+                <li>
+                    <a href="{% url 'register' %}">Register</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+
+    </footer>
 </body>
 
 </html>

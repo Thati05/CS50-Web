@@ -5,21 +5,59 @@ Auctions
 {% endblock %}
 
 {% block body %}
-<h2>Active Listings</h2>
-{% if lists %}
-{% for auction in lists %}
-{% for listing in auction.auction_list.all %}
-<a href="{% url 'listing' auction_id=listing.id %}">
-    <div class="listing">
-        <img src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
-        <h3>{{ listing.title }}</h3>
-        <h4><span>Price:</span> {{ listing.price }}</h4>
-        <p>Created on {{ listing.created_at }}"</p>
+
+
+<section class=" justify-center flex flex-col p-2 pt-20">
+
+
+    <div class="  flex justify-center items-center">
+        <p class=" highlight bg-red-700 text-4xl font-nun font-bold justify-center flex">
+            Active Listings
+        </p>
     </div>
-</a>
-{% endfor %}
-{% endfor %}
-{% else %}
-<p>No active listings available at the moment.</p>
-{% endif %}
+
+
+    {% if lists %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        {% for auction in lists %}
+
+        {% for listing in auction.auction_list.all %}
+
+        <article class=" w-fit h-fit p-5 shadow-lg  ">
+            <div class="w-[350px] justify-center items-center flex flex-col">
+
+
+                <img class=" w-[300px] h-[280px] object-contain" src="{{ listing.image_url }}"
+                    alt="Image of {{ listing.title }}">
+
+
+                <div class="pt-4 flex flex-row items-center font-nun gap-10 ">
+                    <div>
+                        <h3 class=" text-[20px] font-semibold">{{ listing.title }}</h3>
+                        <h4 class=" text-[16px]"><span class=" font-black">Price:</span> {{ listing.price }}</h4>
+                        <p class="text-[12px] text-gray-400">Created on {{ listing.created_at }}</p>
+                    </div>
+                    <button class="btn">
+                        <a href="{% url 'listing' auction_id=listing.id %}">
+                            View
+                        </a>
+                    </button>
+
+
+                </div>
+
+
+            </div>
+        </article>
+
+
+        {% endfor %}
+
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No active listings available at the moment.</p>
+    {% endif %}
+
+</section>
 {% endblock %}
