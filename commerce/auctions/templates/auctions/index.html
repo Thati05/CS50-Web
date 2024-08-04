@@ -6,15 +6,20 @@ Auctions
 
 {% block body %}
 <h2>Active Listings</h2>
+{% if lists %}
 {% for auction in lists %}
 {% for listing in auction.auction_list.all %}
-<div class="listing">
-    <img src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
-    <h3>{{ listing.title }}</h3>
-    <h4><span>Price:</span> {{ listing.price }}</h4>
-    <p>Created on {{ listing.created_at }}</p>
-</div>
-
+<a href="{% url 'listing' auction_id=listing.id %}">
+    <div class="listing">
+        <img src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
+        <h3>{{ listing.title }}</h3>
+        <h4><span>Price:</span> {{ listing.price }}</h4>
+        <p>Created on {{ listing.created_at }}"</p>
+    </div>
+</a>
 {% endfor %}
 {% endfor %}
+{% else %}
+<p>No active listings available at the moment.</p>
+{% endif %}
 {% endblock %}

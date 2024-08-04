@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+Auction Details
+{% endblock %}
+
+{% block body %}
+<h2>{{ listing.title }}</h2>
+<img src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
+<p>{{ listing.description }}</p>
+<p>Price: {{ listing.price }}</p>
+
+<h3>Bids</h3>
+<ul>
+  {% for detail in list_details %}
+  <li>{{ detail.user.username }}: {{ detail.bid }}</li>
+  {% empty %}
+  <li>No bids yet.</li>
+  {% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+<form action="{% url 'listing' listing.id %}" method="post">
+  {% csrf_token %}
+  <input type="number" name="bid" step="0.01" min="{{ listing.price }}" required>
+  <button type="submit">Place Bid</button>
+</form>
+{% else %}
+<p>Please <a href="{% url 'login' %}">log in</a> to place a bid.</p>
+{% endif %}
+
+<h3>Details</h3>
+<ul>
+  <li>Listed by: {{ listing.user.username }}</li>
+</ul>
+
+{% if error_message %}
+<p style="color: red;">{{ error_message }}</p>
+{% endif %}
+{% endblock %}

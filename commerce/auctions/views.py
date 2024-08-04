@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import User, CreateListing, AuctionList
+from .models import User, CreateListing, AuctionList, ListDetails
 from .forms import AuctionListingForm
 
 
@@ -82,6 +82,20 @@ def create_listings(request):
     })
 
 
+
+def details_listing(request, auction_id):
+    listing = get_object_or_404(CreateListing, id=auction_id)
+    if request.method == 'POST':
+        bid_amount = request.POST["bid"]
+        user = request.user
+        ListDetails.objects.create(list_details=listing, bid=bid_amount, user=user)
+        return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+    else:
+        list_details = ListDetails.objects.filter(list_details=listing)
+        return render(request, "auctions/auction_details.html", {
+            "listing": listing,
+            "list_details": list_details
+        })
 
    
 

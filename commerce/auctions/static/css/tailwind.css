@@ -1,0 +1,8 @@
+/* static/css/tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  padding: 10px;
+}
