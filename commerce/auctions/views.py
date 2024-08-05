@@ -11,7 +11,7 @@ from .forms import AuctionListingForm
 
 def index(request):
     return render(request, "auctions/index.html", {
-        "lists" : AuctionList.objects.all()
+        "lists": AuctionList.objects.all()
     })
 
 
@@ -74,12 +74,7 @@ def create_listings(request):
             return HttpResponseRedirect(reverse("index"))
     else:
         form = AuctionListingForm()
-    
-    return render(request, "auctions/create-list.html", {
-        
-        "form": form
-    
-    })
+    return render(request, "auctions/create_listing.html", {"form": form})
 
 
 
