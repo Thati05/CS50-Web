@@ -4,15 +4,17 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import User, CreateListing, AuctionList, ListDetails
+from .models import User, CreateListing, ListDetails
 from .forms import AuctionListingForm
 
 
 
 def index(request):
-    return render(request, "auctions/index.html", {
-        "lists": AuctionList.objects.all()
-    })
+    lists = CreateListing.objects.all()
+    context = {'lists': lists}
+    return render(request, 'auctions/index.html', context)
+
+
 
 
 def login_view(request):
@@ -66,15 +68,18 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+
 def create_listings(request):
+    form = AuctionListingForm()
     if request.method == 'POST':
         form = AuctionListingForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse("index"))
-    else:
-        form = AuctionListingForm()
-    return render(request, "auctions/create_listing.html", {"form": form})
+    context = {'form':form}
+    return render(request, 'auctions/create-list.html', context)
+
+ 
 
 
 

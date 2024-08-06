@@ -5,36 +5,24 @@ Auctions
 {% endblock %}
 
 {% block body %}
-
-
-<section class=" justify-center flex flex-col p-2 pt-20">
-
-
-    <div class="  flex justify-center items-center">
-        <p class=" highlight bg-red-700 text-4xl font-nun font-bold mb-10 justify-center flex">
+<section class="justify-center flex flex-col p-2 pt-20">
+    <div class="flex justify-center items-center">
+        <p class="highlight bg-red-700 text-4xl font-nun font-bold mb-10 justify-center flex">
             Active Listings
         </p>
     </div>
 
-
     {% if lists %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10">
-        {% for auction in lists %}
-
-        {% for listing in auction.auction_list.all %}
-
-        <article class=" w-fit h-fit p-5 shadow-lg  ">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        {% for listing in lists %}
+        <article class="w-fit h-fit p-5 shadow-lg">
             <div class="w-[350px] justify-center items-center flex flex-col">
-
-
-                <img class=" w-[300px] h-[280px] object-contain" src="{{ listing.image_url }}"
+                <img class="w-[300px] h-[280px] object-contain" src="{{ listing.image_url }}"
                     alt="Image of {{ listing.title }}">
-
-
-                <div class="pt-4 flex flex-row items-center font-nun gap-10 ">
+                <div class="pt-4 flex flex-row items-center font-nun gap-10">
                     <div>
-                        <h3 class=" text-[20px] font-semibold">{{ listing.title }}</h3>
-                        <h4 class=" text-[16px]"><span class=" font-black">Price:</span> {{ listing.price }}</h4>
+                        <h3 class="text-[20px] font-semibold">{{ listing.title }}</h3>
+                        <h4 class="text-[16px]"><span class="font-black">Price:</span> {{ listing.price }}</h4>
                         <p class="text-[12px] text-gray-400">Created on {{ listing.created_at }}</p>
                     </div>
                     <button class="btn">
@@ -42,17 +30,9 @@ Auctions
                             View
                         </a>
                     </button>
-
-
                 </div>
-
-
             </div>
         </article>
-
-
-        {% endfor %}
-
         {% endfor %}
     </div>
     {% else %}
@@ -60,7 +40,7 @@ Auctions
     {% endif %}
 
     <hr class="mt-10">
-    <footer class="font-nun flex flex-row justify-between items-center  p-2">
+    <footer class="font-nun flex flex-row justify-between items-center p-2">
         <div class="flex flex-col font-nun font-extrabold text-xl">
             <p class="CS50W">CS50W</p>
             <p>COMMERCE</p>
@@ -80,6 +60,8 @@ Auctions
             {% endif %}
         </div>
     </footer>
-
 </section>
 {% endblock %}
+
+
+<!--<a href="{% url 'listing' auction_id=listing.id %}"> _-->
