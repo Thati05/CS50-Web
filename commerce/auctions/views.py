@@ -92,9 +92,11 @@ def details_listing(request, auction_id):
         return HttpResponseRedirect(reverse("listing", args=[auction_id]))
     else:
         list_details = ListDetails.objects.filter(list_details=listing)
+        bid_count = list_details.count()
         return render(request, "auctions/auction_details.html", {
             "listing": listing,
-            "list_details": list_details
+            "list_details": list_details,
+            "bid_count":bid_count
         })
 
    

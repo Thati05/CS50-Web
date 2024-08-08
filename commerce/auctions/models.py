@@ -15,6 +15,7 @@ class CreateListing(models.Model):
         ('Skincare', 'Skincare')
     ]
 
+    #user = models.ForeignKey(User,on_delete=models.CASCADE, related_name="listings", default="Username" )
     image_url = models.URLField()
     title = models.CharField(max_length=64, validators=[MinLengthValidator(45)] )
     description = models.CharField(max_length=300, default="No description")

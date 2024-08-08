@@ -11,9 +11,11 @@ Auction Details
 <p>Price: {{ listing.price }}</p>
 
 <h3>Bids</h3>
+<p>({{bid_count}}) bids are already made.</p>
+
 <ul>
   {% for detail in list_details %}
-  <li>{{ detail.user.username }}: {{ detail.bid }}</li><!---Show the number of bids----->
+  <li>{{ detail.user.username }}: {{ detail.bid }}</li>
   {% empty %}
   <li>No bids yet.</li>
   {% endfor %}
