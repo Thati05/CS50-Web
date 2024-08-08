@@ -13,7 +13,7 @@ Auction Details
 <h3>Bids</h3>
 <ul>
   {% for detail in list_details %}
-  <li>{{ detail.user.username }}: {{ detail.bid }}</li>
+  <li>{{ detail.user.username }}: {{ detail.bid }}</li><!---Show the number of bids----->
   {% empty %}
   <li>No bids yet.</li>
   {% endfor %}
@@ -31,7 +31,7 @@ Auction Details
 
 <h3>Details</h3>
 <ul>
-  <li>Listed by:</li>
+  <li>Listed by:</li> <!---Show the user that created the acution---->
 </ul>
 
 {% if error_message %}

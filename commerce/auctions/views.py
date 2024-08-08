@@ -81,7 +81,7 @@ def create_listings(request):
 
  
 
-
+"''for bids show the number of bids that have been made '' "
 
 def details_listing(request, auction_id):
     listing = get_object_or_404(CreateListing, id=auction_id)
