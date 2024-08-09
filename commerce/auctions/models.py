@@ -15,12 +15,11 @@ class CreateListing(models.Model):
         ('Skincare', 'Skincare')
     ]
 
-   
-    image_url = models.URLField()
     title = models.CharField(max_length=64, validators=[MinLengthValidator(40)] )
-    description = models.CharField(max_length=300, default="No description")
+    image_url = models.URLField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=50, default="No category", choices=CATEGORY_CHOICES)
+    description = models.CharField(max_length=300, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     
     

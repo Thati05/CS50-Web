@@ -5,11 +5,82 @@ Create Listing
 {% endblock %}
 
 {% block body %}
-<h2>Create a New Listing</h2>
+<style>
+  .form-control {
+    padding: 5px;
+    border: 1px solid #ccc;
 
-<form method="post" action="">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Create Listing</button>
-</form>
+  }
+
+  .url-input {
+    width: 82%;
+    margin-top: 20px;
+  }
+
+  .title-input {
+    font-size: 1.2em;
+    width: 90%;
+  }
+
+  .price-input {
+    margin-top: 20px;
+    width: 40%;
+  }
+
+  .category-select {
+    width: 40%;
+    margin-top: 20px;
+  }
+
+  .description-textarea {
+    width: 100%;
+    height: 100px;
+  }
+</style>
+
+<section class=" p-2 pt-10 flex justify-center items-center flex-col">
+
+  <h2 class="highlight bg-red-700 text-4xl font-nun font-bold mb-10 justify-center flex">Create Your Own Listing </h2>
+
+  <form class="pt-10" method="post" action="">
+    <div class=" flex justify-center items-center flex-col">
+
+      <div class="w-fit h-fit p-5 shadow-lg font-nun" style=" padding: 20px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+      </div>
+
+
+      <button class="mt-10" type="submit">Create Listing</button>
+
+    </div>
+
+
+  </form>
+
+</section>
+
+<hr class="mt-10">
+<footer class="font-nun flex flex-row justify-between items-center p-2">
+  <div class="flex flex-col font-nun font-extrabold text-xl">
+    <p class="CS50W">CS50W</p>
+    <p>COMMERCE</p>
+  </div>
+  <div class="flex flex-row justify-between">
+    {% if user.is_authenticated %}
+    Signed in as <strong class="ml-1">{{ user.username }}</strong>.
+    {% else %}
+    <ul class="text-[18px] flex flex-row gap-10 justify-between items-center">
+      <li>
+        <a href="{% url 'login' %}">Log In</a>
+      </li>
+      <li>
+        <a href="{% url 'register' %}">Register</a>
+      </li>
+    </ul>
+    {% endif %}
+  </div>
+</footer>
+
+
 {% endblock %}
