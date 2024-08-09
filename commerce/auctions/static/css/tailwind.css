@@ -5,7 +5,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.input-bid {
 
+  border: 2px solid black;
+
+}
 
 
 .nav-link {

@@ -5,38 +5,81 @@ Auction Details
 {% endblock %}
 
 {% block body %}
-<h2>{{ listing.title }}</h2>
-<img src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
-<p>{{ listing.description }}</p>
-<p>Price: {{ listing.price }}</p>
+<section class="mt-10 p-2 flex gap-5 justify-center ">
 
-<h3>Bids</h3>
-<p>({{bid_count}}) bids are already made.</p>
+  <div class="image-side " style="padding: 10px; ">
+    <p
+      style="position: absolute; top: 100px; padding: 2px 5px; background-color: gray; color: white; font-weight: bolder;">
+      Category</p>
 
-<ul>
-  {% for detail in list_details %}
-  <li>{{ detail.user.username }}: {{ detail.bid }}</li>
-  {% empty %}
-  <li>No bids yet.</li>
-  {% endfor %}
-</ul>
 
-{% if user.is_authenticated %}
-<form action="{% url 'listing' listing.id %}" method="post">
-  {% csrf_token %}
-  <input type="number" name="bid" step="0.01" min="{{ listing.price }}" required>
-  <button type="submit">Place Bid</button>
-</form>
-{% else %}
-<p>Please <a href="{% url 'login' %}">log in</a> to place a bid.</p>
-{% endif %}
+    <div class="image-side">
 
-<h3>Details</h3>
-<ul>
-  <li>Listed by:</li> <!---Show the user that created the acution---->
-</ul>
 
-{% if error_message %}
-<p style="color: red;">{{ error_message }}</p>
-{% endif %}
-{% endblock %}
+      <img style="height: 500px;" src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
+      <p style="margin-top: 10px;">Listed by: <span class=" font-bold">Thati</span> </p>
+      <!---Show the user that created the acution---->
+
+    </div>
+
+
+
+  </div>
+  <div style="border-left: 1px solid rgba(0, 0, 0, 0.137);"></div>
+
+  <div class="title-side font-nun " style=" width: 50%; ">
+    <h2 class="font-nun font-extrabold" style=" font-size: 40px;">{{ listing.title }}</h2>
+
+    <p class=" font-nun" style=" margin-bottom: 10px; font-size: 22px; ">{{ listing.description }}</p>
+
+
+
+
+
+
+    <p style=" margin: 10px 0px; font-size: 18px;"><span class="font-bold">Price:</span> {{ listing.price }}</p>
+
+    <p style="color: gray;">({{bid_count}}) bids already made.</p>
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'listing' listing.id %}" method="post">
+      {% csrf_token %}
+      <input style=" border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px ;" type="number" name="bid"
+        step="0.01" min="{{ listing.price }}" required>
+      <button type="submit">Place Bid</button>
+    </form>
+    {% else %}
+    <p>Please <a href="{% url 'login' %}">log in</a> to place a bid.</p>
+    {% endif %}
+
+
+
+
+
+
+  </div>
+
+</section>
+
+<hr class="mt-10">
+<footer class="font-nun flex flex-row justify-between items-center p-2">
+  <div class="flex flex-col font-nun font-extrabold text-xl">
+    <p class="CS50W">CS50W</p>
+    <p>COMMERCE</p>
+  </div>
+  <div class="flex flex-row justify-between">
+    {% if user.is_authenticated %}
+    Signed in as <strong class="ml-1">{{ user.username }}</strong>.
+    {% else %}
+    <ul class="text-[18px] flex flex-row gap-10 justify-between items-center">
+      <li>
+        <a href="{% url 'login' %}">Log In</a>
+      </li>
+      <li>
+        <a href="{% url 'register' %}">Register</a>
+      </li>
+    </ul>
+    {% endif %}
+  </div>
+
+  {% endblock %}
