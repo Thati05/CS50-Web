@@ -49,6 +49,13 @@ Auction Details
       <button type="submit">Place Bid</button>
     </form>
     {% else %}
+    <form>
+      {% csrf_token %}
+      <input style=" border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px ;" type="number" name="bid"
+        step="0.01" min="{{ listing.price }}">
+      <button type="submit">Place Bid</button>
+    </form>
+
     <p>Please <a href="{% url 'login' %}">log in</a> to place a bid.</p>
     {% endif %}
 
