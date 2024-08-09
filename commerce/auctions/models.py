@@ -17,7 +17,7 @@ class CreateListing(models.Model):
 
    
     image_url = models.URLField()
-    title = models.CharField(max_length=64, validators=[MinLengthValidator(45)] )
+    title = models.CharField(max_length=64, validators=[MinLengthValidator(40)] )
     description = models.CharField(max_length=300, default="No description")
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=50, default="No category", choices=CATEGORY_CHOICES)
