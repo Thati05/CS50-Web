@@ -15,7 +15,7 @@ class CreateListing(models.Model):
         ('Skincare', 'Skincare')
     ]
 
-    #user = models.ForeignKey(User,on_delete=models.CASCADE, related_name="listings", default="Username" )
+   
     image_url = models.URLField()
     title = models.CharField(max_length=64, validators=[MinLengthValidator(45)] )
     description = models.CharField(max_length=300, default="No description")
@@ -33,8 +33,7 @@ class CreateListing(models.Model):
 class ListDetails(models.Model):
     list_details = models.ForeignKey(CreateListing, on_delete=models.CASCADE, related_name="list_details")
     bid = models.DecimalField(max_digits=20, decimal_places=2)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bids")
-
+  
     def __str__(self):
         return f"{self.list_details.title}"
 

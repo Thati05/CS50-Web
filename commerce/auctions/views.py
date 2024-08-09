@@ -87,8 +87,7 @@ def details_listing(request, auction_id):
     listing = get_object_or_404(CreateListing, id=auction_id)
     if request.method == 'POST':
         bid_amount = request.POST["bid"]
-        user = request.user
-        ListDetails.objects.create(list_details=listing, bid=bid_amount, user=user)
+        ListDetails.objects.create(list_details=listing, bid=bid_amount)
         return HttpResponseRedirect(reverse("listing", args=[auction_id]))
     else:
         list_details = ListDetails.objects.filter(list_details=listing)
@@ -96,7 +95,8 @@ def details_listing(request, auction_id):
         return render(request, "auctions/auction_details.html", {
             "listing": listing,
             "list_details": list_details,
-            "bid_count":bid_count
+            "bid_count":bid_count,
+            
         })
 
    
