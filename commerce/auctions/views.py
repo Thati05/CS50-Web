@@ -86,14 +86,13 @@ def details_listing(request, auction_id):
     listing = get_object_or_404(CreateListing, id=auction_id)
     if request.method == 'POST':
         bid_amount = request.POST.get("bid")
-        comment = request.POST.get("comment")
-        user = request.user
+       
         
         # Ensure the user is authenticated
         if not user.is_authenticated:
             return HttpResponseRedirect(reverse("login"))
 
-        ListDetails.objects.create(list_details=listing, bid=bid_amount, user=user, comment=comment)
+        ListDetails.objects.create(list_details=listing, bid=bid_amount)
         return HttpResponseRedirect(reverse("listing", args=[auction_id]))
 
     else:

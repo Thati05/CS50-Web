@@ -5,6 +5,17 @@ Auction Details
 {% endblock %}
 
 {% block body %}
+<style>
+  button,
+  .btn {
+    padding: 6.5px 20px;
+    color: white;
+    background-color: #b91c1c;
+    font-weight: 600;
+
+  }
+</style>
+
 <section class="mt-10 p-2 flex gap-5 justify-center">
 
   <div class="image-side" style="padding: 10px;">
@@ -15,7 +26,7 @@ Auction Details
 
     <div class="image-side">
       <img style="height: 500px;" src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
-      <p style="margin-top: 10px;">Listed by: <span class="font-bold">{{ listing.user.username }}</span></p>
+      <p style="margin-top: 10px;">Listed by: <span class="font-bold">username</span></p>
       <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
         <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px;" type="text" name="comment">
@@ -44,19 +55,10 @@ Auction Details
       <button type="submit">Place Bid</button>
       {% else %}
       <!-- Redirect the user to the register page if not registered/logged in -->
-      <a href="{% url 'register' %}" class="btn">Register to Place Bid</a>
+      <a href="{% url 'register' %}" class="btn">Place Bid</a>
       {% endif %}
     </form>
 
-    <p>({{ list_details.count }}) comments already made.</p>
-    {% if list_details.exists %}
-    <h3>Comments:</h3>
-    {% for detail in list_details %}
-    <p>{{ detail.comment }} by {{ detail.user.username }}</p>
-    {% endfor %}
-    {% else %}
-    <p>No comments yet.</p>
-    {% endif %}
   </div>
 </section>
 
