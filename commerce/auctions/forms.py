@@ -4,7 +4,7 @@ from .models import CreateListing
 class AuctionListingForm(forms.ModelForm):
     class Meta:
         model = CreateListing
-        fields = '__all__'
+        fields = ['image_url', 'title', 'price', 'category', 'description']
         widgets = {
             'image_url': forms.URLInput(attrs={
                 'size': 40, 

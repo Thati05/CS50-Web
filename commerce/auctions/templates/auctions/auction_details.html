@@ -26,7 +26,8 @@ Auction Details
 
     <div class="image-side">
       <img style="height: 500px;" src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
-      <p style="margin-top: 10px;">Listed by: <span class="font-bold">username</span></p>
+      <p style="margin-top: 10px;">Listed by: <span class="font-bold">{{ creator.username }}</span></p>
+
       <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
         <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px;" type="text" name="comment">

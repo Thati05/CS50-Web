@@ -84,12 +84,12 @@ def create_listings(request):
 
 def details_listing(request, auction_id):
     listing = get_object_or_404(CreateListing, id=auction_id)
+    
     if request.method == 'POST':
         bid_amount = request.POST.get("bid")
-       
         
         # Ensure the user is authenticated
-        if not user.is_authenticated:
+        if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse("login"))
 
         ListDetails.objects.create(list_details=listing, bid=bid_amount)
@@ -101,7 +101,8 @@ def details_listing(request, auction_id):
         return render(request, "auctions/auction_details.html", {
             "listing": listing,
             "list_details": list_details,
-            "bid_count": bid_count
+            "bid_count": bid_count,
+            "creator": listing.user  # Pass the creator of the listing to the template
         })
 
 def my_listings(request):
