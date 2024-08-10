@@ -36,29 +36,29 @@ Auction Details
 
 
 
+    <p style="margin: 10px 0px; font-size: 18px;">
+      <span class="font-bold">Price:</span> {{ listing.price }}
+    </p>
 
-    <p style=" margin: 10px 0px; font-size: 18px;"><span class="font-bold">Price:</span> {{ listing.price }}</p>
+    <p style="color: gray;">({{ bid_count }}) bids already made.</p>
 
-    <p style="color: gray;">({{bid_count}}) bids already made.</p>
-
-    {% if user.is_authenticated %}
     <form action="{% url 'listing' listing.id %}" method="post">
       {% csrf_token %}
-      <input style=" border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px ;" type="number" name="bid"
+      <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px;" type="number" name="bid"
         step="0.01" min="{{ listing.price }}" required>
+      {% if user.is_authenticated %}
       <button type="submit">Place Bid</button>
-    </form>
-    {% else %}
-    <form>
-      {% csrf_token %}
-      <input style=" border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px ;" type="number" name="bid"
-        step="0.01" min="{{ listing.price }}">
-      <button type="submit">Place Bid</button>
+      {% else %}
+      <!-- This will redirect the user to the register page if not registered/logged in -->
+
+      <button type="submit"> <a href="{% url 'register' %}"> Place Bid</a></button>
+
+      {% endif %}
     </form>
 
+    {% if not user.is_authenticated %}
     <p>Please <a href="{% url 'login' %}">log in</a> to place a bid.</p>
     {% endif %}
-
 
 
 

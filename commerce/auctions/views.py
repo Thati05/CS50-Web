@@ -99,9 +99,7 @@ def create_listings(request):
             
         })'''
 
-from django.contrib.auth.decorators import login_required
 
-@login_required
 def details_listing(request, auction_id):
     listing = get_object_or_404(CreateListing, id=auction_id)
     if request.method == 'POST':
