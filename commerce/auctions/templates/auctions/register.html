@@ -1,30 +1,43 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<style>
+    .form-control {
+        padding: 8px;
+        border: 1px solid #0000001b;
 
-    <h2>Register</h2>
+    }
+</style>
+
+<section class=" p-5 pt-10 flex justify-center items-center flex-col gap-5">
+
+    <h2 class="highlight bg-red-700 text-4xl font-nun font-bold mb-10 justify-center flex">Register</h2>
 
     {% if message %}
-        <div>{{ message }}</div>
+    <div>{{ message }}</div>
     {% endif %}
 
-    <form action="{% url 'register' %}" method="post">
+    <form class=" w-fit h-fit p-10 shadow-lg font-nun " action="{% url 'register' %}" method="post">
         {% csrf_token %}
-        <div class="form-group">
+        <div class=" flex flex-col justify-center items-center gap-5 ">
             <input class="form-control" autofocus type="text" name="username" placeholder="Username">
-        </div>
-        <div class="form-group">
+
+
             <input class="form-control" type="email" name="email" placeholder="Email Address">
-        </div>
-        <div class="form-group">
+
+
             <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <div class="form-group">
+
+
             <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+
+            <button type="submit" value="Register">Register</button>
         </div>
-        <input class="btn btn-primary" type="submit" value="Register">
     </form>
 
     Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+</section>
+
+
 
 {% endblock %}

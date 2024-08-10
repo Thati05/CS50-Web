@@ -45,3 +45,9 @@ button {
   font-weight: 600;
 
 }
+
+.form-control {
+  padding: 5px;
+  border: 1px solid #ccc;
+
+}
