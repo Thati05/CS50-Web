@@ -33,7 +33,8 @@ class CreateListing(models.Model):
 class ListDetails(models.Model):
     list_details = models.ForeignKey(CreateListing, on_delete=models.CASCADE, related_name="list_details")
     bid = models.DecimalField(max_digits=20, decimal_places=2)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_bids", default=1)  # Use a specific user ID
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_bids", null=True, blank=True)
+    comment = models.CharField(max_length=65, null=True, blank=True)
 
     def __str__(self):
         return f"{self.list_details.title} - Bid by {self.user.username}"

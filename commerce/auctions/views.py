@@ -81,37 +81,21 @@ def create_listings(request):
 
  
 
-"''for bids show the number of bids that have been made '' "
-
-'''def details_listing(request, auction_id):
-    listing = get_object_or_404(CreateListing, id=auction_id)
-    if request.method == 'POST':
-        bid_amount = request.POST["bid"]
-        ListDetails.objects.create(list_details=listing, bid=bid_amount)
-        return HttpResponseRedirect(reverse("listing", args=[auction_id]))
-    else:
-        list_details = ListDetails.objects.filter(list_details=listing)
-        bid_count = list_details.count()
-        return render(request, "auctions/auction_details.html", {
-            "listing": listing,
-            "list_details": list_details,
-            "bid_count":bid_count,
-            
-        })'''
-
 
 def details_listing(request, auction_id):
     listing = get_object_or_404(CreateListing, id=auction_id)
     if request.method == 'POST':
         bid_amount = request.POST.get("bid")
+        comment = request.POST.get("comment")
         user = request.user
         
         # Ensure the user is authenticated
         if not user.is_authenticated:
             return HttpResponseRedirect(reverse("login"))
 
-        ListDetails.objects.create(list_details=listing, bid=bid_amount, user=user)
+        ListDetails.objects.create(list_details=listing, bid=bid_amount, user=user, comment=comment)
         return HttpResponseRedirect(reverse("listing", args=[auction_id]))
+
     else:
         list_details = ListDetails.objects.filter(list_details=listing)
         bid_count = list_details.count()
@@ -121,6 +105,6 @@ def details_listing(request, auction_id):
             "bid_count": bid_count
         })
 
-   
-
-    
+def my_listings(request):
+    '''should show listings created by user, allow the user to view the listing, view all comment made close actuion and display the highest
+    bider '''

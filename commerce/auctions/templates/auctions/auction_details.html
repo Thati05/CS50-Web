@@ -5,36 +5,30 @@ Auction Details
 {% endblock %}
 
 {% block body %}
-<section class="mt-10 p-2 flex gap-5 justify-center ">
+<section class="mt-10 p-2 flex gap-5 justify-center">
 
-  <div class="image-side " style="padding: 10px; ">
-    <p class=" font-semibold"
-      style="position: absolute; top: 100px; padding: 2px 5px; background-color: gray; color: white; ">
-      {{ listing.category }}</p>
-
+  <div class="image-side" style="padding: 10px;">
+    <p class="font-semibold"
+      style="position: absolute; top: 100px; padding: 2px 5px; background-color: gray; color: white;">
+      {{ listing.category }}
+    </p>
 
     <div class="image-side">
-
-
       <img style="height: 500px;" src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
-      <p style="margin-top: 10px;">Listed by: <span class=" font-bold">username</span> </p>
-      <!---Show the user that created the acution---->
-
+      <p style="margin-top: 10px;">Listed by: <span class="font-bold">{{ listing.user.username }}</span></p>
+      <form action="{% url 'listing' listing.id %}" method="post">
+        {% csrf_token %}
+        <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px;" type="text" name="comment">
+        <button style="background-color: black;" type="submit">Comment</button>
+      </form>
     </div>
-
-
-
   </div>
+
   <div style="border-left: 1px solid rgba(0, 0, 0, 0.137);"></div>
 
-  <div class="title-side font-nun " style=" width: 50%; ">
-    <h2 class="font-nun font-extrabold" style=" font-size: 40px;">{{ listing.title }}</h2>
-
-    <p class=" font-nun" style=" margin-bottom: 10px; font-size: 22px; ">{{ listing.description }}</p>
-
-
-
-
+  <div class="title-side font-nun" style="width: 50%;">
+    <h2 class="font-nun font-extrabold" style="font-size: 40px;">{{ listing.title }}</h2>
+    <p class="font-nun" style="margin-bottom: 10px; font-size: 22px;">{{ listing.description }}</p>
 
     <p style="margin: 10px 0px; font-size: 18px;">
       <span class="font-bold">Price:</span> {{ listing.price }}
@@ -49,23 +43,21 @@ Auction Details
       {% if user.is_authenticated %}
       <button type="submit">Place Bid</button>
       {% else %}
-      <!-- This will redirect the user to the register page if not registered/logged in -->
-
-      <button type="submit"> <a href="{% url 'register' %}"> Place Bid</a></button>
-
+      <!-- Redirect the user to the register page if not registered/logged in -->
+      <a href="{% url 'register' %}" class="btn">Register to Place Bid</a>
       {% endif %}
     </form>
 
-    {% if not user.is_authenticated %}
-    <p>Please <a href="{% url 'login' %}">log in</a> to place a bid.</p>
+    <p>({{ list_details.count }}) comments already made.</p>
+    {% if list_details.exists %}
+    <h3>Comments:</h3>
+    {% for detail in list_details %}
+    <p>{{ detail.comment }} by {{ detail.user.username }}</p>
+    {% endfor %}
+    {% else %}
+    <p>No comments yet.</p>
     {% endif %}
-
-
-
-
-
   </div>
-
 </section>
 
 <hr class="mt-10">
@@ -88,5 +80,5 @@ Auction Details
     </ul>
     {% endif %}
   </div>
-
-  {% endblock %}
+</footer>
+{% endblock %}

@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(CreateListing)
 admin.site.register(User)
 
+
