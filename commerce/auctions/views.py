@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from .models import User, CreateListing, ListDetails
+from .models import User, CreateListing, ListDetails, Comment
 from .forms import AuctionListingForm
 
 
@@ -81,28 +81,36 @@ def create_listings(request):
 
  
 
-
 def details_listing(request, auction_id):
     listing = get_object_or_404(CreateListing, id=auction_id)
-    
+
     if request.method == 'POST':
         bid_amount = request.POST.get("bid")
+        comment_body = request.POST.get("comment")
         
         # Ensure the user is authenticated
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse("login"))
 
-        ListDetails.objects.create(list_details=listing, bid=bid_amount)
+        if bid_amount:
+            ListDetails.objects.create(list_details=listing, bid=bid_amount, user=request.user)
+        
+        if comment_body:
+            Comment.objects.create(listing=listing, user=request.user, body=comment_body)
+        
         return HttpResponseRedirect(reverse("listing", args=[auction_id]))
 
     else:
         list_details = ListDetails.objects.filter(list_details=listing)
+        comments = Comment.objects.filter(listing=listing)
         bid_count = list_details.count()
+
         return render(request, "auctions/auction_details.html", {
             "listing": listing,
             "list_details": list_details,
             "bid_count": bid_count,
-            "creator": listing.user  # Pass the creator of the listing to the template
+            "creator": listing.user,
+            "comments": comments,
         })
 
 def my_listings(request):

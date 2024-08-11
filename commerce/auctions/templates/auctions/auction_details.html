@@ -17,7 +17,6 @@ Auction Details
 </style>
 
 <section class="mt-10 p-2 flex gap-5 justify-center">
-
   <div class="image-side" style="padding: 10px;">
     <p class="font-semibold"
       style="position: absolute; top: 100px; padding: 2px 5px; background-color: gray; color: white;">
@@ -55,13 +54,26 @@ Auction Details
       {% if user.is_authenticated %}
       <button type="submit">Place Bid</button>
       {% else %}
-      <!-- Redirect the user to the register page if not registered/logged in -->
       <a href="{% url 'register' %}" class="btn">Place Bid</a>
       {% endif %}
     </form>
 
+    {% if comments %}
+    {% for comment in comments %}
+    <div class="comment">
+      <p class="font-bold">{{ comment.user.username }}:</p>
+      <p>{{ comment.body }}</p>
+      <p>{{comment.date_added}}</p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No comments yet</p>
+    {% endif %}
   </div>
 </section>
+
+
+
 
 <hr class="mt-10">
 <footer class="font-nun flex flex-row justify-between items-center p-2">
