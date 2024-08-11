@@ -16,11 +16,15 @@ Auction Details
 </style>
 
 <section class="mt-10 p-2 flex gap-5 justify-center">
+
   <div class="image-side" style="padding: 10px;">
     <p class="font-semibold"
       style="position: absolute; top: 100px; padding: 2px 5px; background-color: gray; color: white;">
       {{ listing.category }}
     </p>
+
+
+
 
     <div class="image-side">
       <img style="height: 500px;" src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
@@ -43,10 +47,22 @@ Auction Details
   <div class="title-side font-nun" style="width: 50%;">
     <h2 class="font-nun font-extrabold" style="font-size: 40px;">{{ listing.title }}</h2>
     <p class="font-nun" style="margin-bottom: 10px; font-size: 22px;">{{ listing.description }}</p>
+    <div class=" flex items-center justify-between flex-row ">
 
-    <p style="margin: 10px 0px; font-size: 18px;">
-      <span class="font-bold">Price:</span> {{ listing.price }}
-    </p>
+      <p style="margin: 10px 0px; font-size: 18px;">
+        <span class="font-bold">Price:</span> {{ listing.price }}
+      </p>
+      <div>
+        <form method="post" action="{% url 'watchlist' %}">
+          {% csrf_token %}
+          <input type="hidden" name="listing_id" value="{{ listing.id }}">
+          <input type="submit" value="Add to Watchlist">
+        </form>
+
+
+      </div>
+    </div>
+
 
     <p style="color: gray;">({{ bid_count }}) bids already made.</p>
 

@@ -51,6 +51,19 @@ class MyListing(models.Model):
 
     def __str__(self):
         return f"{self.user_listing.title} - Auction closed: {self.close_auction}"
+        
+
+class WatchList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlists")
+    listing = models.ForeignKey(CreateListing, on_delete=models.CASCADE, related_name="watchlists")
+    remove_watchlist = models.BooleanField(default=False)
+
+    def remove_list(self):
+        self.remove_watchlist = True
+        self.save()
+
+    def __str__(self):
+        return f"{self.listing.title} - Removed: {self.remove_watchlist}"
 
 
   

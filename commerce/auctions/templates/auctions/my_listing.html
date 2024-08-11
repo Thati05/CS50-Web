@@ -9,6 +9,8 @@ My Listings
 
 <section>
   <h2>Your Listings</h2>
+
+
   {% if won_auctions %}
   <div class="alert alert-success mb-5" role="alert">
     <p class="font-nun font-bold">Congratulations! You have won the following auctions:</p>
@@ -19,6 +21,8 @@ My Listings
     </ul>
   </div>
   {% endif %}
+
+
   <ul>
     {% for listing in user_listings %}
     <li>

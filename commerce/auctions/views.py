@@ -160,3 +160,42 @@ def my_listings(request):
         'user_listings': user_listings,
         'won_auctions': won_auctions,
     })
+    
+"""def watchlist(request):
+    user = request.user
+    user_watchlist = WatchList.objects.filter(user=user, remove_watchlist=False)
+
+    if request.method == 'POST':
+        listing_id = request.POST.get('listing_id')
+        listing = get_object_or_404(CreateListing, id=listing_id)
+        watchlist, created = WatchList.objects.get_or_create(user=user, listing=listing)
+        watchlist.remove_list()
+        return redirect('watchlist')
+
+    return render(request, 'auctions/watchlist.html', {
+        "user_watchlist": user_watchlist
+    })"""
+
+def watchlist(request):
+    user = request.user
+
+    if request.method == 'POST':
+        listing_id = request.POST.get('listing_id')
+        listing = get_object_or_404(CreateListing, id=listing_id)
+
+        if 'remove' in request.POST:
+            # Remove the listing from the watchlist
+            watchlist_item = get_object_or_404(WatchList, user=user, listing=listing)
+            watchlist_item.remove_list()  # Mark the item as removed
+        else:
+            # Add the listing to the watchlist if not already present
+            WatchList.objects.get_or_create(user=user, listing=listing, remove_watchlist=False)
+
+        return redirect('watchlist')
+
+    # Get the user's active watchlist items (not removed)
+    user_watchlist = WatchList.objects.filter(user=user, remove_watchlist=False)
+
+    return render(request, 'auctions/watchlist.html', {
+        "user_watchlist": user_watchlist
+    })
