@@ -2,15 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinLengthValidator
 
-
 class User(AbstractUser):
     pass
-
-
-def get_default_user():
-    # Assuming the default user has a primary key of 1
-    return User.objects.get(pk=1)
-
 
 class CreateListing(models.Model):
     CATEGORY_CHOICES = [
@@ -26,10 +19,11 @@ class CreateListing(models.Model):
     category = models.CharField(max_length=50, default="No category", choices=CATEGORY_CHOICES)
     description = models.CharField(max_length=300, blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=get_default_user)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
+
 
 
 
@@ -41,6 +35,22 @@ class ListDetails(models.Model):
 
     def __str__(self):
         return f"{self.list_details.title} - Bid by {self.user.username}"
+
+class MyListing(models.Model):
+    user_listing = models.ForeignKey(CreateListing, on_delete=models.CASCADE, related_name="my_listings")
+    close_auction = models.BooleanField(default=False)  # To check if the auction is closed
+    highest_bidder = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)  # Winner of the auction
+
+    def close_listing(self):
+        """Close the auction and set the highest bidder."""
+        self.close_auction = True
+        highest_bid = self.user_listing.list_details.order_by('-bid').first()
+        if highest_bid:
+            self.highest_bidder = highest_bid.user
+        self.save()
+
+    def __str__(self):
+        return f"{self.user_listing.title} - Auction closed: {self.close_auction}"
 
 
   

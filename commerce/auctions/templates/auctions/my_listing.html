@@ -1,0 +1,75 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+My Listings
+{% endblock %}
+
+
+{% block body %}
+
+<section>
+  <h2>Your Listings</h2>
+  {% if won_auctions %}
+  <div class="alert alert-success mb-5" role="alert">
+    <p class="font-nun font-bold">Congratulations! You have won the following auctions:</p>
+    <ul class="list-disc ml-5">
+      {% for auction in won_auctions %}
+      <li>{{ auction.user_listing.title }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  <ul>
+    {% for listing in user_listings %}
+    <li>
+      <h3>{{ listing.title }}</h3>
+      <p>Status: {% if listing.close_auction %}Closed{% else %}Open{% endif %}</p>
+      <p>Highest Bidder: {% if listing.highest_bidder %}{{ listing.highest_bidder.username }}{% else %}N/A{% endif %}
+      </p>
+      <p>Highest Bid: {% if listing.highest_bid %}${{ listing.highest_bid }}{% else %}No bids yet{% endif %}</p>
+      <a href="{% url 'listing' listing.id %}">View Listing</a>
+
+      {% if not listing.close_auction %}
+      <form action="{% url 'my-listings' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="listing_id" value="{{ listing.id }}">
+        <button type="submit">Close Auction</button>
+      </form>
+      {% else %}
+      {% if user == listing.highest_bidder %}
+      <p>Congratulations! You won this auction.</p>
+      {% endif %}
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<hr class="mt-10">
+<footer class="font-nun flex flex-row justify-between items-center p-2">
+  <div class="flex flex-col font-nun font-extrabold text-xl">
+    <p class="CS50W">CS50W</p>
+    <p>COMMERCE</p>
+  </div>
+  <div class="flex flex-row justify-between">
+    {% if user.is_authenticated %}
+    Signed in as <strong class="ml-1">{{ user.username }}</strong>.
+    {% else %}
+    <ul class="text-[18px] flex flex-row gap-10 justify-between items-center">
+      <li>
+        <a href="{% url 'login' %}">Log In</a>
+      </li>
+      <li>
+        <a href="{% url 'register' %}">Register</a>
+      </li>
+    </ul>
+    {% endif %}
+  </div>
+</footer>
+
+
+
+
+
+
+{% endblock %}

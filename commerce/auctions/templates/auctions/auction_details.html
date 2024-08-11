@@ -12,7 +12,6 @@ Auction Details
     color: white;
     background-color: #b91c1c;
     font-weight: 600;
-
   }
 </style>
 
@@ -27,11 +26,15 @@ Auction Details
       <img style="height: 500px;" src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
       <p style="margin-top: 10px;">Listed by: <span class="font-bold">{{ creator.username }}</span></p>
 
+      {% if is_closed %}
+      <p style="color: red; font-weight: bold;">This auction is closed.</p>
+      {% else %}
       <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
         <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px;" type="text" name="comment">
         <button style="background-color: black;" type="submit">Comment</button>
       </form>
+      {% endif %}
     </div>
   </div>
 
@@ -47,6 +50,7 @@ Auction Details
 
     <p style="color: gray;">({{ bid_count }}) bids already made.</p>
 
+    {% if not is_closed %}
     <form action="{% url 'listing' listing.id %}" method="post">
       {% csrf_token %}
       <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px;" type="number" name="bid"
@@ -57,13 +61,16 @@ Auction Details
       <a href="{% url 'register' %}" class="btn">Place Bid</a>
       {% endif %}
     </form>
+    {% else %}
+    <p style="color: red;">Bidding is closed for this auction.</p>
+    {% endif %}
 
     {% if comments %}
     {% for comment in comments %}
     <div class="comment">
       <p class="font-bold">{{ comment.user.username }}:</p>
       <p>{{ comment.body }}</p>
-      <p>{{comment.date_added}}</p>
+      <p>{{ comment.date_added }}</p>
     </div>
     {% endfor %}
     {% else %}
@@ -71,9 +78,6 @@ Auction Details
     {% endif %}
   </div>
 </section>
-
-
-
 
 <hr class="mt-10">
 <footer class="font-nun flex flex-row justify-between items-center p-2">

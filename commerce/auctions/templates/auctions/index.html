@@ -12,6 +12,17 @@ Auctions
         </p>
     </div>
 
+    <!--- {% if won_auctions %}
+    <div class="alert alert-success mb-5" role="alert">
+        <p class="font-nun font-bold">Congratulations! You have won the following auctions:</p>
+        <ul class="list-disc ml-5">
+            {% for auction in won_auctions %}
+            <li>{{ auction.user_listing.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}-->
+
     {% if lists %}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {% for listing in lists %}
@@ -23,7 +34,8 @@ Auctions
                     <div>
                         <h3 class="text-[20px] font-semibold">{{ listing.title }}</h3>
                         <h4 class="text-[16px]"><span class="font-black">Price:</span> {{ listing.price }}</h4>
-                        <p class="text-[12px] text-gray-400">Created on {{ listing.created_at }}</p>
+                        <p class="text-[12px] text-gray-400">Created on {{ listing.created_at|date:"F j, Y, g:i a" }}
+                        </p>
                     </div>
                     <button class="btn">
                         <a href="{% url 'listing' auction_id=listing.id %}">
