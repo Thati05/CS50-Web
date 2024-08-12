@@ -12,15 +12,9 @@ from .forms import AuctionListingForm
 def index(request):
     lists = CreateListing.objects.all()
     user = request.user
-    
-    # Check if the user has won any bids
-    #won_auctions = []
-    #if user.is_authenticated:
-       # won_auctions = MyListing.objects.filter(highest_bidder=user, close_auction=True)
-
     context = {
         'lists': lists,
-       # 'won_auctions': won_auctions,
+
     }
     return render(request, 'auctions/index.html', context)
 
@@ -130,6 +124,11 @@ def details_listing(request, auction_id):
             "is_closed": is_closed,  # Pass the closed status to the template
         })
 
+
+
+
+
+
 def my_listings(request):
     user = request.user
     # Filter listings created by the user that are not closed
@@ -161,20 +160,6 @@ def my_listings(request):
         'won_auctions': won_auctions,
     })
     
-"""def watchlist(request):
-    user = request.user
-    user_watchlist = WatchList.objects.filter(user=user, remove_watchlist=False)
-
-    if request.method == 'POST':
-        listing_id = request.POST.get('listing_id')
-        listing = get_object_or_404(CreateListing, id=listing_id)
-        watchlist, created = WatchList.objects.get_or_create(user=user, listing=listing)
-        watchlist.remove_list()
-        return redirect('watchlist')
-
-    return render(request, 'auctions/watchlist.html', {
-        "user_watchlist": user_watchlist
-    })"""
 
 def watchlist(request):
     user = request.user
@@ -198,4 +183,24 @@ def watchlist(request):
 
     return render(request, 'auctions/watchlist.html', {
         "user_watchlist": user_watchlist
+    })
+
+  # function must display the category that the user has choosen, example: Fashion 
+def category(request, category):
+    # Get all listings that belong to the chosen category
+    listings = CreateListing.objects.filter(category=category)
+    
+    return render(request, 'auctions/category_listings.html', {
+        'category': category,
+        'listings': listings
+    })
+
+
+         # function must show the avaliable categories that the user can choose from
+def categories(request):
+    # Get a list of distinct categories from the listings
+    categories = CreateListing.objects.values_list('category', flat=True).distinct()
+    
+    return render(request, 'auctions/categories.html', {
+        'categories': categories
     })
