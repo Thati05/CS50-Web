@@ -15,7 +15,7 @@ Auction Details
   }
 </style>
 
-<section class="mt-10 p-2 flex gap-5 justify-center">
+<section class="mt-10 p-2 font-nun flex gap-5 justify-center">
 
   <div class="image-side" style="padding: 10px;">
     <p class="font-semibold"
@@ -35,8 +35,8 @@ Auction Details
       {% else %}
       <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
-        <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 5px 20px;" type="text" name="comment">
-        <button style="background-color: black;" type="submit">Comment</button>
+        <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 7px 20px;" type="text" name="comment">
+        <button style=" color: black; border: 1px solid black; background-color: white;" type="submit">Comment</button>
       </form>
       {% endif %}
     </div>
@@ -56,7 +56,7 @@ Auction Details
         <form method="post" action="{% url 'watchlist' %}">
           {% csrf_token %}
           <input type="hidden" name="listing_id" value="{{ listing.id }}">
-          <input type="submit" value="Add to Watchlist">
+          <button style=" background-color:black;" type="submit" value="Add to Watchlist">Add to Watchlist</button>
         </form>
 
 
@@ -94,6 +94,8 @@ Auction Details
     {% endif %}
   </div>
 </section>
+
+<!---Footer secton -->
 
 <hr class="mt-10">
 <footer class="font-nun flex flex-row justify-between items-center p-2">

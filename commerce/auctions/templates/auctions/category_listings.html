@@ -5,16 +5,65 @@
 {% endblock %}
 
 {% block body %}
-<h2>{{ category }} Listings</h2>
-{% if listings %}
-<ul>
-  {% for listing in listings %}
-  <li>
-    <a href="{% url 'listing' listing.id %}">{{ listing.title }}</a> - {{ listing.price }}
-  </li>
-  {% endfor %}
-</ul>
-{% else %}
-<p>No listings available in this category.</p>
-{% endif %}
+<section class="justify-center items-center flex flex-col p-2 pt-20">
+  <div class="flex justify-center items-center">
+    <p class="highlight bg-red-700 text-4xl font-nun font-bold mb-10 justify-center flex">{{ category }}</p>
+  </div>
+
+
+
+
+  {% if listings %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    {% for listing in listings %}
+    <article class="w-fit h-fit p-5 shadow-lg">
+      <div class="w-[350px] justify-center items-center flex flex-col">
+        <img class="w-[300px] h-[280px] object-contain" src="{{ listing.image_url }}"
+          alt="Image of {{ listing.title }}">
+        <div class="pt-4 flex flex-row items-center font-nun gap-10">
+          <div>
+            <h3 class="text-[20px] font-semibold">{{ listing.title }}</h3>
+            <h4 class="text-[16px]"><span class="font-black">Price:</span> {{ listing.price }}</h4>
+            <p class="text-[12px] text-gray-400">Created on {{ listing.created_at|date:"F j, Y, g:i a" }}
+            </p>
+          </div>
+          <button class="btn">
+            <a href="{% url 'listing' listing.id %}">
+              View
+            </a>
+          </button>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p class=" font-nun font-extrabold " style=" font-size: 28px;">Oops, No listings available in this category.</p>
+    {% endif %}
+
+</section>
+<!---Footer secton -->
+
+<hr class="mt-10">
+<footer class="font-nun flex flex-row justify-between items-center p-2">
+  <div class="flex flex-col font-nun font-extrabold text-xl">
+    <p class="CS50W">CS50W</p>
+    <p>COMMERCE</p>
+  </div>
+  <div class="flex flex-row justify-between">
+    {% if user.is_authenticated %}
+    Signed in as <strong class="ml-1">{{ user.username }}</strong>.
+    {% else %}
+    <ul class="text-[18px] flex flex-row gap-10 justify-between items-center">
+      <li>
+        <a href="{% url 'login' %}">Log In</a>
+      </li>
+      <li>
+        <a href="{% url 'register' %}">Register</a>
+      </li>
+    </ul>
+    {% endif %}
+  </div>
+</footer>
+
 {% endblock %}

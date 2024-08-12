@@ -5,16 +5,65 @@ Categories
 {% endblock %}
 
 {% block body %}
-<h2>Available Categories</h2>
-<ul>
-  {% for category, image_url in categories_with_images.items %}
-  <li>
-    <a href="{% url 'category' category %}">
-      <img src="{{ image_url }}" alt="{{ category }} image" style="width:50px;height:50px;">
-      {{ category }}
-    </a>
-  </li>
-  {% endfor %}
-</ul>
+
+
+<section class=" flex flex-col justify-normal items-center p-2 pt-20 ">
+  <div class="flex justify-center items-center">
+    <p class="highlight bg-red-700 text-4xl font-nun font-bold mb-10 justify-center flex">
+      Choose a Category
+    </p>
+  </div>
+
+  <div>
+
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  " style="gap:80px ;">
+      {% for category, image_url in categories_with_images.items %}
+      <div class="shadow-lg" style=" padding: 60px 80px; border-radius: 20px;">
+
+        <li>
+          <div style=" align-items: center; flex-direction: column; display: flex;">
+            <a href="{% url 'category' category %}">
+              <img src="{{ image_url }}" alt="{{ category }} image"
+                style="width:150px;height:150px; object-fit: contain;"> </a>
+            <p class="font-nun font-bold" style="margin-top: 12px;"> {{ category }}</p>
+          </div>
+
+
+
+        </li>
+      </div>
+
+      {% endfor %}
+    </ul>
+  </div>
+
+
+</section>
+
+<!---Footer secton -->
+
+<hr class="mt-10">
+<footer class="font-nun flex flex-row justify-between items-center p-2">
+  <div class="flex flex-col font-nun font-extrabold text-xl">
+    <p class="CS50W">CS50W</p>
+    <p>COMMERCE</p>
+  </div>
+  <div class="flex flex-row justify-between">
+    {% if user.is_authenticated %}
+    Signed in as <strong class="ml-1">{{ user.username }}</strong>.
+    {% else %}
+    <ul class="text-[18px] flex flex-row gap-10 justify-between items-center">
+      <li>
+        <a href="{% url 'login' %}">Log In</a>
+      </li>
+      <li>
+        <a href="{% url 'register' %}">Register</a>
+      </li>
+    </ul>
+    {% endif %}
+  </div>
+</footer>
+
+
 
 {% endblock %}
