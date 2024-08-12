@@ -7,16 +7,19 @@ class User(AbstractUser):
 
 class CreateListing(models.Model):
     CATEGORY_CHOICES = [
+        ('No category', 'No category'),
         ('Fashion', 'Fashion'),
         ('Art & Crafts', 'Art & Crafts'),
         ('Electronics', 'Electronics'),
-        ('Skincare', 'Skincare')
+        ('Skincare', 'Skincare'),
+        ('Home & Kitchen', 'Home & Kitchen'),
+        ('Jewelry & Accessories', 'Jewelry & Accessories'),
     ]
 
     title = models.CharField(max_length=64, validators=[MinLengthValidator(40)])
     image_url = models.URLField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    category = models.CharField(max_length=50, default="No category", choices=CATEGORY_CHOICES)
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='No category')
     description = models.CharField(max_length=300, blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

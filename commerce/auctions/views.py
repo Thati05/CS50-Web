@@ -198,9 +198,16 @@ def category(request, category):
 
          # function must show the avaliable categories that the user can choose from
 def categories(request):
-    # Get a list of distinct categories from the listings
-    categories = CreateListing.objects.values_list('category', flat=True).distinct()
-    
+    categories_with_images = {
+        'Fashion': 'https://cdn-icons-png.flaticon.com/128/1124/1124043.png',
+        'Skincare': 'https://cdn-icons-png.flaticon.com/128/2413/2413171.png',
+        'Art & Crafts': 'https://cdn-icons-png.flaticon.com/128/2722/2722226.png',
+        'No category': 'https://cdn-icons-png.flaticon.com/128/6662/6662930.png',
+        'Home & Kitchen': 'https://cdn-icons-png.flaticon.com/128/11495/11495820.png',
+        'Jewelry & Accessories': 'https://cdn-icons-png.flaticon.com/128/1426/1426087.png',
+        'Electronics': 'https://cdn-icons-png.flaticon.com/128/2777/2777142.png'
+    }
+
     return render(request, 'auctions/categories.html', {
-        'categories': categories
+        'categories_with_images': categories_with_images,
     })
