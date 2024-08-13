@@ -48,7 +48,7 @@ Create Listing
   <form class="pt-10" method="post" action="">
     <div class=" flex justify-center items-center flex-col">
 
-      <div class="w-fit h-fit p-5 shadow-lg font-nun" style=" padding: 20px;">
+      <div class="w-fit h-fit p-5 shadow-lg font-nun" style=" padding: 20px;  border: 1px solid black;">
         {% csrf_token %}
         {{ form.as_p }}
       </div>
