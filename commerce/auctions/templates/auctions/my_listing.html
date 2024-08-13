@@ -7,47 +7,101 @@ My Listings
 
 {% block body %}
 
-<section>
-  <h2>Your Listings</h2>
+<div class="flex justify-center items-center" style=" padding-top: 80px;">
+  <p class="highlight bg-red-700 text-4xl font-nun font-bold mb-10 justify-center flex">
+    My Listings
+  </p>
+</div>
+
+<section style="margin-left: 20px;" class="mt-10 p-2 font-nun flex gap-5  justify-between">
 
 
-  {% if won_auctions %}
-  <div class="alert alert-success mb-5" role="alert">
-    <p class="font-nun font-bold">Congratulations! You have won the following auctions:</p>
-    <ul class="list-disc ml-5">
-      {% for auction in won_auctions %}
-      <li>{{ auction.user_listing.title }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
 
 
-  <ul>
+
+
+
+  <ul class="">
     {% for listing in user_listings %}
-    <li>
-      <h3>{{ listing.title }}</h3>
-      <p>Status: {% if listing.close_auction %}Closed{% else %}Open{% endif %}</p>
-      <p>Highest Bidder: {% if listing.highest_bidder %}{{ listing.highest_bidder.username }}{% else %}N/A{% endif %}
-      </p>
-      <p>Highest Bid: {% if listing.highest_bid %}${{ listing.highest_bid }}{% else %}No bids yet{% endif %}</p>
-      <a href="{% url 'listing' listing.id %}">View Listing</a>
+    <li style="margin-bottom: 20px; padding: 20px; border: 1px solid black;"
+      class=" shadow-lg flex items-center gap-10">
 
-      {% if not listing.close_auction %}
-      <form action="{% url 'my-listings' %}" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="listing_id" value="{{ listing.id }}">
-        <button type="submit">Close Auction</button>
-      </form>
-      {% else %}
-      {% if user == listing.highest_bidder %}
-      <p>Congratulations! You won this auction.</p>
-      {% endif %}
-      {% endif %}
+      <div style=" gap: 5px; border-right: 1px solid rgba(0, 0, 0, 0.122); padding-right: 10px;">
+        <h3>{{ listing.title }}</h3>
+        <p>Status: {% if listing.close_auction %}Closed{% else %}Open{% endif %}</p>
+      </div>
+
+      <div style=" border-right: 1px solid rgba(0, 0, 0, 0.122); padding-right: 10px;">
+        <p>Highest Bidder: {% if listing.highest_bidder %}{{ listing.highest_bidder.username }}{% else %}N/A{% endif %}
+        </p>
+        <p>Highest Bid: {% if listing.highest_bid %}${{ listing.highest_bid }}{% else %}No bids yet{% endif %}</p>
+      </div>
+
+      <div style="gap: 5px ;" class=" flex flex-col">
+        <button style=" background-color: black;">
+          <a href="{% url 'listing' listing.id %}">View Listing</a>
+        </button>
+
+        {% if not listing.close_auction %}
+        <form action="{% url 'my-listings' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="listing_id" value="{{ listing.id }}">
+          <button type="submit">Close Auction</button>
+        </form>
+        {% endif %}
+      </div>
+
+
+
+
+
+
     </li>
     {% endfor %}
   </ul>
+
+
+
+  <div style=" padding-left: 20px; border-left: 1px solid #ccc;" class="2">
+    <div class="flex justify-center items-center">
+      <p class="  font-nun font-bold justify-center flex"
+        style="background-color: gray; color: white;padding: 2px 5px; margin-bottom: 10px;">
+        Auctions won
+      </p>
+    </div>
+    {% if won_auctions %}
+    <div class=" flex justify-center flex-col" role="alert">
+
+      <div>
+        <p class="font-nun font-bold">🌟Congratulations!🌟 You have won the following auctions:</p>
+        <ul class="list-disc ml-5">
+          {% for auction in won_auctions %}
+          <li>{{ auction.user_listing.title }}</li>
+          {% endfor %}
+        </ul>
+
+      </div>
+
+    </div>
+    {% endif %}
+
+  </div>
+
+
+
+
+
+
 </section>
+
+
+
+
+
+
+
+
+
 
 <hr class="mt-10">
 <footer class="font-nun flex flex-row justify-between items-center p-2">
