@@ -35,7 +35,8 @@ Auction Details
       {% else %}
       <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
-        <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 7px 20px;" type="text" name="comment">
+        <input style="border: 1px solid rgba(128, 128, 128, 0.741); padding: 7px 20px;" type="text" autocomplete="off"
+          name="comment">
         <button style=" color: black; border: 1px solid black; background-color: white;" type="submit">Comment</button>
       </form>
       {% endif %}
