@@ -92,6 +92,7 @@ def create_listings(request):
 def details_listing(request, auction_id):
     listing = get_object_or_404(CreateListing, id=auction_id)
 
+    
     if request.method == 'POST':
         bid_amount = request.POST.get("bid")
         comment_body = request.POST.get("comment")
@@ -155,6 +156,7 @@ def my_listings(request):
         my_listing.close_listing()
         return redirect('my-listings')
 
+
     return render(request, 'auctions/my_listing.html', {
         'user_listings': user_listings,
         'won_auctions': won_auctions,
@@ -168,10 +170,12 @@ def watchlist(request):
         listing_id = request.POST.get('listing_id')
         listing = get_object_or_404(CreateListing, id=listing_id)
 
+
         if 'remove' in request.POST:
             # Remove the listing from the watchlist
             watchlist_item = get_object_or_404(WatchList, user=user, listing=listing)
             watchlist_item.remove_list()  # Mark the item as removed
+          
         else:
             # Add the listing to the watchlist if not already present
             WatchList.objects.get_or_create(user=user, listing=listing, remove_watchlist=False)
@@ -189,6 +193,7 @@ def watchlist(request):
 def category(request, category):
     # Get all listings that belong to the chosen category
     listings = CreateListing.objects.filter(category=category)
+
     
     return render(request, 'auctions/category_listings.html', {
         'category': category,
@@ -211,3 +216,8 @@ def categories(request):
     return render(request, 'auctions/categories.html', {
         'categories_with_images': categories_with_images,
     })
+
+    from django.http import Http404
+
+def test_404_view(request):
+    raise Http404("This is a test 404 error")
