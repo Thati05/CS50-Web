@@ -20,10 +20,11 @@
     <form class="w-fit h-fit p-10 shadow-lg font-nun" action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <div class=" flex flex-col justify-center items-center gap-5  ">
-            <input class="form-control" class="form-control" type="text" name="username" placeholder="Username">
+            <input class="form-control" class="form-control" type="text" name="username" autocomplete="off"
+                placeholder="Username">
 
 
-            <input class="form-control" type="password" name="password" placeholder="Password">
+            <input class="form-control" type="password" autocomplete="off" name="password" placeholder="Password">
 
             <button type="submit" value="Login"> Login </button>
         </div>

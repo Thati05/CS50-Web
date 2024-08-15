@@ -55,15 +55,22 @@ Auction Details
       <p style="margin: 10px 0px; font-size: 18px;">
         <span class="font-bold">Price:</span> {{ listing.price }}
       </p>
+
+
       <div>
+        {% if user.is_authenticated %}
         <form method="post" action="{% url 'watchlist' %}">
           {% csrf_token %}
           <input type="hidden" name="listing_id" value="{{ listing.id }}">
           <button style=" background-color:black;" type="submit" value="Add to Watchlist">Add to Watchlist</button>
         </form>
+        {% endif %}
+
+
 
 
       </div>
+
     </div>
 
 
