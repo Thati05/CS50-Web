@@ -1,0 +1,22 @@
+{% extends "mail/layout.html" %}
+
+{% block body %}
+
+<h2>Your Profile</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ u_form.as_p }}
+  {{ p_form.as_p }}
+  <button type="submit">Update</button>
+</form>
+
+{% if user.profile.profile_image %}
+<img src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
+{% else %}
+<img src="" alt="Default Profile Picture">
+{% endif %}
+
+
+
+{% endblock %}
