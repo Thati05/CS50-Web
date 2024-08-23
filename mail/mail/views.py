@@ -3,22 +3,50 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import JsonResponse
-from django.shortcuts import HttpResponse, HttpResponseRedirect, render
+from django.shortcuts import HttpResponse, HttpResponseRedirect, render, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import User, Email
+from .forms import *
+from .models import Email, User, Profile
 
 
 def index(request):
-
     # Authenticated users view their inbox
     if request.user.is_authenticated:
-        return render(request, "mail/inbox.html")
+        try:
+            profile = request.user.profile  # Try to get the user's profile
+        except Profile.DoesNotExist:
+            profile = Profile.objects.create(user=request.user)  # Create a profile if it doesn't exist
+
+        context = {
+            'profile': profile
+        }
+        return render(request, "mail/inbox.html", context)
 
     # Everyone else is prompted to sign in
     else:
         return HttpResponseRedirect(reverse("login"))
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect('profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileForm(instance=request.user.profile)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+    return render(request, 'mail/profile.html', context)
 
 
 @csrf_exempt
