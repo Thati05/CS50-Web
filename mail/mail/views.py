@@ -3,30 +3,23 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import JsonResponse
-from django.shortcuts import HttpResponse, HttpResponseRedirect, render, redirect
+from django.shortcuts import HttpResponse, HttpResponseRedirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from .forms import UserUpdateForm, ProfileForm
-from .models import User, Email, Profile
+
+from .models import User, Email
 
 
 def index(request):
+
     # Authenticated users view their inbox
     if request.user.is_authenticated:
-        try:
-            profile = request.user.profile  # Try to get the user's profile
-        except Profile.DoesNotExist:
-            profile = Profile.objects.create(user=request.user)  # Create a profile if it doesn't exist
-
-        context = {
-            'profile': profile
-        }
-        return render(request, "mail/inbox.html", context)
+        return render(request, "mail/inbox.html")
 
     # Everyone else is prompted to sign in
     else:
         return HttpResponseRedirect(reverse("login"))
-        
+
 
 @csrf_exempt
 @login_required
@@ -154,69 +147,33 @@ def login_view(request):
         return render(request, "mail/login.html")
 
 
-
-
-
-@login_required
-def profile(request):
-    print(f"Request Method: {request.method}")
-    try:
-        profile = request.user.profile
-        print(f"Profile found for user {request.user}")
-    except Profile.DoesNotExist:
-        profile = Profile.objects.create(user=request.user)
-        print("Created new profile for user")
-
-    if request.method == 'POST':
-        print("Handling POST request")
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileForm(request.POST, request.FILES, instance=profile)
-        if u_form.is_valid() and p_form.is_valid():
-            print("Forms are valid, saving changes")
-            u_form.save()
-            p_form.save()
-            return redirect('profile')
-        else:
-            print("Forms are invalid")
-    else:
-        print("Handling GET request")
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileForm(instance=profile)
-
-    context = {
-        'u_form': u_form,
-        'p_form': p_form
-    }
-    print("Rendering profile.html with context:", context)
-    return render(request, 'mail/profile.html', context)
-
-
-
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
+
 def register(request):
     if request.method == "POST":
         email = request.POST["email"]
+
+        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
-
         if password != confirmation:
             return render(request, "mail/register.html", {
                 "message": "Passwords must match."
             })
 
+        # Attempt to create new user
         try:
-            user = User.objects.create_user(username=email, email=email, password=password)
+            user = User.objects.create_user(email, email, password)
             user.save()
-            Profile.objects.create(user=user)
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
-        except IntegrityError:
+        except IntegrityError as e:
+            print(e)
             return render(request, "mail/register.html", {
                 "message": "Email address already taken."
             })
+        login(request, user)
+        return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "mail/register.html")
