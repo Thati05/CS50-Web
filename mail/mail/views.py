@@ -157,13 +157,20 @@ def email(request, email_id):
 
 def login_view(request):
     if request.method == "POST":
-
-        # Attempt to sign user in
         email = request.POST["email"]
         password = request.POST["password"]
-        user = authenticate(request, username=email, password=password)
+        
+        # Fetch users with the given email
+        users = User.objects.filter(email=email)
+        
+        # Try authenticating the first user that matches
+        user = None
+        for u in users:
+            user = authenticate(request, username=u.username, password=password)
+            if user is not None:
+                break
 
-        # Check if authentication successful
+        # Check if authentication was successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
@@ -175,6 +182,7 @@ def login_view(request):
         return render(request, "mail/login.html")
 
 
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
@@ -182,6 +190,7 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
+        username = request.POST["username"]
         email = request.POST["email"]
 
         # Ensure password matches confirmation
@@ -192,16 +201,19 @@ def register(request):
                 "message": "Passwords must match."
             })
 
-        # Attempt to create new user
+        # Attempt to create new user with email as username
         try:
-            user = User.objects.create_user(email, email, password)
+            user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
         except IntegrityError as e:
             print(e)
             return render(request, "mail/register.html", {
-                "message": "Email address already taken."
-            })
+                "message": "Email or username already taken."
+            }) 
+        
+        # Log the user in after successful registration
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
-    else:
-        return render(request, "mail/register.html")
+    
+    # If the request method is GET, render the registration page
+    return render(request, "mail/register.html")

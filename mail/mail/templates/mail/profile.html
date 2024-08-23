@@ -10,7 +10,7 @@
 </form>
 
 {% if user.profile.profile_image %}
-<img src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
+<img width="100px" src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
 {% else %}
 <p>No profile picture uploaded.</p>
 {% endif %}
