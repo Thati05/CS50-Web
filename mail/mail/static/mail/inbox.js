@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
 
   // Use buttons to toggle between views
@@ -34,6 +35,35 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
+  fetch(`/emails/${mailbox}`)
+    .then(response => response.json())
+    .then(emails => {
+      // Print emails
+      console.log(emails);
+      emails.forEach(email => {
+        const Email = document.createElement('div');
+        Email.className = "list-group-item"
+        Email.innerHTML = `
+        <h4>${email.recipients}</h4>
+        <h6>${email.subject}</h6>
+        <p>${email.timestamp}<p>
+
+        `;
+        //Read and unread messages
+        Email.className = email.read ? 'read' : 'unread';
+
+        Email.addEventListener('click', function () {
+          console.log('This element has been clicked!')
+        });
+        document.querySelector('#emails-view').append(Email);
+
+
+
+      });
+
+
+    });
 }
 
 function send_email(event) {

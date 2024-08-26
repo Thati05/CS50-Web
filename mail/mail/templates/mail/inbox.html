@@ -50,5 +50,14 @@
 {% endblock %}
 
 {% block script %}
+<style>
+    .unread {
+        background-color: rgba(255, 0, 0, 0.438);
+    }
+
+    .read {
+        background-color: rgba(0, 0, 255, 0.297);
+    }
+</style>
 <script src="{% static 'mail/inbox.js' %}"></script>
 {% endblock %}
