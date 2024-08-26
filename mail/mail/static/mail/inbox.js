@@ -37,7 +37,20 @@ function view_email(id) {
       document.querySelector('#emails-view').style.display = 'none';
       document.querySelector('#compose-view').style.display = 'none';
       document.querySelector('#email-detail').style.display = 'block';
-      document.querySelector('#email-detail').innerHTML = 'block';
+      document.querySelector('#email-detail').innerHTML = `
+      
+<ul class="list-group">
+  <li class="list-group-item">From: ${email.sender}</li>
+  <li class="list-group-item">To: ${email.recipients}</li>
+  <li class="list-group-item">Subject: ${email.subject}</li>
+  <li class="list-group-item">${email.timestamp}</li>
+  <div><button class="btn btn-sm btn-outline-primary" >Reply</button></div>
+  
+  <hr/>
+  <li class="list-group-item">${email.body}</li>
+</ul>
+      
+      `;
 
     });
 }
