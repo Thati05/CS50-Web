@@ -52,8 +52,13 @@ function view_email(id) {
       
       `;
 
+
+
+
     });
 }
+
+
 
 
 function load_mailbox(mailbox) {
