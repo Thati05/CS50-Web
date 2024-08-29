@@ -14,7 +14,7 @@
         display: inline-block;
         flex-direction: column;
         /*border: solid black 1px;*/
-        height: 150vh;
+        height: max-content;
         padding: 20px;
         background-color: #f5f6f7;
 
@@ -53,8 +53,11 @@
 
     }
 
-    .nav-btn:active {
+
+
+    .white-bg {
         background-color: #FFFFFF;
+
     }
 
     .red {
@@ -94,6 +97,16 @@
         font-weight: 600;
         margin-right: 160px;
     }
+
+    button.nav-btn:focus,
+    button.nav-btn:active {
+        outline: none;
+        border: none;
+    }
+
+    .three-dot {
+        cursor: pointer;
+    }
 </style>
 
 <section class="contain">
@@ -111,7 +124,7 @@
                 <h2 class=" email">{{ request.user.email }}</h2>
             </div>
 
-            <div class=" ml-5 cursor-pointer">
+            <div class=" ml-5 three-dot ">
                 <img width="20px" src="https://cdn-icons-png.flaticon.com/128/512/512142.png"
                     alt="three-dots_navigation">
             </div>
@@ -125,52 +138,49 @@
 
 
         <div class="navigation">
-            <button class=" nav-btn red" id="compose"> <span class="plus">+</span> New Message</button>
+            <button class="  nav-btn red" id="compose"> <span class="plus">+</span> New Message</button>
 
-            <button class=" bg-white mb-2  flex nav-btn justify-between items-center" id="inbox">
+            <button onclick="nav_btn(this)" class="mb-2 flex nav-btn justify-between items-center" id="inbox">
                 <img width="20px" src="https://cdn-icons-png.flaticon.com/512/833/833290.png">
-
-                <span class=" ml-3 label">Inbox</span>
-                <span class=" count ">5</span>
+                <span class="ml-3 label">Inbox</span>
+                <span class="count">5</span>
             </button>
 
-
-
-            <button class=" mb-2  flex nav-btn justify-between items-center" id="sent">
-
+            <button onclick="nav_btn(this)" class="mb-2 flex nav-btn justify-between items-center" id="sent">
                 <img width="20px" src="https://cdn-icons-png.flaticon.com/512/1373/1373410.png">
-
-                <span class=" ml-3  label font-semibold">Sent</span>
-                <span class=" ml-2 count text ">10</span>
-
+                <span class="ml-3 label font-semibold">Sent</span>
+                <span class="ml-2 count text">10</span>
             </button>
 
-            <button class=" mb-2  flex nav-btn justify-between items-center" id="archived">
-
+            <button onclick="nav_btn(this)" class="mb-2 flex nav-btn justify-between items-center" id="archived">
                 <img width="20px" src="https://cdn-icons-png.flaticon.com/512/263/263122.png">
-
-                <span class=" ml-3 long_label font-semibold">Archived</span>
-                <span class=" count  ">7</span>
-
+                <span class="ml-3 long_label font-semibold">Archived</span>
+                <span class="count">7</span>
             </button>
 
-            <button class=" mb-2  flex nav-btn justify-between items-center" id="starred">
-
+            <button onclick="nav_btn(this)" class="mb-2 flex nav-btn justify-between items-center" id="starred">
                 <img width="20px" src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png">
-
-                <span class=" ml-3   long_label font-semibold">Starred</span>
-                <span style=" margin-left: 10px;" class=" count  ">3</span>
-
+                <span class="ml-3 long_label font-semibold">Starred</span>
+                <span style="margin-left: 10px;" class="count">3</span>
             </button>
 
-            <button class=" mb-2  flex nav-btn justify-between items-center" id="trash">
-
+            <button onclick="nav_btn(this)" class="mb-2 flex nav-btn justify-between items-center" id="trash">
                 <img width="20px" src="https://cdn-icons-png.flaticon.com/512/484/484662.png">
-
-                <span class=" ml-3 label">Trash</span>
-                <span class=" count ">5</span>
-
+                <span class="ml-3 label">Trash</span>
+                <span class="count">5</span>
             </button>
+
+            <script>
+                function nav_btn(button) {
+                    // Remove 'white-bg' class from all buttons
+                    const buttons = document.querySelectorAll('.nav-btn');
+                    buttons.forEach(btn => btn.classList.remove('white-bg'));
+
+                    // Add 'white-bg' class to the clicked button
+                    button.classList.add('white-bg');
+                }
+            </script>
+
 
             <!--<a class="btn btn-sm btn-outline-primary" href="{% url 'profile' %}">Profile</a>
             <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>-->
@@ -178,7 +188,7 @@
             <hr class=" my-2 mb-4">
             <div class=" flex mb-3 ">
                 <h3 class="label-title">Labels
-                    <span>(5)</span>
+                    <span style=" font-weight: lighter;">(5)</span>
                 </h3>
                 <img width="20px" src="	https://cdn-icons-png.flaticon.com/512/2985/2985150.png">
             </div>
