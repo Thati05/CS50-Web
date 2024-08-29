@@ -104,8 +104,99 @@
         border: none;
     }
 
-    .three-dot {
+    /* Hide the dropdown menu by default */
+    .menu-links {
+        display: none;
+    }
+
+    /* Optional: Style the image cursor */
+    .three-dot img {
         cursor: pointer;
+    }
+
+    /* Dropdown menu styles */
+    .dropdown_1 {
+        position: absolute;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        top: 70px;
+        left: 200px;
+
+
+    }
+
+    .item {
+        padding: 5px 10px;
+        text-decoration: none;
+        color: #333;
+        display: block;
+    }
+
+    a {
+        text-decoration: none;
+        text-decoration-line: none;
+    }
+
+    .item:hover {
+        background-color: #f1f1f1;
+    }
+
+    .media {
+        padding-right: 115px;
+    }
+
+    .general {
+        margin-right: 150px;
+    }
+
+    .personal {
+        margin-right: 145px;
+    }
+
+    .work {
+        margin-right: 170px;
+    }
+
+    .skool {
+        margin-right: 158px;
+    }
+
+    .unread {
+        background-color: rgba(255, 0, 0, 0.438);
+    }
+
+    .read {
+        background-color: rgba(0, 0, 255, 0.297);
+    }
+
+    .archived-btn {
+        background-color: blueviolet;
+    }
+
+    .unarchived-btn {
+        background-color: red;
+    }
+
+    .username {
+        font-size: 20px;
+
+        font-weight: bold;
+    }
+
+    .count {
+        font-size: 10px;
+        padding: 5px 10px;
+        font-weight: bold;
+        border-radius: 100%;
+        background-color: #EBECEC;
+        object-fit: contain;
+    }
+
+    .text {
+        padding: 5px 7px;
     }
 </style>
 
@@ -124,10 +215,32 @@
                 <h2 class=" email">{{ request.user.email }}</h2>
             </div>
 
-            <div class=" ml-5 three-dot ">
+            <div class=" ml-5 three-dot " onclick="toggleMenu()">
                 <img width="20px" src="https://cdn-icons-png.flaticon.com/128/512/512142.png"
                     alt="three-dots_navigation">
             </div>
+            <div class="dropdown_1 menu-links">
+                <a class="item" href="{% url 'profile' %}">Profile</a>
+                <hr>
+                <a class="item" href="{% url 'logout' %}">Log Out</a>
+            </div>
+            <!--ToggleMenu-->
+            <script>
+                function toggleMenu() {
+                    const menu = document.querySelector('.menu-links');
+                    menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+                }
+
+                // Close the menu if clicked outside
+                document.addEventListener('click', function (event) {
+                    const threeDot = document.querySelector('.three-dot');
+                    const menu = document.querySelector('.menu-links');
+
+                    if (!threeDot.contains(event.target) && !menu.contains(event.target)) {
+                        menu.style.display = 'none';
+                    }
+                });
+            </script>
 
 
 
@@ -182,8 +295,7 @@
             </script>
 
 
-            <!--<a class="btn btn-sm btn-outline-primary" href="{% url 'profile' %}">Profile</a>
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>-->
+
 
             <hr class=" my-2 mb-4">
             <div class=" flex mb-3 ">
@@ -219,27 +331,7 @@
                 <span class="count ">3</span>
             </div>
 
-            <style>
-                .media {
-                    padding-right: 115px;
-                }
 
-                .general {
-                    margin-right: 150px;
-                }
-
-                .personal {
-                    margin-right: 145px;
-                }
-
-                .work {
-                    margin-right: 170px;
-                }
-
-                .skool {
-                    margin-right: 158px;
-                }
-            </style>
         </div>
 
 
@@ -283,41 +375,6 @@
 {% endblock %}
 
 {% block script %}
-<style>
-    .unread {
-        background-color: rgba(255, 0, 0, 0.438);
-    }
 
-    .read {
-        background-color: rgba(0, 0, 255, 0.297);
-    }
-
-    .archived-btn {
-        background-color: blueviolet;
-    }
-
-    .unarchived-btn {
-        background-color: red;
-    }
-
-    .username {
-        font-size: 20px;
-
-        font-weight: bold;
-    }
-
-    .count {
-        font-size: 10px;
-        padding: 5px 10px;
-        font-weight: bold;
-        border-radius: 100%;
-        background-color: #EBECEC;
-        object-fit: contain;
-    }
-
-    .text {
-        padding: 5px 7px;
-    }
-</style>
 <script src="{% static 'mail/inbox.js' %}"></script>
 {% endblock %}
