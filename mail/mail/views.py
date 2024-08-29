@@ -12,19 +12,16 @@ from .models import Email, User, Profile
 
 
 def index(request):
-    # Authenticated users view their inbox
     if request.user.is_authenticated:
         try:
-            profile = request.user.profile  # Try to get the user's profile
+            profile = request.user.profile
         except Profile.DoesNotExist:
-            profile = Profile.objects.create(user=request.user)  # Create a profile if it doesn't exist
+            profile = Profile.objects.create(user=request.user)
 
         context = {
             'profile': profile
         }
         return render(request, "mail/inbox.html", context)
-
-    # Everyone else is prompted to sign in
     else:
         return HttpResponseRedirect(reverse("login"))
 
@@ -52,35 +49,26 @@ def profile(request):
 @csrf_exempt
 @login_required
 def compose(request):
-
-    # Composing a new email must be via POST
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
 
-    # Check recipient emails
     data = json.loads(request.body)
     emails = [email.strip() for email in data.get("recipients").split(",")]
     if emails == [""]:
-        return JsonResponse({
-            "error": "At least one recipient required."
-        }, status=400)
+        return JsonResponse({"error": "At least one recipient required."}, status=400)
 
-    # Convert email addresses to users
     recipients = []
     for email in emails:
-        try:
-            user = User.objects.get(email=email)
-            recipients.append(user)
-        except User.DoesNotExist:
-            return JsonResponse({
-                "error": f"User with email {email} does not exist."
-            }, status=400)
+        users = User.objects.filter(email=email) # Change get() method to filter() method to avoid MultipleObjects Error
+        if users.exists():
+            # Handle case where there are multiple users with the same email
+            recipients.extend(users)
+        else:
+            return JsonResponse({"error": f"User with email {email} does not exist."}, status=400)
 
-    # Get contents of email
     subject = data.get("subject", "")
     body = data.get("body", "")
 
-    # Create one email for each recipient, plus sender
     users = set()
     users.add(request.user)
     users.update(recipients)
@@ -93,8 +81,7 @@ def compose(request):
             read=user == request.user
         )
         email.save()
-        for recipient in recipients:
-            email.recipients.add(recipient)
+        email.recipients.add(*recipients)
         email.save()
 
     return JsonResponse({"message": "Email sent successfully."}, status=201)
@@ -102,8 +89,6 @@ def compose(request):
 
 @login_required
 def mailbox(request, mailbox):
-
-    # Filter emails returned based on mailbox
     if mailbox == "inbox":
         emails = Email.objects.filter(
             user=request.user, recipients=request.user, archived=False
@@ -119,7 +104,6 @@ def mailbox(request, mailbox):
     else:
         return JsonResponse({"error": "Invalid mailbox."}, status=400)
 
-    # Return emails in reverse chronologial order
     emails = emails.order_by("-timestamp").all()
     return JsonResponse([email.serialize() for email in emails], safe=False)
 
@@ -127,18 +111,14 @@ def mailbox(request, mailbox):
 @csrf_exempt
 @login_required
 def email(request, email_id):
-
-    # Query for requested email
     try:
         email = Email.objects.get(user=request.user, pk=email_id)
     except Email.DoesNotExist:
         return JsonResponse({"error": "Email not found."}, status=404)
 
-    # Return email contents
     if request.method == "GET":
         return JsonResponse(email.serialize())
 
-    # Update whether email is read or should be archived
     elif request.method == "PUT":
         data = json.loads(request.body)
         if data.get("read") is not None:
@@ -148,7 +128,6 @@ def email(request, email_id):
         email.save()
         return HttpResponse(status=204)
 
-    # Email must be via GET or PUT
     else:
         return JsonResponse({
             "error": "GET or PUT request required."
@@ -159,18 +138,14 @@ def login_view(request):
     if request.method == "POST":
         email = request.POST["email"]
         password = request.POST["password"]
-        
-        # Fetch users with the given email
+
         users = User.objects.filter(email=email)
-        
-        # Try authenticating the first user that matches
         user = None
         for u in users:
             user = authenticate(request, username=u.username, password=password)
             if user is not None:
                 break
 
-        # Check if authentication was successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
@@ -182,7 +157,6 @@ def login_view(request):
         return render(request, "mail/login.html")
 
 
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
@@ -192,8 +166,6 @@ def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
-
-        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
@@ -201,19 +173,15 @@ def register(request):
                 "message": "Passwords must match."
             })
 
-        # Attempt to create new user with email as username
         try:
             user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
         except IntegrityError as e:
-            print(e)
             return render(request, "mail/register.html", {
                 "message": "Email or username already taken."
             }) 
         
-        # Log the user in after successful registration
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
-    
-    # If the request method is GET, render the registration page
+
     return render(request, "mail/register.html")
