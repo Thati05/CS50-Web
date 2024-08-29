@@ -4,55 +4,272 @@
 
 
 {% block body %}
+<style>
+    .email {
+        font-size: small;
+        font-weight: lighter;
+    }
 
-<h2 class=" text-4xl">{{ request.user.username }}</h2>
-<h2>{{ request.user.email }}</h2>
+    .sidebar {
+        display: inline-block;
+        flex-direction: column;
+        /*border: solid black 1px;*/
+        height: 150vh;
+        padding: 20px;
+        background-color: #f5f6f7;
 
-{% if user.profile.profile_image %}
-<img width="100px" src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
-{% else %}
-<p>No profile picture uploaded.</p>
-{% endif %}
+
+    }
+
+    .navigation {
+        margin-top: 20px;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contain {
+        display: flex;
 
 
-<button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
-<button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
-<button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
-<button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
-<button class="btn btn-sm btn-outline-primary" id="starred">Starred</button>
-<button class="btn btn-sm btn-outline-primary" id="trash">Trash</button>
-<a class="btn btn-sm btn-outline-primary" href="{% url 'profile' %}">Profile</a>
-<a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
-<hr>
+    }
 
-<div id="emails-view">
-</div>
-<div id="email-detail">
-</div>
+    .email-section {
+        width: 75%;
+        padding-left: 20px;
+    }
 
-<div id="compose-view">
-    <h3>New Email</h3>
-    <form id="compose-form">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="compose-from">From:</label>
-            <input id="compose-from" name="from" disabled class="form-control" value="{{ request.user.email }}">
+    .nav-btn {
+
+        padding: 12px 10px;
+        justify-items: center;
+        text-align: center;
+        border-radius: 10px;
+        font-weight: 400;
+        width: 267px;
+
+
+
+
+    }
+
+    .nav-btn:active {
+        background-color: #FFFFFF;
+    }
+
+    .red {
+        padding: 10px;
+        background-color: #C90016;
+        color: white;
+        margin-bottom: 20px;
+        font-weight: bolder;
+    }
+
+    .plus {
+        font-size: 20px;
+        font-weight: bolder;
+    }
+
+    .label {
+        margin-right: 145px;
+    }
+
+    .long_label {
+        margin-right: 123px;
+    }
+
+    .color_dot {
+
+        margin-right: 10px;
+        border-radius: 100%;
+        padding: 4px;
+
+    }
+
+    img {
+        object-fit: contain;
+    }
+
+    .label-title {
+        font-weight: 600;
+        margin-right: 160px;
+    }
+</style>
+
+<section class="contain">
+    <div class="sidebar">
+        <div class=" flex justify-end items-center  ">
+            <div class=" mr-2">
+                {% if user.profile.profile_image %}
+                <img width="50px" src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
+                {% else %}
+                <p>No profile picture uploaded.</p>
+                {% endif %}
+            </div>
+            <div>
+                <h2 class=" username">{{ request.user.username }}</h2>
+                <h2 class=" email">{{ request.user.email }}</h2>
+            </div>
+
+            <div class=" ml-5 cursor-pointer">
+                <img width="20px" src="https://cdn-icons-png.flaticon.com/128/512/512142.png"
+                    alt="three-dots_navigation">
+            </div>
+
+
+
+
         </div>
-        <div class="form-group">
-            <label for="compose-recipients">To:</label>
-            <input id="compose-recipients" name="recipients" class="form-control" placeholder="Recipients">
+
+
+
+
+        <div class="navigation">
+            <button class=" nav-btn red" id="compose"> <span class="plus">+</span> New Message</button>
+
+            <button class=" bg-white mb-2  flex nav-btn justify-between items-center" id="inbox">
+                <img width="20px" src="https://cdn-icons-png.flaticon.com/512/833/833290.png">
+
+                <span class=" ml-3 label">Inbox</span>
+                <span class=" count ">5</span>
+            </button>
+
+
+
+            <button class=" mb-2  flex nav-btn justify-between items-center" id="sent">
+
+                <img width="20px" src="https://cdn-icons-png.flaticon.com/512/1373/1373410.png">
+
+                <span class=" ml-3  label font-semibold">Sent</span>
+                <span class=" ml-2 count text ">10</span>
+
+            </button>
+
+            <button class=" mb-2  flex nav-btn justify-between items-center" id="archived">
+
+                <img width="20px" src="https://cdn-icons-png.flaticon.com/512/263/263122.png">
+
+                <span class=" ml-3 long_label font-semibold">Archived</span>
+                <span class=" count  ">7</span>
+
+            </button>
+
+            <button class=" mb-2  flex nav-btn justify-between items-center" id="starred">
+
+                <img width="20px" src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png">
+
+                <span class=" ml-3   long_label font-semibold">Starred</span>
+                <span style=" margin-left: 10px;" class=" count  ">3</span>
+
+            </button>
+
+            <button class=" mb-2  flex nav-btn justify-between items-center" id="trash">
+
+                <img width="20px" src="https://cdn-icons-png.flaticon.com/512/484/484662.png">
+
+                <span class=" ml-3 label">Trash</span>
+                <span class=" count ">5</span>
+
+            </button>
+
+            <!--<a class="btn btn-sm btn-outline-primary" href="{% url 'profile' %}">Profile</a>
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>-->
+
+            <hr class=" my-2 mb-4">
+            <div class=" flex mb-3 ">
+                <h3 class="label-title">Labels
+                    <span>(5)</span>
+                </h3>
+                <img width="20px" src="	https://cdn-icons-png.flaticon.com/512/2985/2985150.png">
+            </div>
+
+            <div class=" mb-3 flex items-center">
+                <div style=" background-color: #F801F2;" class=" color_dot"></div>
+                <p class="work ">Work</p>
+                <span class="count ">3</span>
+            </div>
+            <div class=" mb-3  flex items-center">
+                <div style=" background-color: #FE0500;" class=" color_dot"></div>
+                <p class="skool ">School</p>
+                <span class="count ">3</span>
+            </div>
+            <div class=" mb-3  flex items-center">
+                <div style=" background-color: #FF641D;" class=" color_dot"></div>
+                <p class="personal ">Personal</p>
+                <span class="count text ">10</span>
+            </div>
+            <div class=" mb-3  flex items-center">
+                <div style=" background-color: #F1067A;" class=" color_dot"></div>
+                <p class="general ">General</p>
+                <span class="count ">3</span>
+            </div>
+            <div class=" mb-3  flex items-center">
+                <div style=" background-color: #00C1FE;" class=" color_dot"></div>
+                <p class="media">Social Media</p>
+                <span class="count ">3</span>
+            </div>
+
+            <style>
+                .media {
+                    padding-right: 112px;
+                }
+
+                .general {
+                    margin-right: 148px;
+                }
+
+                .personal {
+                    margin-right: 145px;
+                }
+
+                .work {
+                    margin-right: 170px;
+                }
+
+                .skool {
+                    margin-right: 158px;
+                }
+            </style>
         </div>
-        <div class="form-group">
-            <label for="compose-subject">Subject:</label>
-            <input id="compose-subject" name="subject" class="form-control" placeholder="Subject">
+
+
+    </div>
+
+
+    <div class=" email-section ">
+
+        <div id="emails-view">
         </div>
-        <div class="form-group">
-            <label for="compose-body">Body:</label>
-            <textarea id="compose-body" name="body" class="form-control" placeholder="Body"></textarea>
+        <div id="email-detail">
         </div>
-        <input type="submit" class="btn btn-primary" value="Send">
-    </form>
-</div>
+
+        <div class="compose" id="compose-view">
+            <h3>New Email</h3>
+            <form id="compose-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="compose-from">From:</label>
+                    <input id="compose-from" name="from" disabled class="form-control" value="{{ request.user.email }}">
+                </div>
+                <div class="form-group">
+                    <label for="compose-recipients">To:</label>
+                    <input id="compose-recipients" name="recipients" class="form-control" placeholder="Recipients">
+                </div>
+                <div class="form-group">
+                    <label for="compose-subject">Subject:</label>
+                    <input id="compose-subject" name="subject" class="form-control" placeholder="Subject">
+                </div>
+                <div class="form-group">
+                    <label for="compose-body">Body:</label>
+                    <textarea id="compose-body" name="body" class="form-control" placeholder="Body"></textarea>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Send">
+            </form>
+        </div>
+    </div>
+
+</section>
+
 {% endblock %}
 
 {% block script %}
@@ -71,6 +288,25 @@
 
     .unarchived-btn {
         background-color: red;
+    }
+
+    .username {
+        font-size: 20px;
+
+        font-weight: bold;
+    }
+
+    .count {
+        font-size: 10px;
+        padding: 5px 10px;
+        font-weight: bold;
+        border-radius: 100%;
+        background-color: #EBECEC;
+        object-fit: contain;
+    }
+
+    .text {
+        padding: 5px 7px;
     }
 </style>
 <script src="{% static 'mail/inbox.js' %}"></script>

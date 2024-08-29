@@ -14,13 +14,20 @@
 
     {% block script %}
     {% endblock %}
+    <style>
+        .padding {
+            padding: 20px;
+            padding-left: 0px;
+            padding-top: 0pc;
+        }
+    </style>
 </head>
 
-<body">
-    <div class="container">
+<body class="padding">
+    <div>
         {% block body %}
         {% endblock %}
     </div>
-    </body>
+</body>
 
 </html>
