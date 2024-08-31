@@ -45,7 +45,7 @@ function view_email(id) {
   <li class="list-group-item">To: ${email.recipients}</li>
   <li class="list-group-item">Subject: ${email.subject}</li>
   <li class="list-group-item">${email.timestamp}</li>
-  <div><button class="btn btn-sm btn-outline-primary" >Reply</button></div>
+
   
   <hr/>
   <li class="list-group-item">${email.body}</li>
@@ -77,6 +77,15 @@ function load_mailbox(mailbox) {
     .then(emails => {
       // Print emails
       console.log(emails);
+
+
+
+
+
+
+
+      //List of emi
+
       emails.forEach(email => {
         const Email = document.createElement('div');
         Email.className = "list-group-item"

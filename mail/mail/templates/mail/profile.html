@@ -1,17 +1,113 @@
 {% extends "mail/layout.html" %}
+{% load static tailwind_tags %}
+{% load static %}
 
 {% block body %}
-<h2>Your Profile</h2>
-<form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ u_form.as_p }}
-  {{ p_form.as_p }}
-  <button type="submit">Update</button>
-</form>
 
-{% if user.profile.profile_image %}
-<img width="100px" src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
-{% else %}
-<p>No profile picture uploaded.</p>
-{% endif %}
+<style>
+  .profile-contain {
+    display: flex;
+    border: 1px solid rgb(236, 236, 236);
+    flex-direction: column;
+    border-radius: 20px;
+    width: fit-content;
+    align-items: center;
+    position: absolute;
+    padding: 30px;
+    height: max-content;
+    width: fit-content;
+    margin-left: 400px;
+    margin-top: 30px;
+
+  }
+
+  .profile-image {
+    margin-bottom: 20px;
+    border-radius: 50%;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .submit-button {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: #C90016;
+    color: white;
+    padding: 10px 20px;
+    width: fit-content;
+    border-radius: 5px;
+    cursor: pointer;
+
+  }
+
+  .shadow-md {
+    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+
+
+  .label {
+    width: fit-content;
+    padding: 5px 5px;
+    display: flex;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    background-color: #E68A94;
+  }
+</style>
+
+<div class="profile-contain shadow-md ">
+  <h2 class="flex mb-5 justify-center text-4xl">My Profile</h2>
+
+  {% if user.profile.profile_image %}
+  <img class="profile-image" width="150px" src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
+  {% else %}
+  <p>No profile picture uploaded.</p>
+  {% endif %}
+
+  <form method="POST" enctype="multipart/form-data" class="form-container">
+    {% csrf_token %}
+    <div>
+      <label for="username" class="label">Profile name</label>
+      {{ u_form.username }}
+      {% if u_form.username.errors %}
+      <p class="text-red-500 text-xs mt-2">{{ u_form.username.errors|striptags }}</p>
+      {% endif %}
+    </div>
+    <div>
+      <label for="username" class=" label">Edit Image</label>
+      {{ p_form.as_p }}
+      {% for field in p_form %}
+      {% if field.errors %}
+      <p class="text-red-500 text-xs mt-2">{{ field.errors|striptags }}</p>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class=" flex items-center justify-between">
+      <button type="submit" class="submit-button mr-5">
+        Save Changes
+      </button>
+      <a style=" text-decoration: none; color: white;" class="submit-button white" href=" {% url 'index' %}">Return
+      </a>
+    </div>
+
+  </form>
+
+</div>
+<style>
+  .white {
+    background-color: black;
+
+    color: white;
+
+  }
+</style>
 {% endblock %}
