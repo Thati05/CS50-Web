@@ -2,7 +2,6 @@
 {% load static tailwind_tags %}
 {% load static %}
 
-
 {% block body %}
 <style>
     .email {
@@ -13,12 +12,10 @@
     .sidebar {
         display: inline-block;
         flex-direction: column;
-        /*border: solid black 1px;*/
         height: 150vh;
-        padding: 20px;
+        padding: 10px;
         background-color: #f5f6f7;
-
-
+        width: 23%;
     }
 
     .navigation {
@@ -26,38 +23,29 @@
         width: auto;
         display: flex;
         flex-direction: column;
+
+
     }
 
     .contain {
         display: flex;
-
-
     }
 
     .email-section {
         width: 75%;
-
     }
 
     .nav-btn {
-
         padding: 12px 10px;
         justify-items: center;
         text-align: center;
         border-radius: 10px;
         font-weight: 400;
         width: 267px;
-
-
-
-
     }
-
-
 
     .white-bg {
         background-color: #FFFFFF;
-
     }
 
     .red {
@@ -82,11 +70,9 @@
     }
 
     .color_dot {
-
         margin-right: 10px;
         border-radius: 100%;
         padding: 4px;
-
     }
 
     img {
@@ -104,17 +90,14 @@
         border: none;
     }
 
-    /* Hide the dropdown menu by default */
     .menu-links {
         display: none;
     }
 
-    /* Optional: Style the image cursor */
     .three-dot img {
         cursor: pointer;
     }
 
-    /* Dropdown menu styles */
     .dropdown_1 {
         position: absolute;
         background-color: #ffffff;
@@ -124,8 +107,6 @@
         z-index: 1;
         top: 70px;
         left: 200px;
-
-
     }
 
     .item {
@@ -182,7 +163,6 @@
 
     .username {
         font-size: 20px;
-
         font-weight: bold;
     }
 
@@ -202,8 +182,8 @@
 
 <section class="contain">
     <div class="sidebar">
-        <div class=" flex justify-end items-center  ">
-            <div class=" mr-2">
+        <div class="flex justify-end items-center">
+            <div class="mr-2">
                 {% if user.profile.profile_image %}
                 <img width="50px" src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
                 {% else %}
@@ -211,11 +191,10 @@
                 {% endif %}
             </div>
             <div>
-                <h2 class=" username">{{ request.user.username }}</h2>
-                <h2 class=" email">{{ request.user.email }}</h2>
+                <h2 class="username">{{ request.user.username }}</h2>
+                <h2 class="email">{{ request.user.email }}</h2>
             </div>
-
-            <div class=" ml-5 three-dot " onclick="toggleMenu()">
+            <div class="ml-4 three-dot" onclick="toggleMenu()">
                 <img width="20px" src="https://cdn-icons-png.flaticon.com/128/512/512142.png"
                     alt="three-dots_navigation">
             </div>
@@ -224,7 +203,7 @@
                 <hr>
                 <a class="item" href="{% url 'logout' %}">Log Out</a>
             </div>
-            <!--ToggleMenu-->
+
             <script>
                 function toggleMenu() {
                     const menu = document.querySelector('.menu-links');
@@ -241,17 +220,10 @@
                     }
                 });
             </script>
-
-
-
-
         </div>
 
-
-
-
         <div class="navigation">
-            <button class="  nav-btn red" id="compose"> <span class="plus">+</span> New Message</button>
+            <button class="nav-btn red" id="compose"> <span class="plus">+</span> New Message</button>
 
             <button onclick="nav_btn(this)" class="mb-2 flex nav-btn justify-between items-center" id="inbox">
                 <img width="20px" src="https://cdn-icons-png.flaticon.com/512/833/833290.png">
@@ -294,56 +266,411 @@
                 }
             </script>
 
-
-
-
-            <hr class=" my-2 mb-4">
-            <div class=" flex mb-3 ">
-                <h3 class="label-title">Labels
-                    <span style=" font-weight: lighter;">(5)</span>
-                </h3>
-                <img width="20px" src="	https://cdn-icons-png.flaticon.com/512/2985/2985150.png">
+            <hr class="my-2 mb-4">
+            <div class="flex mb-3">
+                <h3 class="label-title">Labels <span style="font-weight: lighter;">(5)</span></h3>
+                <img width="20px" src="https://cdn-icons-png.flaticon.com/512/2985/2985150.png">
             </div>
 
-            <div class=" mb-3 flex items-center">
-                <div style=" background-color: #F801F2;" class=" color_dot"></div>
-                <p class="work ">Work</p>
-                <span class="count ">3</span>
+            <div class="mb-3 flex items-center">
+                <div style="background-color: #F801F2;" class="color_dot"></div>
+                <p class="work">Work</p>
+                <span class="count">3</span>
             </div>
-            <div class=" mb-3  flex items-center">
-                <div style=" background-color: #FE0500;" class=" color_dot"></div>
-                <p class="skool ">School</p>
-                <span class="count ">3</span>
+
+            <div class="mb-3 flex items-center">
+                <div style="background-color: #FE0500;" class="color_dot"></div>
+                <p class="skool">School</p>
+                <span class="count">3</span>
             </div>
-            <div class=" mb-3  flex items-center">
-                <div style=" background-color: #FF641D;" class=" color_dot"></div>
-                <p class="personal ">Personal</p>
-                <span class="count text ">10</span>
+
+            <div class="mb-3 flex items-center">
+                <div style="background-color: #FF641D;" class="color_dot"></div>
+                <p class="personal">Personal</p>
+                <span class="count text">10</span>
             </div>
-            <div class=" mb-3  flex items-center">
-                <div style=" background-color: #F1067A;" class=" color_dot"></div>
-                <p class="general ">General</p>
-                <span class="count ">3</span>
+
+            <div class="mb-3 flex items-center">
+                <div style="background-color: #F1067A;" class="color_dot"></div>
+                <p class="general">General</p>
+                <span class="count">3</span>
             </div>
-            <div class=" mb-3  flex items-center">
-                <div style=" background-color: #00C1FE;" class=" color_dot"></div>
+
+            <div class="mb-3 flex items-center">
+                <div style="background-color: #00C1FE;" class="color_dot"></div>
                 <p class="media">Social Media</p>
-                <span class="count ">3</span>
+                <span class="count">3</span>
             </div>
-
-
         </div>
-
-
     </div>
 
+    <div class="email-section">
+        <style>
+            .email-item {
+                display: flex;
+                flex-direction: column;
+                padding: 20px 30px 50px 20px;
+                border-bottom: 1px solid #ddd;
+                cursor: pointer;
+                background-color: #fff;
+                transition: background-color 0.3s;
+            }
 
-    <div class=" email-section ">
+            .email-item:hover {
+                background-color: #f5f5f5;
+            }
 
-        <div id="emails-view">
+            .email-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .email-subject {
+                font-weight: bold;
+                color: #333;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: flex;
+                align-items: center;
+            }
+
+            .email-sender {
+                font-weight: normal;
+                color: #777;
+                justify-content: space-between;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: flex;
+                align-items: center;
+            }
+
+            .email-timestamp {
+                font-size: 0.8em;
+                color: #999;
+            }
+
+            .email-body {
+                color: #666;
+                margin-top: 5px;
+                font-size: 0.9em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .read-indicator {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: red;
+                margin-right: 10px;
+            }
+
+            .email-item.read .read-indicator {
+                background-color: grey;
+            }
+
+            .inbox-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 15px;
+                background-color: #fff;
+            }
+
+            .inbox-contain {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 15px;
+                border-bottom: 1px solid #ddd;
+                background-color: #fff;
+                flex-wrap: wrap;
+            }
+
+            .inbox-title {
+                font-size: 1.5em;
+                font-weight: bold;
+                color: #333;
+            }
+
+            .message-info {
+                font-size: 0.9em;
+                color: #777;
+            }
+
+            .search-bar {
+                flex: 1;
+
+                display: flex;
+                align-items: center;
+                margin-left: 15px;
+                margin-right: 10px;
+                background-color: #f8f8f8;
+                border-radius: 5px;
+                padding: 5px 10px;
+                width: 50%;
+                gap: 10px;
+            }
+
+            .search-bar input {
+                border: none;
+                background-color: transparent;
+                flex: 1;
+                padding: 5px;
+                font-size: 1em;
+                color: #777;
+                outline: none;
+                width: 50%;
+            }
+
+            .search-bar input::placeholder {
+                color: #aaa;
+                font-size: 20px;
+            }
+
+            input {
+                outline: none;
+                border: none;
+            }
+
+            input:focus {
+                outline: none;
+                border: none;
+            }
+
+            .add-button {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                width: 40px;
+                height: 45px;
+                background-color: #f8f8f8;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            .add-button:hover {
+                background-color: #e0e0e0;
+            }
+
+            .add-button::after {
+                content: '+';
+                font-size: 1.5em;
+                color: #777;
+            }
+
+            .bar {
+                display: flex;
+                width: auto;
+            }
+
+            .email-section-contain {
+                display: flex;
+                width: 100%;
+            }
+
+            .email-list-full {
+                width: 100%;
+                transition: width 0.3s;
+            }
+
+            .email-list-split {
+                width: 50%;
+                transition: width 0.3s;
+            }
+
+            .email-detail-hidden {
+                display: none;
+            }
+
+            .email-detail-visible {
+                display: block;
+                width: 80%;
+                transition: width 0.3s;
+            }
+
+
+            .full-email-view .email-list-split {
+                width: 100%;
+            }
+
+            .full-email-view .email-detail-visible {
+                display: none;
+            }
+        </style>
+
+        <div class="email-section-contain">
+            <div id="emails-view" class="email-list-full"></div>
+            <div id="email-detail" class="email-detail-hidden"></div>
         </div>
-        <div id="email-detail">
-        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Use buttons to toggle between views
+                document.querySelector('#compose-form').addEventListener('submit', send_email);
+                document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
+                document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
+                document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
+                document.querySelector('#starred').addEventListener('click', () => load_mailbox('starred'));
+                document.querySelector('#trash').addEventListener('click', () => load_mailbox('trash'));
+                document.querySelector('#compose').addEventListener('click', compose_email);
+
+                // By default, load the inbox
+                load_mailbox('inbox');
+            });
+
+            function compose_email() {
+                document.querySelector('#emails-view').style.display = 'none';
+                document.querySelector('#compose-view').style.display = 'block';
+                document.querySelector('#email-detail').style.display = 'none';
+
+                document.querySelector('#compose-recipients').value = '';
+                document.querySelector('#compose-subject').value = '';
+                document.querySelector('#compose-body').value = '';
+            }
+
+            function view_email(id) {
+                fetch(`/emails/${id}`)
+                    .then(response => response.json())
+                    .then(email => {
+                        console.log(email);
+
+                        document.querySelector('#emails-view').classList.remove('email-list-full');
+                        document.querySelector('#emails-view').classList.add('email-list-split');
+                        document.querySelector('#email-detail').classList.remove('email-detail-hidden');
+                        document.querySelector('#email-detail').classList.add('email-detail-visible');
+
+                        document.querySelector('#email-detail').innerHTML = `
+                            <ul class="list-group">
+                                <li class="list-group-item">From: ${email.sender}</li>
+                                <li class="list-group-item">To: ${email.recipients}</li>
+                                <li class="list-group-item">Subject: ${email.subject}</li>
+                                <li class="list-group-item">${email.timestamp}</li>
+                                <hr/>
+                                <li class="list-group-item">${email.body}</li>
+                            </ul>
+                        `;
+                    });
+            }
+
+
+
+            // Step 1: Store the reference in a variable
+            const emailDetailElement = document.querySelector('#email-detail');
+
+            // Step 2: Initially hide the email detail view
+            emailDetailElement.style.display = 'none';
+
+            function load_mailbox(mailbox) {
+                // Display email list and hide compose view
+                document.querySelector('#emails-view').style.display = 'block';
+                document.querySelector('#compose-view').style.display = 'none';
+
+                // Hide the email detail view initially
+                emailDetailElement.style.display = 'none';
+
+                // Reset layout to full email list view
+                document.querySelector('#emails-view').classList.remove('email-list-split');
+                document.querySelector('#emails-view').classList.add('email-list-full');
+                emailDetailElement.classList.remove('email-detail-visible');
+                emailDetailElement.classList.add('email-detail-hidden');
+
+                fetch(`/emails/${mailbox}`)
+                    .then(response => response.json())
+                    .then(emails => {
+                        const unreadCount = emails.filter(email => !email.read).length;
+
+                        document.querySelector('#emails-view').innerHTML = `
+                <div class='inbox-contain'>
+                    <div class="inbox-header">
+                        <div>
+                            <div class="inbox-title">${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</div>
+                            <div class="message-info">${emails.length} Messages · ${unreadCount} unread</div>
+                        </div>
+
+                    </div>
+                    <div class='bar'>
+                        <div class="search-bar">
+                            <img width='20px' src="https://cdn-icons-png.flaticon.com/512/17216/17216943.png">
+                            <input autofocus='off' type="text" placeholder="Search">
+                        </div>
+                        <div class="add-button"></div>
+                    </div>
+                </div>
+            `;
+
+
+
+                        emails.forEach(email => {
+                            const emailItem = document.createElement('div');
+                            emailItem.className = `email-item ${email.read ? 'read' : 'unread'}`;
+
+                            emailItem.innerHTML = `
+                    <div class="email-header">
+                        <div class="email-subject">
+                            <div class="read-indicator"></div>
+                            ${email.subject}
+                        </div>
+                        <div class="email-timestamp">${email.timestamp}</div>
+                    </div>
+                    <div class="email-sender">
+                        <div>${email.sender}</div>
+                        <img width='20px' src='https://cdn-icons-png.flaticon.com/512/2990/2990259.png'>
+                    </div>
+                    <div class="email-body">${email.body.substring(0, 50)}...</div>
+                `;
+
+                            // Step 3: Show email detail when an email is clicked
+                            emailItem.addEventListener('click', () => {
+                                document.querySelectorAll('.email-item').forEach(item => item.style.backgroundColor = '');
+                                emailItem.style.backgroundColor = '#f8d7da';
+
+                                // Fetch and display the email content
+                                view_email(email.id);
+
+                                // Change the display of the email detail view to block
+                                emailDetailElement.style.display = 'block';
+
+                                // Switch to split view
+                                document.querySelector('#emails-view').classList.remove('email-list-full');
+                                document.querySelector('#emails-view').classList.add('email-list-split');
+                                emailDetailElement.classList.remove('email-detail-hidden');
+                                emailDetailElement.classList.add('email-detail-visible');
+                            });
+
+                            document.querySelector('#emails-view').append(emailItem);
+                        });
+                    });
+            }
+
+
+
+            function send_email(event) {
+                event.preventDefault();
+
+                const recipients = document.querySelector('#compose-recipients').value;
+                const subject = document.querySelector('#compose-subject').value;
+                const body = document.querySelector('#compose-body').value;
+
+                fetch('/emails', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        recipients: recipients,
+                        subject: subject,
+                        body: body,
+                    })
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log(result);
+                        load_mailbox('inbox');
+                    });
+            }
+        </script>
 
         <style>
             .compose-email {
@@ -373,8 +700,6 @@
             .compose {
                 margin: 35px;
                 border-radius: 10px;
-
-
             }
 
             .btn {
@@ -385,8 +710,7 @@
         </style>
 
         <div class="compose shadow-md" id="compose-view">
-
-            <form class=" " id="compose-form">
+            <form id="compose-form">
                 <div class="compose-email">
                     <h3>Compose Message</h3>
                 </div>
@@ -413,18 +737,14 @@
                         <textarea id="compose-body" name="body" class="form-control" placeholder="Body"></textarea>
                     </div>
                     <input type="submit" class="btn" value="Send">
-
                 </div>
-
             </form>
         </div>
     </div>
-
 </section>
 
 {% endblock %}
 
 {% block script %}
 
-<script src="{% static 'mail/inbox.js' %}"></script>
 {% endblock %}
