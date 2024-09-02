@@ -5,11 +5,15 @@ from .models import Profile
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username']
+        fields = ['username', 'email']
         widgets = {
             'username': forms.TextInput(attrs={
                 'class': 'w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500',
-                'placeholder': 'Profile name'
+                'placeholder': 'Username'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500',
+                'placeholder': 'Email'
             }),
         }
 

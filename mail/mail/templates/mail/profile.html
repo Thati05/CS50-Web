@@ -2,112 +2,215 @@
 {% load static tailwind_tags %}
 {% load static %}
 
+
 {% block body %}
-
 <style>
-  .profile-contain {
+  .profile-heading {
+    font-size: larger;
+    font-weight: bold;
+    color: #C90016;
+
+  }
+
+  .profile-detail-contain {
+    flex-direction: row;
+    gap: 200px;
+
+  }
+
+  .profile-sidebar {
+    padding-right: 20px;
+    margin-top: 20px;
+    padding-bottom: 100px;
+    border-right: 1px solid #ccc;
+  }
+
+  .socials {
+    gap: 50px;
     display: flex;
-    border: 1px solid rgb(236, 236, 236);
     flex-direction: column;
-    border-radius: 20px;
-    width: fit-content;
-    align-items: center;
-    position: absolute;
-    padding: 30px;
-    height: max-content;
-    width: fit-content;
-    margin-left: 400px;
+    align-items: start;
     margin-top: 30px;
+    color: #C90016;
+    font-size: 14px;
+  }
+
+
+
+  img {
+    object-fit: contain;
+  }
+
+  .text-\[\#C90016\] {
+    --tw-text-opacity: 1;
+    color: rgb(201 0 22 / var(--tw-text-opacity))
+      /* #c90016 */
+    ;
+
+    font-weight: 500;
 
   }
 
-  .profile-image {
-    margin-bottom: 20px;
-    border-radius: 50%;
-  }
 
-  .form-container {
+  .form-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+
+    align-items: start;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    width: 120px;
+    font-size: 0.875rem;
+    font-weight: bolder;
+    color: #C90016;
+  }
+
+  .form-group input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #CBD5E0;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    color: #c9001782;
+    background-color: #FCF2F3;
     width: 100%;
   }
 
+  .form-group input:focus {
+    border-color: #C90016;
+    background-color: #fff;
+    outline: none;
+  }
+
+  .form-group i {
+    margin-left: 0.5rem;
+    color: #A0AEC0;
+    cursor: pointer;
+  }
+
+  .error-message {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: #E53E3E;
+  }
+
   .submit-button {
-    align-items: center;
-    display: flex;
-    justify-content: center;
+    margin-top: 10px;
     background-color: #C90016;
     color: white;
-    padding: 10px 20px;
-    width: fit-content;
-    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
     cursor: pointer;
-
-  }
-
-  .shadow-md {
-    --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  }
-
-
-  .label {
-    width: fit-content;
-    padding: 5px 5px;
-    display: flex;
-    font-size: 15px;
-    font-weight: 600;
-    color: white;
-    background-color: #E68A94;
+    font-size: 1rem;
   }
 </style>
 
-<div class="profile-contain shadow-md ">
-  <h2 class="flex mb-5 justify-center text-4xl">My Profile</h2>
 
-  {% if user.profile.profile_image %}
-  <img class="profile-image" width="150px" src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
-  {% else %}
-  <p>No profile picture uploaded.</p>
-  {% endif %}
+<section class=" p-4 items-center justify-between w-full  ">
+  <div class="flex items-center">
+    <a href="{% url 'index' %}" class="mr-2 arrow">
+      <img width="20px" src="https://cdn-icons-png.flaticon.com/128/3183/3183354.png">
+    </a>
 
-  <form method="POST" enctype="multipart/form-data" class="form-container">
-    {% csrf_token %}
-    <div>
-      <label for="username" class="label">Profile name</label>
-      {{ u_form.username }}
-      {% if u_form.username.errors %}
-      <p class="text-red-500 text-xs mt-2">{{ u_form.username.errors|striptags }}</p>
+    <h2 class="profile-heading">PROFILE</h2>
+  </div>
+
+
+  <div class=" flex justify-between items-center profile-detail-contain">
+
+    <div class=" items-center  profile-sidebar">
+      <p class=" my-3 text-[#C90016]">Profile picture</p>
+
+      {% if user.profile.profile_image %}
+      <img class="profile-image" width="100px" src="{{ user.profile.profile_image.url }}" alt="Profile Picture">
+      {% else %}
+      <img width="100px" src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png">
       {% endif %}
+
+      <div class=" items-center socials">
+
+        <div class=" flex">
+          <img width="20px" src="	https://cdn-icons-png.flaticon.com/512/174/174848.png ">
+          <p class=" ml-4">Add Facebook</p>
+        </div>
+
+        <div class=" flex">
+          <img width="20px" src="https://cdn-icons-png.flaticon.com/128/5968/5968830.png
+          ">
+          <p class=" ml-4">Add Twitter</p>
+        </div>
+
+        <div class=" flex">
+          <img class=" object-contain" width="20px" src=" https://cdn-icons-png.flaticon.com/128/15713/15713420.png">
+          <p class=" ml-4">Add Instagram</p>
+        </div>
+
+        <div class=" flex">
+          <img width="20px" src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png">
+          <p class=" ml-4">Add Linkedin</p>
+        </div>
+
+
+      </div>
+
+
+
     </div>
-    <div>
-      <label for="username" class=" label">Edit Image</label>
-      {{ p_form.as_p }}
-      {% for field in p_form %}
-      {% if field.errors %}
-      <p class="text-red-500 text-xs mt-2">{{ field.errors|striptags }}</p>
-      {% endif %}
-      {% endfor %}
+
+
+    <div class="form-container">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Username Field -->
+        <div class="form-group">
+          <label for="username">Username:</label>
+          {{ u_form.username }}
+          <i class="fas fa-info-circle"></i>
+        </div>
+        {% if u_form.username.errors %}
+        <p class="error-message">{{ u_form.username.errors|striptags }}</p>
+        {% endif %}
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          {{ u_form.email }}
+          <i class="fas fa-info-circle"></i>
+        </div>
+        {% if u_form.email.errors %}
+        <p class="error-message">{{ u_form.email.errors|striptags }}</p>
+        {% endif %}
+
+        <!-- Password Fields (assuming they are part of ProfileForm) -->
+        <div>
+          {{ p_form.as_p }}
+          {% for field in p_form %}
+          {% if field.errors %}
+          <p class="text-red-500 text-xs mt-2">{{ field.errors|striptags }}</p>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <!-- Submit Button -->
+        <div class="form-group">
+          <button type="submit" class="submit-button">Save Changes</button>
+
+        </div>
+      </form>
     </div>
-    <div class=" flex items-center justify-between">
-      <button type="submit" class="submit-button mr-5">
-        Save Changes
-      </button>
-      <a style=" text-decoration: none; color: white;" class="submit-button white" href=" {% url 'index' %}">Return
-      </a>
-    </div>
 
-  </form>
 
-</div>
-<style>
-  .white {
-    background-color: black;
+  </div>
 
-    color: white;
 
-  }
-</style>
+
+
+</section>
+
+
+
+
 {% endblock %}
