@@ -2,24 +2,79 @@
 
 {% block body %}
 
-<h2>Login</h2>
 
-{% if message %}
-<div>{{ message }}</div>
-{% endif %}
+<style>
+    section {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        justify-content: center;
+        align-items: center;
+        padding-top: 100px;
 
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    <div class="form-group">
-        <input class="form-control" type="email" name="email" placeholder="Email" required>
-    </div>
-    <div class="form-group">
-        <input class="form-control" type="password" name="password" placeholder="Password" required>
-    </div>
-    <button class="btn btn-primary" type="submit">Login</button>
-</form>
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 10px;
+        padding: 50px;
+    }
+
+    h2 {
+        margin: 20px 0px;
+        font-size: 30px;
+        color: #C90016;
+        font-weight: bolder;
+
+    }
+
+    .btn {
+        background-color: #C90016;
+        color: white;
+        font-size: bold;
+    }
+
+    .btn:hover {
+        color: white;
+    }
+
+    .shadow-md {
+        --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+        box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    }
+</style>
+
+<section>
+
+    <h2>Login</h2>
+
+    {% if message %}
+    <div>{{ message }}</div>
+    {% endif %}
+
+    <form class=" shadow-md mb-2 " action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <button class="btn mr-2" type="submit">Login</button>
 
 
-Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+
+    </form>
+    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+</section>
+
+
+
+
+
 
 {% endblock %}
