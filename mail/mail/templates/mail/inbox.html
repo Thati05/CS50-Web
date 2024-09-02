@@ -341,6 +341,13 @@
                 text-overflow: ellipsis;
                 display: flex;
                 align-items: center;
+                margin: 7px 0px;
+            }
+
+            .usermail {
+                font-weight: normal;
+                color: #777;
+
             }
 
             .email-timestamp {
@@ -476,7 +483,7 @@
             }
 
             .email-list-split {
-                width: 50%;
+                width: 45%;
                 transition: width 0.3s;
             }
 
@@ -497,6 +504,23 @@
 
             .full-email-view .email-detail-visible {
                 display: none;
+            }
+
+            .email-background {
+                border-left: 10px solid #E68A94;
+            }
+
+            .email-detail-header {
+                padding: 20px;
+                display: flex;
+                justify-content: space-between;
+
+            }
+
+
+            #emails-view {
+
+                border-right: solid 1px #EBECEC;
             }
         </style>
 
@@ -528,7 +552,9 @@
                 document.querySelector('#compose-recipients').value = '';
                 document.querySelector('#compose-subject').value = '';
                 document.querySelector('#compose-body').value = '';
+
             }
+
 
             function view_email(id) {
                 fetch(`/emails/${id}`)
@@ -542,11 +568,63 @@
                         document.querySelector('#email-detail').classList.add('email-detail-visible');
 
                         document.querySelector('#email-detail').innerHTML = `
+                        
+                        <section class='email-detail-container' >
+
+                            <div class='email-detail-header' >
+                                <img width='30px' src='	https://cdn-icons-png.flaticon.com/512/3183/3183354.png' >
+                                <div class='flex items-center '>
+                                    <img width='15px' class='mr-2' src='https://cdn-icons-png.flaticon.com/512/130/130882.png' >
+                                    <p> 1 of 3</p>
+                                   <img width='15px' class='ml-2' src='   https://cdn-icons-png.flaticon.com/512/130/130884.png ' >
+                                    </div>
+                                    <div class='flex  items-center' >
+                                       <img width='20px' class='object-contain mr-4' src='https://cdn-icons-png.flaticon.com/512/7650/7650382.png' >
+                                        <img width='20px' class=' object-contain' src='	https://cdn-icons-png.flaticon.com/512/484/484662.png' >
+                                        </div>
+                               
+                                </div>
+                                <hr class='pb-3'>
+
+                            <div class='email-detail-user'>
+                                
+                                <div class='flex items-center ' style="justify-content: space-around;" >
+
+                                    <div class= mr-2 >
+                                        <img width='80px' src='https://cdn-icons-png.flaticon.com/512/3177/3177440.png'>
+                                    </div>
+
+                                        <div>
+
+                                             <p class='email-subject'>Seithati Mokoena<p>
+                                            <div  class=' mt-1 flex item-center usermail ' >
+                                                 <p class=''>From:${email.sender}<p> 
+                                                    
+                                                    <div class=' mx-2'>&#183</div>
+                                                     <p>To:Me</p>
+                                            </div>
+
+                                        </div>
+
+                                    <div class='ml-4'>
+                                        <p class='email-timestamp' >${email.timestamp}<p>
+                                            <img class='mt-3 object-contain' width='15px' src='https://cdn-icons-png.flaticon.com/512/2107/2107957.png'>
+
+                                    </div>
+                                       
+                                       
+                                </div>
+                                    
+                            </div>
+                            <hr class='my-3'>
+                               
+
+                            </section>
                             <ul class="list-group">
-                                <li class="list-group-item">From: ${email.sender}</li>
+                                <li class="list-group-item">From: </li>
                                 <li class="list-group-item">To: ${email.recipients}</li>
                                 <li class="list-group-item">Subject: ${email.subject}</li>
-                                <li class="list-group-item">${email.timestamp}</li>
+                                <li class="list-group-item"></li>
                                 <hr/>
                                 <li class="list-group-item">${email.body}</li>
                             </ul>
@@ -610,21 +688,37 @@
                     <div class="email-header">
                         <div class="email-subject">
                             <div class="read-indicator"></div>
-                            ${email.subject}
-                        </div>
+                            ${email.subject.substring(0, 22)}...</div>
                         <div class="email-timestamp">${email.timestamp}</div>
                     </div>
+            <div style="margin-left: 20px;" >
+                
                     <div class="email-sender">
                         <div>${email.sender}</div>
                         <img width='20px' src='https://cdn-icons-png.flaticon.com/512/2990/2990259.png'>
                     </div>
-                    <div class="email-body">${email.body.substring(0, 50)}...</div>
+                    <div class="email-body">${email.body.substring(0, 100)}...</div>
+                </div>
+                
                 `;
 
                             // Step 3: Show email detail when an email is clicked
                             emailItem.addEventListener('click', () => {
-                                document.querySelectorAll('.email-item').forEach(item => item.style.backgroundColor = '');
-                                emailItem.style.backgroundColor = '#f8d7da';
+
+
+                                // Remove the "email-background" class and reset the background color for all email items
+                                document.querySelectorAll('.email-item').forEach(item => {
+                                    item.classList.remove('email-background');
+                                    item.style.backgroundColor = '';
+                                });
+
+                                // Add the "email-background" class to the clicked email item
+                                emailItem.classList.add('email-background');
+
+                                // Set the background color of the clicked email item
+                                emailItem.style.backgroundColor = '#FCF2F3';
+
+
 
                                 // Fetch and display the email content
                                 view_email(email.id);
@@ -729,7 +823,7 @@
                         <input autocomplete="off" id="compose-subject" name="subject" class="form-control"
                             placeholder="Subject">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group ">
                         <label for="compose-body">Body:</label>
                         <textarea id="compose-body" name="body" class="form-control" placeholder="Body"></textarea>
                     </div>
