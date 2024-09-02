@@ -522,6 +522,10 @@
 
                 border-right: solid 1px #EBECEC;
             }
+
+            #archive {
+                cursor: pointer;
+            }
         </style>
 
         <div class="email-section-contain">
@@ -554,6 +558,11 @@
                 document.querySelector('#compose-body').value = '';
 
             }
+            //Function for Capitalizing the first letter of the string
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
 
 
             function view_email(id) {
@@ -562,75 +571,101 @@
                     .then(email => {
                         console.log(email);
 
+                        // Switch to split view
                         document.querySelector('#emails-view').classList.remove('email-list-full');
                         document.querySelector('#emails-view').classList.add('email-list-split');
                         document.querySelector('#email-detail').classList.remove('email-detail-hidden');
                         document.querySelector('#email-detail').classList.add('email-detail-visible');
 
+                        // Display the email details
+                        // Assuming email.sender contains the email address
+                        const senderEmail = email.sender;
+
+                        // Extract the username before the '@' sign using a regular expression
+                        const username = senderEmail.match(/^[^@]+/)[0];
                         document.querySelector('#email-detail').innerHTML = `
-                        
-                        <section class='email-detail-container' >
-
-                            <div class='email-detail-header' >
-                                <img width='30px' src='	https://cdn-icons-png.flaticon.com/512/3183/3183354.png' >
-                                <div class='flex items-center '>
-                                    <img width='15px' class='mr-2' src='https://cdn-icons-png.flaticon.com/512/130/130882.png' >
-                                    <p> 1 of 3</p>
-                                   <img width='15px' class='ml-2' src='   https://cdn-icons-png.flaticon.com/512/130/130884.png ' >
-                                    </div>
-                                    <div class='flex  items-center' >
-                                       <img width='20px' class='object-contain mr-4' src='https://cdn-icons-png.flaticon.com/512/7650/7650382.png' >
-                                        <img width='20px' class=' object-contain' src='	https://cdn-icons-png.flaticon.com/512/484/484662.png' >
-                                        </div>
-                               
-                                </div>
-                                <hr class='pb-3'>
-
-                            <div class='email-detail-user'>
-                                
-                                <div class='flex items-center ' style="justify-content: space-around;" >
-
-                                    <div class= mr-2 >
-                                        <img width='80px' src='https://cdn-icons-png.flaticon.com/512/3177/3177440.png'>
-                                    </div>
-
-                                        <div>
-
-                                             <p class='email-subject'>Seithati Mokoena<p>
-                                            <div  class=' mt-1 flex item-center usermail ' >
-                                                 <p class=''>From:${email.sender}<p> 
-                                                    
-                                                    <div class=' mx-2'>&#183</div>
-                                                     <p>To:Me</p>
-                                            </div>
-
-                                        </div>
-
-                                    <div class='ml-4'>
-                                        <p class='email-timestamp' >${email.timestamp}<p>
-                                            <img class='mt-3 object-contain' width='15px' src='https://cdn-icons-png.flaticon.com/512/2107/2107957.png'>
-
-                                    </div>
-                                       
-                                       
-                                </div>
-                                    
+                <section class='email-detail-container'>
+                    <div class='email-detail-header'>
+                        <img width='30px' src='https://cdn-icons-png.flaticon.com/512/3183/3183354.png'>
+                        <div class='flex items-center'>
+                            <img width='15px' class='mr-2' src='https://cdn-icons-png.flaticon.com/512/130/130882.png'>
+                            <p>1 of 3</p>
+                            <img width='15px' class='ml-2' src='https://cdn-icons-png.flaticon.com/512/130/130884.png'>
+                        </div>
+                        <div class='flex items-center'>
+                            <div id='archive'></div>
+                           
+                            <img width='20px' class='object-contain' src='https://cdn-icons-png.flaticon.com/512/484/484662.png'>
+                        </div>
+                    </div>
+                    <hr class='pb-3'>
+                    <div class='email-detail-user'>
+                        <div class='flex items-center' style="justify-content: space-around;">
+                            <div class='flex items-center'>
+                            <div class='mr-2'>
+                                <img width='80px' src='https://cdn-icons-png.flaticon.com/512/3177/3177440.png'>
                             </div>
-                            <hr class='my-3'>
-                               
+                            <div>
+                                <p class='email-subject'>${capitalizeFirstLetter(username)}</p> <!-Get the string before the '@' sign this will be the user name. Use regular expressions -->
+                                <div class='mt-1 flex item-center usermail'>
+                                    <p>From: ${email.sender}</p>
+                                    <div class='mx-2'>&#183;</div>
+                                    <p>To: Me</p>
+                                </div>
+                            </div>
 
-                            </section>
-                            <ul class="list-group">
-                                <li class="list-group-item">From: </li>
-                                <li class="list-group-item">To: ${email.recipients}</li>
-                                <li class="list-group-item">Subject: ${email.subject}</li>
-                                <li class="list-group-item"></li>
-                                <hr/>
-                                <li class="list-group-item">${email.body}</li>
-                            </ul>
-                        `;
+                            </div>
+                            <div class='ml-4'>
+                                <p class='email-timestamp'>${email.timestamp}</p>
+                                <img class='mt-3 object-contain' width='15px' src='https://cdn-icons-png.flaticon.com/512/2107/2107957.png'>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class='my-3'>
+                    <div class='p-4'>
+                        <h1 class='email-subject mb-5'>${email.subject}</h1>
+                        <p>${email.body}</p>
+                    </div>
+                    <hr class='my-3'>
+                    <div class='px-4 items-center flex'>
+                        <div class='items-center flex mr-5'>
+                            <img class='mr-2' width='20px' src='https://cdn-icons-png.flaticon.com/512/2990/2990259.png'>
+                            <p>Reply</p>
+                        </div>
+                        <div class='items-center flex'>
+                            <img class='mr-2' width='20px' src='https://cdn-icons-png.flaticon.com/512/2956/2956786.png'>
+                            <p>Forward</p>
+                        </div>
+                    </div>
+                </section>
+            `;
+
+                        // Mark as read if it's not already marked
+                        if (!email.read) {
+                            fetch(`/emails/${email.id}`, {
+                                method: 'PUT',
+                                body: JSON.stringify({
+                                    read: true
+                                })
+                            });
+                        }
+
+                        // Archive/Unarchive logic
+                        const archive_icon = document.querySelector('#archive');
+                        archive_icon.innerHTML = `<img width='20px' class='object-contain mr-4' src='https://cdn-icons-png.flaticon.com/512/7650/7650382.png'>`;
+                        archive_icon.addEventListener('click', () => {
+                            fetch(`/emails/${id}`, {
+                                method: 'PUT',
+                                body: JSON.stringify({
+                                    archived: !email.archived
+                                })
+                            }).then(() => {
+                                load_mailbox('inbox');  // Reload the inbox after archiving
+                            });
+                        });
                     });
             }
+
 
 
 
