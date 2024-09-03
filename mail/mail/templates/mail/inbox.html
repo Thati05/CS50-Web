@@ -526,6 +526,14 @@
             #archive {
                 cursor: pointer;
             }
+
+            .vid {
+                display: flex;
+                padding-top: 100px;
+                justify-content: center;
+
+
+            }
         </style>
 
         <div class="email-section-contain">
@@ -694,19 +702,13 @@ ${email.subject}`;
 
 
 
-
-            // Step 1: Store the reference in a variable
-            const emailDetailElement = document.querySelector('#email-detail');
-
-            // Step 2: Initially hide the email detail view
-            emailDetailElement.style.display = 'none';
-
             function load_mailbox(mailbox) {
                 // Display email list and hide compose view
                 document.querySelector('#emails-view').style.display = 'block';
                 document.querySelector('#compose-view').style.display = 'none';
 
                 // Hide the email detail view initially
+                const emailDetailElement = document.querySelector('#email-detail');
                 emailDetailElement.style.display = 'none';
 
                 // Reset layout to full email list view
@@ -718,8 +720,8 @@ ${email.subject}`;
                 fetch(`/emails/${mailbox}`)
                     .then(response => response.json())
                     .then(emails => {
+                        // Display the inbox header with the count of messages and unread emails
                         const unreadCount = emails.filter(email => !email.read).length;
-
                         document.querySelector('#emails-view').innerHTML = `
                 <div class='inbox-contain'>
                     <div class="inbox-header">
@@ -727,7 +729,6 @@ ${email.subject}`;
                             <div class="inbox-title">${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</div>
                             <div class="message-info">${emails.length} Messages · ${unreadCount} unread</div>
                         </div>
-
                     </div>
                     <div class='bar'>
                         <div class="search-bar">
@@ -739,63 +740,72 @@ ${email.subject}`;
                 </div>
             `;
 
-
-
-                        emails.forEach(email => {
-                            const emailItem = document.createElement('div');
-                            emailItem.className = `email-item ${email.read ? 'read' : 'unread'}`;
-
-                            emailItem.innerHTML = `
-                    <div class="email-header">
-                        <div class="email-subject">
-                            <div class="read-indicator"></div>
-                            ${email.subject.substring(0, 22)}...</div>
-                        <div class="email-timestamp">${email.timestamp}</div>
-                    </div>
-            <div style="margin-left: 20px;" >
-                
-                    <div class="email-sender">
-                        <div>${email.sender}</div>
-                        <img width='20px' src='https://cdn-icons-png.flaticon.com/512/2990/2990259.png'>
-                    </div>
-                    <div class="email-body">${email.body.substring(0, 100)}...</div>
-                </div>
-                
+                        // If the mailbox is empty, show a video or message indicating no emails
+                        if (emails.length === 0) {
+                            const noEmailMessage = document.createElement('div');
+                            noEmailMessage.innerHTML = `
+                        <div  class='vid' >
+                             <video width="256" height="256" preload="none" style="background: transparent  url('https://cdn-icons-png.flaticon.com/512/14674/14674079.png') 50% 50% / fit no-repeat;" autoplay="autoplay" loop="true" muted="muted" playsinline="">
+                                 <source src="https://cdn-icons-mp4.flaticon.com/512/14674/14674079.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                   
+                   
                 `;
+                            document.querySelector('#emails-view').append(noEmailMessage);
+                        } else {
+                            // If there are emails, display them
+                            emails.forEach(email => {
+                                const emailItem = document.createElement('div');
+                                emailItem.className = `email-item ${email.read ? 'read' : 'unread'}`;
 
-                            // Step 3: Show email detail when an email is clicked
-                            emailItem.addEventListener('click', () => {
+                                emailItem.innerHTML = `
+                        <div class="email-header">
+                            <div class="email-subject">
+                                <div class="read-indicator"></div>
+                                ${email.subject.length > 22 ? email.subject.substring(0, 22) + '...' : email.subject}
+                            </div>
+                            <div class="email-timestamp">${email.timestamp}</div>
+                        </div>
+                        <div style="margin-left: 20px;">
+                            <div class="email-sender">
+                                <div>${email.sender}</div>
+                                <img width='20px' src='https://cdn-icons-png.flaticon.com/512/2990/2990259.png'>
+                            </div>
+                            <div class="email-body">
+                                ${email.body.length > 100 ? email.body.substring(0, 100) + '...' : email.body}
+                            </div>
+                        </div>
+                    `;
 
+                                // Add event listener for when an email is clicked
+                                emailItem.addEventListener('click', () => {
+                                    // Reset background color and remove custom class from all email items
+                                    document.querySelectorAll('.email-item').forEach(item => {
+                                        item.classList.remove('email-background');
+                                        item.style.backgroundColor = '';
+                                    });
 
-                                // Remove the "email-background" class and reset the background color for all email items
-                                document.querySelectorAll('.email-item').forEach(item => {
-                                    item.classList.remove('email-background');
-                                    item.style.backgroundColor = '';
+                                    // Add background color and custom class to the clicked email item
+                                    emailItem.classList.add('email-background');
+                                    emailItem.style.backgroundColor = '#FCF2F3';
+
+                                    // Fetch and display the email content
+                                    view_email(email.id);
+
+                                    // Change the display of the email detail view to block
+                                    emailDetailElement.style.display = 'block';
+
+                                    // Switch to split view
+                                    document.querySelector('#emails-view').classList.remove('email-list-full');
+                                    document.querySelector('#emails-view').classList.add('email-list-split');
+                                    emailDetailElement.classList.remove('email-detail-hidden');
+                                    emailDetailElement.classList.add('email-detail-visible');
                                 });
 
-                                // Add the "email-background" class to the clicked email item
-                                emailItem.classList.add('email-background');
-
-                                // Set the background color of the clicked email item
-                                emailItem.style.backgroundColor = '#FCF2F3';
-
-
-
-                                // Fetch and display the email content
-                                view_email(email.id);
-
-                                // Change the display of the email detail view to block
-                                emailDetailElement.style.display = 'block';
-
-                                // Switch to split view
-                                document.querySelector('#emails-view').classList.remove('email-list-full');
-                                document.querySelector('#emails-view').classList.add('email-list-split');
-                                emailDetailElement.classList.remove('email-detail-hidden');
-                                emailDetailElement.classList.add('email-detail-visible');
+                                document.querySelector('#emails-view').append(emailItem);
                             });
-
-                            document.querySelector('#emails-view').append(emailItem);
-                        });
+                        }
                     });
             }
 
