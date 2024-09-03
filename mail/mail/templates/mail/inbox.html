@@ -175,6 +175,238 @@
     .text {
         padding: 5px 7px;
     }
+
+    .email-item {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 30px 50px 20px;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+        background-color: #fff;
+        transition: background-color 0.3s;
+    }
+
+    .email-item:hover {
+        background-color: #f5f5f5;
+    }
+
+    .email-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .email-subject {
+        font-weight: bold;
+        color: #333;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+    }
+
+    .email-sender {
+        font-weight: normal;
+        color: #777;
+        justify-content: space-between;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+        margin: 7px 0px;
+    }
+
+    .usermail {
+        font-weight: normal;
+        color: #777;
+
+    }
+
+    .email-timestamp {
+        font-size: 0.8em;
+        color: #999;
+    }
+
+    .email-body {
+        color: #666;
+        margin-top: 5px;
+        font-size: 0.9em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .read-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: red;
+        margin-right: 10px;
+    }
+
+    .email-item.read .read-indicator {
+        background-color: grey;
+    }
+
+    .inbox-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: #fff;
+    }
+
+    .inbox-contain {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        border-bottom: 1px solid #ddd;
+        background-color: #fff;
+        flex-wrap: wrap;
+    }
+
+    .inbox-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .message-info {
+        font-size: 0.9em;
+        color: #777;
+    }
+
+    .search-bar {
+        flex: 1;
+
+        display: flex;
+        align-items: center;
+        margin-left: 15px;
+        margin-right: 10px;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        padding: 5px 10px;
+        width: 50%;
+        gap: 10px;
+    }
+
+    .search-bar input {
+        border: none;
+        background-color: transparent;
+        flex: 1;
+        padding: 5px;
+        font-size: 1em;
+        color: #777;
+        outline: none;
+        width: 50%;
+    }
+
+    .search-bar input::placeholder {
+        color: #aaa;
+        font-size: 20px;
+    }
+
+    input {
+        outline: none;
+        border: none;
+    }
+
+    input:focus {
+        outline: none;
+        border: none;
+    }
+
+    .add-button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 45px;
+        background-color: #f8f8f8;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .add-button:hover {
+        background-color: #e0e0e0;
+    }
+
+    .add-button::after {
+        content: '+';
+        font-size: 1.5em;
+        color: #777;
+    }
+
+    .bar {
+        display: flex;
+        width: auto;
+    }
+
+    .email-section-contain {
+        display: flex;
+        width: 100%;
+    }
+
+    .email-list-full {
+        width: 100%;
+        transition: width 0.3s;
+    }
+
+    .email-list-split {
+        width: 45%;
+        transition: width 0.3s;
+    }
+
+    .email-detail-hidden {
+        display: none;
+    }
+
+    .email-detail-visible {
+        display: block;
+        width: 80%;
+        transition: width 0.3s;
+    }
+
+
+    .full-email-view .email-list-split {
+        width: 100%;
+    }
+
+    .full-email-view .email-detail-visible {
+        display: none;
+    }
+
+    .email-background {
+        border-left: 10px solid #E68A94;
+    }
+
+    .email-detail-header {
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+
+    #emails-view {
+
+        border-right: solid 1px #EBECEC;
+    }
+
+    #archive {
+        cursor: pointer;
+    }
+
+    .vid {
+        display: flex;
+        padding-top: 100px;
+        justify-content: center;
+
+
+    }
 </style>
 
 <section class="contain">
@@ -302,239 +534,6 @@
     </div>
 
     <div class="email-section">
-        <style>
-            .email-item {
-                display: flex;
-                flex-direction: column;
-                padding: 20px 30px 50px 20px;
-                border-bottom: 1px solid #ddd;
-                cursor: pointer;
-                background-color: #fff;
-                transition: background-color 0.3s;
-            }
-
-            .email-item:hover {
-                background-color: #f5f5f5;
-            }
-
-            .email-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .email-subject {
-                font-weight: bold;
-                color: #333;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: flex;
-                align-items: center;
-            }
-
-            .email-sender {
-                font-weight: normal;
-                color: #777;
-                justify-content: space-between;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: flex;
-                align-items: center;
-                margin: 7px 0px;
-            }
-
-            .usermail {
-                font-weight: normal;
-                color: #777;
-
-            }
-
-            .email-timestamp {
-                font-size: 0.8em;
-                color: #999;
-            }
-
-            .email-body {
-                color: #666;
-                margin-top: 5px;
-                font-size: 0.9em;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .read-indicator {
-                width: 10px;
-                height: 10px;
-                border-radius: 50%;
-                background-color: red;
-                margin-right: 10px;
-            }
-
-            .email-item.read .read-indicator {
-                background-color: grey;
-            }
-
-            .inbox-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px 15px;
-                background-color: #fff;
-            }
-
-            .inbox-contain {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px 15px;
-                border-bottom: 1px solid #ddd;
-                background-color: #fff;
-                flex-wrap: wrap;
-            }
-
-            .inbox-title {
-                font-size: 1.5em;
-                font-weight: bold;
-                color: #333;
-            }
-
-            .message-info {
-                font-size: 0.9em;
-                color: #777;
-            }
-
-            .search-bar {
-                flex: 1;
-
-                display: flex;
-                align-items: center;
-                margin-left: 15px;
-                margin-right: 10px;
-                background-color: #f8f8f8;
-                border-radius: 5px;
-                padding: 5px 10px;
-                width: 50%;
-                gap: 10px;
-            }
-
-            .search-bar input {
-                border: none;
-                background-color: transparent;
-                flex: 1;
-                padding: 5px;
-                font-size: 1em;
-                color: #777;
-                outline: none;
-                width: 50%;
-            }
-
-            .search-bar input::placeholder {
-                color: #aaa;
-                font-size: 20px;
-            }
-
-            input {
-                outline: none;
-                border: none;
-            }
-
-            input:focus {
-                outline: none;
-                border: none;
-            }
-
-            .add-button {
-                display: inline-flex;
-                justify-content: center;
-                align-items: center;
-                width: 40px;
-                height: 45px;
-                background-color: #f8f8f8;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            }
-
-            .add-button:hover {
-                background-color: #e0e0e0;
-            }
-
-            .add-button::after {
-                content: '+';
-                font-size: 1.5em;
-                color: #777;
-            }
-
-            .bar {
-                display: flex;
-                width: auto;
-            }
-
-            .email-section-contain {
-                display: flex;
-                width: 100%;
-            }
-
-            .email-list-full {
-                width: 100%;
-                transition: width 0.3s;
-            }
-
-            .email-list-split {
-                width: 45%;
-                transition: width 0.3s;
-            }
-
-            .email-detail-hidden {
-                display: none;
-            }
-
-            .email-detail-visible {
-                display: block;
-                width: 80%;
-                transition: width 0.3s;
-            }
-
-
-            .full-email-view .email-list-split {
-                width: 100%;
-            }
-
-            .full-email-view .email-detail-visible {
-                display: none;
-            }
-
-            .email-background {
-                border-left: 10px solid #E68A94;
-            }
-
-            .email-detail-header {
-                padding: 20px;
-                display: flex;
-                justify-content: space-between;
-
-            }
-
-
-            #emails-view {
-
-                border-right: solid 1px #EBECEC;
-            }
-
-            #archive {
-                cursor: pointer;
-            }
-
-            .vid {
-                display: flex;
-                padding-top: 100px;
-                justify-content: center;
-
-
-            }
-        </style>
 
         <div class="email-section-contain">
             <div id="emails-view" class="email-list-full"></div>
