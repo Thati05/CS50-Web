@@ -3,14 +3,56 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from rest_framework.response import Response # Get json response that is more formatted 
+from rest_framework.decorators import api_view # Styles the rest api
+from .serializers import *
+from .models import User, Post
 
-from .models import User
+
 
 
 def index(request):
+    routes = [
+        {
+            'Endpoint': '/posts/',
+            'method': 'GET',
+            'body': None,
+            'description': 'Returns an array of posts'
+        },
+        {
+            'Endpoint': '/posts/id',
+            'method': 'GET',
+            'body': None,
+            'description': 'Returns a single post object'
+        },
+        {
+            'Endpoint': '/post/create/',
+            'method': 'POST',
+            'body': {'body': ""},
+            'description': 'Creates new post with data sent in post request'
+        },
+        {
+            'Endpoint': '/post/id/update/',
+            'method': 'PUT',
+            'body': {'body': ""},
+            'description': 'Creates an existing post with data sent in post request'
+        },
+        {
+            'Endpoint': '/posts/id/delete/',
+            'method': 'DELETE',
+            'body': None,
+            'description': 'Deletes and exiting post'
+        },
+    ]
     return render(request, "network/index.html")
 
-
+@api_view(['GET'])
+def getPosts(request):
+    posts = Post.objects.all()
+    serializer = PostSerializer(posts, many=True) # many=True means that we will like to serializer multiple objects
+    return Response(serializer.data)
+    
+    
 def login_view(request):
     if request.method == "POST":
 

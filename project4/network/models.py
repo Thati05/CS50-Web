@@ -10,7 +10,7 @@ class Post(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    likes=models.ManyToManyField(User, related_name="liked posts", blank=True)
+    likes=models.ManyToManyField(User, related_name="liked_posts", blank=True)
     
     def __str__(self):
         return f"{self.user.username} : {self.content[:30]}"
