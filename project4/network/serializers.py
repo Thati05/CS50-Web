@@ -4,7 +4,7 @@ from rest_framework.serializers import ModelSerializer
 
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Post, Profile, Comment
+from .models import Post, Profile, Comment, User
 
 # Serializing the User model
 class UserSerializer(serializers.ModelSerializer):
@@ -13,17 +13,16 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'first_name', 'last_name']  # You can add more fields if necessary
 
 
-# Serializing the Post model
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)  # Nested serialization of the user
-    likes_count = serializers.SerializerMethodField()  # Custom field to count likes
+    likes_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ['id', 'user', 'content', 'created_at', 'updated_at', 'likes_count']  # Excluding likes for brevity
+        fields = ['id', 'user', 'content', 'created_at', 'updated_at', 'likes_count']  # Ensure the 'model' attribute is correct
 
     def get_likes_count(self, obj):
-        return obj.likes.count()  # Method to get the total number of likes
+        return obj.likes.count()
 
 
 # Serializing the Profile model

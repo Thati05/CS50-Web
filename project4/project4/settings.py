@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'network.apps.NetworkConfig',  #This will connect our core django project to the django app we added
     'django.contrib.admin',
+     #Connecting djanjo api and react 
+    'corsheaders',
     'rest_framework',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +45,11 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    
+    #Connecting djanjo api and react 
+    "corsheaders.middleware.CorsMiddleware",
+    
+    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -121,3 +128,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ #Connecting djanjo api and react 
+CORS_ALLOW_ALL_ORIGINS = True
