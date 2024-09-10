@@ -51,6 +51,7 @@ def getPosts(request):
     posts = Post.objects.all()
     serializer = PostSerializer(posts, many=True) # many=True means that we will like to serializer multiple objects
     return Response(serializer.data)
+
     
     
 def login_view(request):

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+
 const Pages = () => {
   const [posts, setPosts] = useState([]);
 
@@ -26,7 +27,9 @@ const Pages = () => {
 
   return (
     <div>
+      
       <div className='posts-list'>
+        {/*Create a component for each item and pass the key prop and an object*/}
         {posts.map((post, index) => (
           <h1 key={index}>{post.content}</h1>
         ))}

@@ -57,13 +57,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+import os
 ROOT_URLCONF = 'project4.urls'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+
+'DIRS': [
+    os.path.join(BASE_DIR, 'frontend', 'dist',),  # Use os.path.join for string paths
+],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,7 +131,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/assets/'
+
+import os
+
+# Assuming BASE_DIR is a string path (in older Django versions)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend', 'dist', 'assets'),  # Use os.path.join for string paths
+]
+
 
  #Connecting djanjo api and react 
 CORS_ALLOW_ALL_ORIGINS = True
