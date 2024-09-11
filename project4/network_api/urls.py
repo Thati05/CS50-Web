@@ -4,12 +4,12 @@ In our api urls.py we are going to build api endpoints
 """
 
 from django.urls import path
-from . import views 
+from .views import PostList
 
 app_name = 'network_api'
 
 urlpatterns = [
     
-   # path('', views.PostList, name='posts')
+   path('', PostList.as_view(), name='posts')
     
 ]
