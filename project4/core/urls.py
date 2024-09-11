@@ -1,11 +1,12 @@
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('network.urls', namespace='network')),
-    path('api/', include('network_api.urls', namespace='network_api'))
+    path('', include('network.urls')),
+    path('api/', include('network_api.urls'))
     
     
 ]
