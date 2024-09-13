@@ -21,20 +21,22 @@ const Header = () => {
 
      {/*Profile */}
 
-    <div className=' flex w-full justify-center items-center mb-5  '>
-<div className=' flex items-center justify-between gap-24'>
+    <div className=' flex  justify-center items-center mb-5 px-5  '>
+<div className=' flex items-center justify-between gap-[98px] '>
 
     { userProfile.map((profile) => (
       <div>
-        <div className='justify-center rounded-xl w-[80px] h-[74px]  image-container img_border'>
+      <div className=' bg-gradient' >
+        <div className='justify-center rounded-[11px] w-[69px] h-[69px]  image-container img_border'>
 
-<img className='rounded-md  w-[60px] h-[53px] object-cover' key={profile.alt} src={profile.src} alt={profile.alt}/>
+<img className='rounded-md  w-[60px] h-[60px]  object-cover' key={profile.alt} src={profile.src} alt={profile.alt}/>
 
 
       
-      </div>
+      </div>  </div>
 <p className=' pt-3 font-Nunito font-semibold text-center' >{profile.name}</p>
-      </div>
+</div>
+    
      
     ))}
  

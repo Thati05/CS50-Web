@@ -37,13 +37,13 @@ function App() {
  
 
   return (
-    <>
+    <div className=' flex flex-col'>
     <div>Christ Jesus</div>
     <h1>Latest Posts</h1>
     {/*We are accessing the higher order component */}
     <Loader isLoading={appState.loading} posts={appState.posts}/> 
 
-    </>
+    </div>
   )
 }
 
