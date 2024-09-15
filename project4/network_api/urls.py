@@ -9,8 +9,6 @@ from .views import PostList, RegisterUser
 app_name = 'network_api'
 
 urlpatterns = [
-    
-   path('', PostList.as_view(), name='posts'),
-   path('/register', RegisterUser.as_view(), name='register')
-    
+    path('', PostList.as_view(), name='posts'),
+    path('register/', RegisterUser.as_view(), name='register')
 ]

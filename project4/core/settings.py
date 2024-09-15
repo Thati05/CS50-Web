@@ -151,7 +151,7 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
 
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": settings.SECRET_KEY,
+    "SIGNING_KEY": SECRET_KEY,
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
     "ISSUER": None,
@@ -159,7 +159,7 @@ SIMPLE_JWT = {
     "JWK_URL": None,
     "LEEWAY": 0,
 
-    "AUTH_HEADER_TYPES": ("Bearer",'JWT'),
+    "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
