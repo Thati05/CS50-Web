@@ -15,4 +15,4 @@ class Post(models.Model):
         return f"{self.creator.username}: {self.content[0:10]}..."
     
 
-    
+#User model
