@@ -1,27 +1,23 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import Header from './components/Header.jsx'
-import SidebarLeft from './components/SidebarLeft.jsx'
-import SidebarRight from './components/SidebarRight.jsx'
-import { BrowserRouter, Routes, Route } from "react-router-dom";  
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App.jsx';
+import Register from './components/Register.jsx';
+import './index.css';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Header/>
-    <div className=' flex justify-between' >
-      <SidebarLeft/>
-      <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<App/>}/>
-    
-    </Routes>
-    
+    <BrowserRouter>
+     
+      <div className="flex justify-center">
+      
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+       
+      </div>
     </BrowserRouter>
-    <SidebarRight/>
-   
-    </div>
-    
-  </StrictMode>,
-)
+  </StrictMode>
+);

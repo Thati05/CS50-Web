@@ -2,6 +2,9 @@ import Posts from './components/Posts';
 import LoaderComponent from './components/Loader';
 import { useState, useEffect } from 'react';
 import './index.css';
+import Header from './components/Header.jsx';
+import SidebarLeft from './components/SidebarLeft.jsx';
+import SidebarRight from './components/SidebarRight.jsx';
 
 function App() {
   // Higher Order Component wrapping Posts with Loader
@@ -28,12 +31,23 @@ function App() {
   }, []); // Empty dependency array to run only once after mounting
 
   return (
-    <div className="flex flex-col">
-      <div>Christ Jesus</div>
+    <section>
+       <Header/>
+    <div className="flex flex-row justify-between items-center">
+      
+      <SidebarLeft/>
+      <div className=' flex flex-col'>
+            <div>Christ Jesus</div>
       <h1>Latest Posts</h1>
+      
       {/* Accessing the higher-order component */}
       <Loader isLoading={appState.loading} posts={appState.posts} />
+      </div>
+  
+      <SidebarRight/>
     </div>
+    </section>
+ 
   );
 }
 
