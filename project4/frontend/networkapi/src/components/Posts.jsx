@@ -5,7 +5,19 @@ const Posts = (props) => {
   if (!posts || posts.length === 0) return <p>Can not find any posts, Sorry!</p>;
 
   return (
-    <section className=' font-Nunito font-semibold text-lg  mr-5 CIK-posts' >
+    <section className=' font-Nunito font-semibold text-lg   CIK-posts' >
+    
+    
+    <div className=' text-xl mb-20 mt-10 font-Nunito flex justify-center gap-40  '>
+      <button className='btn-CIK '>
+        All Posts
+      </button>
+      <button>
+        Following
+      </button>
+      </div>
+
+
   <div className=' flex'>
        <div className=' items-start'>
          {posts.map((post) => (

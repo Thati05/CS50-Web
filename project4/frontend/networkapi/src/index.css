@@ -29,18 +29,26 @@ width: fit-content;
 }
 
 .CIK-leftside{
- padding-right: 150px;
+ padding-right: 15px;
   height: 80vh;
 border-right: 1px solid #7575754c;
 }
 .CIK-rightside{
-  padding-left: 150px;
+  padding-left: 15px;
   height: 80vh;
 border-left: 1px solid #7575754c;
 }
 
 .CIK-posts{
   height: 80vh;
+}
+
+.side-item{
+
+  width:190px;
+  padding: 10px 70px 10px 20px  ;
+  border-radius: 15px;
+
 }
 
 
