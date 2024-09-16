@@ -1,9 +1,17 @@
 // src/components/Header.js
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { userProfile } from "../constants"; // Ensure proper import
 
+
+
+
 const Header = () => {
+
+  
+
+
+
   return (
     <section>
       <div className="flex justify-between items-center p-10">
@@ -22,6 +30,7 @@ const Header = () => {
           />
           {/* Else display this */}
           <Link to="/register">Sign Up</Link>
+          <Link to="/login">Login</Link>
         </div>
       </div>
 
