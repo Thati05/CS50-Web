@@ -33,19 +33,29 @@ function App() {
   return (
     <section>
        <Header/>
-    <div className="flex flex-row justify-between items-center">
       
+      <div className=' text-xl  font-Nunito flex justify-center mt-32 gap-40  '>
+      <button className='btn-CIK'>
+        All Posts
+      </button>
+      <button>
+        Following
+      </button>
+
+
+        </div>
+    
+    {/*Post display section */}
+
+    <div className="flex flex-row justify-between items-center mt-10">
       <SidebarLeft/>
-      <div className=' flex flex-col'>
-            <div>Christ Jesus</div>
-      <h1>Latest Posts</h1>
-      
-      {/* Accessing the higher-order component */}
+       {/* Accessing the higher-order component */}
       <Loader isLoading={appState.loading} posts={appState.posts} />
-      </div>
-  
       <SidebarRight/>
+      
     </div>
+
+
     </section>
  
   );

@@ -5,12 +5,20 @@ const Posts = (props) => {
   if (!posts || posts.length === 0) return <p>Can not find any posts, Sorry!</p>;
 
   return (
-    <section>
-      {posts.map((post) => (
+    <section className=' font-Nunito font-semibold text-lg  mr-5 CIK-posts' >
+  <div className=' flex'>
+       <div className=' items-start'>
+         {posts.map((post) => (
         <p key={post.id}>{post.content}</p>
       ))}
-    </section>
+      </div>
+  
+ 
+    </div>
+ 
+   </section>
   );
 };
 
 export default Posts;
+

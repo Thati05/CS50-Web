@@ -8,7 +8,18 @@ import { userProfile } from "../constants"; // Ensure proper import
 
 const Header = () => {
 
-  
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() =>{
+    //We are going to chech if the user is authenticated by cheking the JWT token
+     
+    const token = localStorage.getItem('access_token');
+      if (token){
+        setIsAuthenticated(true)
+      }
+    
+
+  }, [])
 
 
 
@@ -16,9 +27,12 @@ const Header = () => {
     <section>
       <div className="flex justify-between items-center p-10">
         <div className="font-Nunito font-extrabold text-3xl">Network</div>
-        <div className="flex gap-7 items-center">
-          {/* If the user is authorized display these */}
-          <img
+       <div className="flex gap-7 items-center">
+           {isAuthenticated ? (
+            
+        <>
+           {/* If the user is authenticated then display this: */}
+            <img
             width={20}
             src="https://cdn-icons-png.flaticon.com/512/2040/2040504.png"
             alt="User"
@@ -28,9 +42,22 @@ const Header = () => {
             src="https://cdn-icons-png.flaticon.com/512/3239/3239952.png"
             alt="Notifications"
           />
-          {/* Else display this */}
-          <Link to="/register">Sign Up</Link>
+          
+        </>
+          ):(
+            
+          
+          <> 
+            {/*Else if the user is not authenticated then display this: */}
+          
+           <Link to="/register">Sign Up</Link>
           <Link to="/login">Login</Link>
+          
+          </>
+        
+        )}
+       
+        
         </div>
       </div>
 

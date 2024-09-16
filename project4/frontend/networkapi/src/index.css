@@ -21,6 +21,28 @@ border: 5px solid rgb(255, 255, 255);
   background: linear-gradient(to top right, rgb(0, 0, 0), rgba(163, 162, 162, 0.756));
 }
 
+.btn-CIK{
+border-bottom: black solid 3px;
+font-weight: bold;
+width: fit-content;
+
+}
+
+.CIK-leftside{
+ padding-right: 150px;
+  height: 80vh;
+border-right: 1px solid #7575754c;
+}
+.CIK-rightside{
+  padding-left: 150px;
+  height: 80vh;
+border-left: 1px solid #7575754c;
+}
+
+.CIK-posts{
+  height: 80vh;
+}
+
 
 
 @layer utilities {
