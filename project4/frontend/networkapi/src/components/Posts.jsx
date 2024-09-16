@@ -18,7 +18,7 @@ const Posts = (props) => {
       </div>
 
 
-  <div className=' flex'>
+  <div className=' flex justify-center'>
        <div className=' items-start'>
          {posts.map((post) => (
         <p key={post.id}>{post.content}</p>
