@@ -24,12 +24,12 @@ const SidebarLeft = () => {
      </div>
 
      <div className=' flex items-center side-item  '>
-      <img  width={30} height={30} className=' object-contain'  src='https://cdn-icons-png.flaticon.com/512/10146/10146694.png'/>
+      <img  width={30} height={30} className=' object-contain'  src='https://cdn-icons-png.flaticon.com/512/266/266033.png'/>
       <p className='ml-5' >Profile</p>
      </div>
 
      <div className=' flex items-center side-item  '>
-      <img  width={30} height={30} className=' object-contain'  src='https://cdn-icons-png.flaticon.com/512/10146/10146694.png'/>
+      <img  width={30} height={30} className=' object-contain'  src='https://cdn-icons-png.flaticon.com/512/1581/1581723.png'/>
       <p className='ml-5' >Friends</p>
      </div>
 

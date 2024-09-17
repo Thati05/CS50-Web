@@ -30,12 +30,13 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)  
-    follower_count = serializers.IntegerField(read_only=True)  
+    email = serializers.EmailField(source='user.email', read_only=True)  # Get the email from the User model
+    follower_count = serializers.IntegerField(read_only=True) 
     following_count = serializers.IntegerField(read_only=True) 
 
     class Meta:
         model = Profile
-        fields = ['user', 'about', 'profile_pic', 'follower_count', 'following_count']
+        fields = ['user', 'email', 'about', 'profile_pic', 'follower_count', 'following_count']
 
     def update(self, instance, validated_data):
         instance.about = validated_data.get('about', instance.about)
@@ -45,10 +46,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         return instance
 
 
-
 class FollowSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)  # The current user (follower)
-    followed_user = serializers.StringRelatedField(read_only=True)  # The followed user
+    user = serializers.StringRelatedField(read_only=True) 
+    followed_user = serializers.StringRelatedField(read_only=True)  
 
     class Meta:
         model = Follow
@@ -56,8 +56,8 @@ class FollowSerializer(serializers.ModelSerializer):
         
 
 class LikeSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)  # The user who liked the post
-    post = serializers.StringRelatedField(read_only=True)  # The post that was liked
+    user = serializers.StringRelatedField(read_only=True)  
+    post = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Like
