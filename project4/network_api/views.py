@@ -4,12 +4,14 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from network.models import Post, Profile, Follow, Like, User
 from .serializers import PostSerializer, RegisterUserSerializer, ProfileSerializer, FollowSerializer, LikeSerializer
+
 class PostList(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user) 
+        serializer.save(creator=self.request.user)
 
 class RegisterUser(APIView):
     permission_classes = [AllowAny]  # Allow registration to any user

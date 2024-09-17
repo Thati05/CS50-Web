@@ -3,9 +3,12 @@ from network.models import *
 
 
 class PostSerializer(serializers.ModelSerializer):
+    creator_username = serializers.CharField(source='creator.username', read_only=True)
+
     class Meta:
         model = Post
-        fields = ['id', 'creator', 'content', 'created_at', 'updated_at', 'like_count']
+        fields = ['id', 'creator', 'creator_username', 'content', 'created_at', 'updated_at', 'like_count']
+        read_only_fields = ['id', 'creator', 'creator_username', 'created_at', 'updated_at', 'like_count']
     
     def create(self, validated_data):
         user = self.context['request'].user  
