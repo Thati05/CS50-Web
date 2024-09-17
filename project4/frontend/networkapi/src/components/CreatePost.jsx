@@ -72,6 +72,7 @@ const CreatePost = () => {
           
           {/* Content Field */}
           <input
+          autoComplete='off'
             onChange={handleChange}
             name="content"
             className="CIL-input text-gray-400 items-center"
