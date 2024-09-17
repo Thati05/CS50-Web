@@ -30,18 +30,18 @@ width: fit-content;
 
 .CIK-leftside{
  padding-right: 30px;
-  height: 100vh;
+  height:200vh;
 border-right: 1px solid #7575754c;
 margin-left: 20px;
 }
 .CIK-rightside{
   padding-left: 15px;
-  height: 100vh;
+  height:200vh;
 border-left: 1px solid #7575754c;
 }
 
 .CIK-posts{
-  height: 100vh;
+  height:200vh;
 }
 
 .side-item{
@@ -62,8 +62,30 @@ border-left: 1px solid #7575754c;
 .CIL-input{
   width:60%;
   margin-left: 20px;
+  padding: 20px 0px 20px  0px;
+  
 }
+.CIL-input:focus{
+  outline: none;
+  border: none;
 
+}
+.CIL-post{
+  /*border: 1px solid black;*/
+  border-radius: 20px;
+  background-color:#F0F1F4;
+  height: fit-content;
+
+}
+.CIL-post-items{
+  background-color: white;
+  border-radius: 20px;
+ 
+}
+.post-text{
+  width: 450px;
+  height: 170px;
+}
 
 
 @layer utilities {
