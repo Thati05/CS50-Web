@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import CreatePost from './CreatePost';
+import { formatDistanceToNow } from 'date-fns';  
+
 
 
 const Posts = (props) => {
   const { posts } = props;
   if (!posts || posts.length === 0) return <p>Can not find any posts, Sorry!</p>;
+
+  {/*const [timeAgo, setTimeAgo] = useState('');
+
+  // Convert the created_at timestamp to a "time ago" format
+  useEffect(() => {
+    const timeAgoString = formatDistanceToNow(new Date(posts.created_at), { addSuffix: true });
+    setTimeAgo(timeAgoString);  // Set the "time ago" string
+  }, [posts.created_at]);*/}
 
   return (
     <section className=' font-Nunito font-semibold text-lg  CIK-posts' >
@@ -29,6 +39,8 @@ const Posts = (props) => {
        
        <div className=' flex gap-16 flex-col'>
              {posts.map((post) => (
+
+              
 <div className=' CIL-post  p-5'>
 
  <div className='CIL-post-items'>

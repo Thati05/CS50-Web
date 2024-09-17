@@ -12,6 +12,8 @@ class PostList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+        
+
 
 class RegisterUser(APIView):
     permission_classes = [AllowAny]  # Allow registration to any user
