@@ -28,22 +28,42 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     
 
 
+
 class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)  
-    email = serializers.EmailField(source='user.email', read_only=True)  # Get the email from the User model
-    follower_count = serializers.IntegerField(read_only=True) 
-    following_count = serializers.IntegerField(read_only=True) 
+    email = serializers.EmailField(source='user.email', read_only=True)  
+    follower_count = serializers.SerializerMethodField() 
+    following_count = serializers.SerializerMethodField() 
+    profile_pic = serializers.SerializerMethodField()  # Get the full URL of the profile picture
 
     class Meta:
         model = Profile
         fields = ['user', 'email', 'about', 'profile_pic', 'follower_count', 'following_count']
 
+   
     def update(self, instance, validated_data):
         instance.about = validated_data.get('about', instance.about)
         if 'profile_pic' in validated_data:
             instance.profile_pic = validated_data['profile_pic']
         instance.save()
         return instance
+
+    # Get the full URL for the profile picture
+    def get_profile_pic(self, obj):
+        request = self.context.get('request')  # Make sure request is available in the context
+        if obj.profile_pic:
+            return request.build_absolute_uri(obj.profile_pic.url)
+        return None
+
+  
+    def get_follower_count(self, obj):
+        return obj.user.followers.count()  
+
+   
+    def get_following_count(self, obj):
+        return obj.user.following.count() 
+
+
 
 
 class FollowSerializer(serializers.ModelSerializer):

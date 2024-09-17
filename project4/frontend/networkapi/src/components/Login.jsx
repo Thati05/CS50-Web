@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from "react";
 import axiosInstance from "../axios";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +9,7 @@ export const Login = () => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const navigate = useNavigate(); // Fix: Use navigate for redirection
+  const navigate = useNavigate(); // Use navigate for redirection
 
   const handleChange = (e) => {
     setFormData({
@@ -29,13 +28,20 @@ export const Login = () => {
         password: formData.password,
       })
       .then((res) => {
-        localStorage.setItem("access_token", res.data.access); // Fix: Correct the key name
-        localStorage.setItem("refresh_token", res.data.refresh);
+        // Store tokens and username in localStorage
+        localStorage.setItem("access_token", res.data.access); // Store access token
+        localStorage.setItem("refresh_token", res.data.refresh); // Store refresh token
+        localStorage.setItem("username", formData.username); // Store the username in localStorage
+
+        // Set the Authorization header with the token
         axiosInstance.defaults.headers["Authorization"] =
-          "JWT " + localStorage.getItem("access_token"); // Fix: Added space after 'JWT'
+          "JWT " + localStorage.getItem("access_token");
 
         console.log(res.data);
         navigate("/"); // Redirect to home after login
+      })
+      .catch((err) => {
+        console.error("Login failed:", err);
       });
   };
 
