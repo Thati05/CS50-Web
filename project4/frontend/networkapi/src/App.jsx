@@ -38,7 +38,7 @@ function App() {
     
     {/*Post display section */}
 
-    <div className="flex flex-row justify-between items-center mt-20">
+    <div className="flex flex-row justify-between w-full items-center mt-20">
       <SidebarLeft/>
        {/* Accessing the higher-order component */}
       <Loader isLoading={appState.loading} posts={appState.posts} />

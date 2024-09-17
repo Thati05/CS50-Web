@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 const SidebarRight = () => {
-  const [profile, setProfile] = useState(null); // State to store profile data
+  const [profile, setProfile] = useState(null); 
   const [username, setUsername] = useState(localStorage.getItem('username')); // Get the username from localStorage
-  const [error, setError] = useState(null); // Error state to handle fetch errors
+  const [error, setError] = useState(null); 
 
   // Fetch user profile after login
   useEffect(() => {
@@ -24,13 +24,13 @@ const SidebarRight = () => {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`  // Ensure the token is passed correctly
+            'Authorization': `Bearer ${token}`  
           }
         });
 
         if (response.ok) {
           const data = await response.json();
-          setProfile(data);  // Set profile data
+          setProfile(data); 
         } else {
           setError('Failed to fetch profile data: ' + response.statusText);
         }
@@ -44,18 +44,18 @@ const SidebarRight = () => {
 
   // Check if there's an error
   if (error) {
-    return <div>Error: {error}</div>;  // Display error message
+    return <div>Error: {error}</div>; 
   }
 
-  // Check if profile data is available
+  // Checking if profile data is available
   if (!profile) {
-    return <div>Loading...</div>;  // Display loading state while fetching data
+    return <div>Loading...</div>;  
   }
 
 
   return (
-    <section className='  font-Nunito font-semibold text-lg  mr-5 CIK-rightside' >
-    <div className=' items-center flex flex-col gap-10'>
+    <section className='  font-Nunito font-semibold text-lg  CIK-rightside' >
+    <div className='  flex flex-col gap-10'>
  
 
 
@@ -71,7 +71,7 @@ const SidebarRight = () => {
      </div>
   <div className=' ml-5'>
     <p>{profile.user || 'Username'}</p>
-    <p>{profile.email || 'User@Email'}</p>
+    <p className=' text-gray-400'>{profile.email || 'User@Email'}</p>
   </div>
 
  </div>
@@ -89,8 +89,8 @@ const SidebarRight = () => {
      </div>
      </div>
   <div className=' ml-5'>
-    <p>Username</p>
-    <p>User@Email</p>
+    <p>Tyla</p>
+    <p className=' text-gray-400' >tyla@gmail.com</p>
   </div>
 
  </div>
@@ -106,8 +106,8 @@ const SidebarRight = () => {
      </div>
      </div>
   <div className=' ml-5'>
-    <p>Username</p>
-    <p>User@Email</p>
+    <p>Jessica</p>
+    <p className=' text-gray-400' >jess@gmail.com</p>
   </div>
 
  </div>

@@ -29,9 +29,10 @@ width: fit-content;
 }
 
 .CIK-leftside{
- padding-right: 15px;
+ padding-right: 30px;
   height: 100vh;
 border-right: 1px solid #7575754c;
+margin-left: 20px;
 }
 .CIK-rightside{
   padding-left: 15px;

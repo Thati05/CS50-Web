@@ -42,6 +42,8 @@ const Header = () => {
             src="https://cdn-icons-png.flaticon.com/512/3239/3239952.png"
             alt="Notifications"
           />
+
+          <Link to='/logout'>Logout</Link>
           
         </>
           ):(
