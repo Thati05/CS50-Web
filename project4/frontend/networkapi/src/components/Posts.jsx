@@ -10,7 +10,7 @@ const Posts = (props) => {
     <section className=' font-Nunito font-semibold text-lg  CIK-posts' >
     
     
-    <div className=' text-xl mb-20 mt-10 font-Nunito flex justify-center gap-40  '>
+    <div className=' text-xl mb-10 mt-10 font-Nunito flex justify-center gap-40  '>
       <button className='btn-CIK '>
         All Posts
       </button>
@@ -20,7 +20,7 @@ const Posts = (props) => {
       </div>
 
 
-  <div className=' flex justify-center'>
+  <div className=' flex-col text-center flex justify-center px-20 '>
     <div>
 <CreatePost/>
     </div>
