@@ -12,7 +12,7 @@ useEffect(() => {
   localStorage.removeItem('username');
   axiosInstance.defaults.headers["Authorization"] = null;
 
-  navigate('/login')
+  navigate('/')
 
 })
 
