@@ -24,7 +24,7 @@ const Header = () => {
 
 
   return (
-    <section>
+    <section className=" font-Nunito">
       <div className="flex justify-between items-center p-10">
         <div className="font-Nunito font-extrabold text-3xl">Network</div>
        <div className="flex gap-7 items-center">
@@ -42,8 +42,13 @@ const Header = () => {
             src="https://cdn-icons-png.flaticon.com/512/3239/3239952.png"
             alt="Notifications"
           />
-
-          <Link to='/logout'>Logout</Link>
+          <button className="CIK-btn_black" >
+            <div className="JC-btn_contain" >
+                <Link to='/logout'>Logout</Link>
+            </div>
+            
+          </button>
+        
           
         </>
           ):(
@@ -51,9 +56,22 @@ const Header = () => {
           
           <> 
             {/*Else if the user is not authenticated then display this: */}
+
+            <button className="CIK-btn_black" >
+            <div className="JC-btn_contain" >
+             <Link to="/register">Sign Up</Link>
+            </div>
+             
+           </button>
           
-           <Link to="/register">Sign Up</Link>
-          <Link to="/login">Login</Link>
+          
+           <button className="CIK-btn_black"  >
+            <div className="JC-btn_contain" >
+              <Link to="/login">Login</Link>
+            </div>
+             
+           </button>
+         
           
           </>
         

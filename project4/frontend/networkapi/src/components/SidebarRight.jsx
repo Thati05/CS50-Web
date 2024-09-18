@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SidebarRight = () => {
   const [profile, setProfile] = useState(null); 
   const [username, setUsername] = useState(localStorage.getItem('username')); // Get the username from localStorage
   const [error, setError] = useState(null); 
+  const navigate = useNavigate()
 
   // Fetch user profile after login
   useEffect(() => {
@@ -44,7 +46,10 @@ const SidebarRight = () => {
 
   // Check if there's an error
   if (error) {
-    return <div>Error: {error}</div>; 
+    return navigate('/login')
+    console.log(error)
+    ; 
+   
   }
 
   // Checking if profile data is available

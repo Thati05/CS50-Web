@@ -87,6 +87,22 @@ border-left: 1px solid #7575754c;
   height: 170px;
 }
 
+.CIK-btn_black{
+padding: 3px 3px;
+ border: 1px black solid;
+ border-radius: 10px;
+
+}
+
+.JC-btn_contain{
+  border: 1px solid black;
+  padding: 7px 15px;
+  border-radius: 8px;
+  color: white;
+  background-color: black;
+  font-weight: bold;
+}
+
 
 @layer utilities {
 
