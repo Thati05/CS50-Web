@@ -15,6 +15,9 @@ urlpatterns = [
     # User registration endpoint
     path('register/', RegisterUser.as_view(), name='register'),
     
+     path('create/', CreatePost.as_view(), name='create'),
+
+    
     # Profile endpoints (view or update a user's profile)
     path('profile/<str:username>/', ProfileDetail.as_view(), name='profile'),
 
