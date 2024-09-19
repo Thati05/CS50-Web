@@ -48,19 +48,20 @@ const SidebarRight = () => {
   if (error) {
 
     return <div className='CIK-rightside pt-10 flex flex-col items-center'> 
-    <div >Sign up/login</div>
+    <div className=' text-2xl font-bold font-Nunito ' >Sign up/login</div>
 
-    <div>     <video src='https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/kcD8j4eYo375Zwa5SU.mp4'  width="400" height="256" preload="none" autoplay="autoplay" loop="true" muted="muted" playsinline="">
+    <div>
+      <video src='https://d1jj76g3lut4fe.cloudfront.net/processed/thumb/kcD8j4eYo375Zwa5SU.mp4'  width="400" height="256" preload="none" autoplay="autoplay" loop="true" muted="muted" playsinline="">
+    </video>
     
-</video></div>
+    </div>
     
 
 
 </div>
     
   
-    console.log(error)
-    ; 
+
    
   }
 

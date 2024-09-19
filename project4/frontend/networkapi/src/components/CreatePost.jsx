@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () => {
+  const navigate = useNavigate()
   const [createPost, setCreatePost] = useState({ content: '' });
   const [error, setError] = useState(null);    // State to handle error messages
   const [success, setSuccess] = useState(null);  // State to handle success messages
@@ -40,12 +42,12 @@ const CreatePost = () => {
       setSuccess('Post created successfully!');
       setCreatePost({ content: '' });  // Clear form on success
     } catch (error) {
-      setError(error.message);
+      setError('Please sign up/login');
     }
   };
 
   return (
-    <div>
+    <div className=' font-Nunito'>
       {/* Create Post Form */}
       <form onSubmit={handleSubmit}>
         <div className="flex items-center justify-between py-[55px] CIL-create_post">
@@ -68,8 +70,8 @@ const CreatePost = () => {
         </div>
       </form>
       {/* Display success or error messages */}
-      {success && <div className="text-green-500">{success}</div>}
-      {error && <div className="text-red-500">{error}</div>}
+      {success && <div className="text-green-500 font-bold">{success}</div>}
+      {error && <div className="text-red-500 font-bold">{error}</div>}
     </div>
   );
 };

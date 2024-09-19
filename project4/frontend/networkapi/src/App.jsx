@@ -42,7 +42,7 @@ function App() {
       <Header />
 
       {/*Post display section */}
-      <div className="flex flex-row  w-full justify-between  mt-20">
+      <div className="flex flex-row  w-full justify-between ">
         <SidebarLeft />
         {/* Accessing the higher-order component */}
         <Loader
