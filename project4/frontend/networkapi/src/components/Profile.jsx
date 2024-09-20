@@ -1,71 +1,152 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';  // To get the username from the URL
-import axiosInstance from '../axios';  // Axios instance for making API requests
+import { useParams, useNavigate } from 'react-router-dom';
+
+const BASE_URL = 'http://127.0.0.1:8000/api';  // Base URL for API requests
 
 const Profile = () => {
   const { username } = useParams();  // Get the username from the URL
+  const navigate = useNavigate();  // Used for redirection
   const [profile, setProfile] = useState(null);  // State to store profile data
-  const [about, setAbout] = useState('');  // "About Me" section
   const [posts, setPosts] = useState([]);  // Store user's posts
-  const [editPostId, setEditPostId] = useState(null);  // Track the post being edited
-  const [editPostContent, setEditPostContent] = useState('');  // Store edited post content
+  const [isFollowing, setIsFollowing] = useState(false);  // Follow/unfollow status
+  const [about, setAbout] = useState('');  // "About Me" section
   const [isEditingAbout, setIsEditingAbout] = useState(false);  // Toggle for editing "About Me"
+  const [editPostId, setEditPostId] = useState(null);  // ID of the post being edited
+  const [editPostContent, setEditPostContent] = useState('');  // Store edited post content
+  const loggedInUsername = localStorage.getItem('username');  // Get the logged-in username
+  const accessToken = localStorage.getItem('access_token');  // Assume access token is stored here
 
   useEffect(() => {
     fetchProfile();
   }, [username]);
 
-  // Fetch profile data, including posts
+  // Helper function to add authorization header if user is logged in
+  const authHeaders = () => ({
+    'Content-Type': 'application/json',
+    ...(accessToken && { 'Authorization': `Bearer ${accessToken}` }),  // Include token if available
+  });
+
+  // Fetch profile data and user's posts in reverse chronological order
   const fetchProfile = async () => {
     try {
-      const response = await axiosInstance.get(`/profile/${username}/`);
-      setProfile(response.data);
-      setPosts(response.data.posts);  // Set user's posts
-      setAbout(response.data.about || '');  // Set "About Me" section
+      const response = await fetch(`${BASE_URL}/profile/${username}/`, {
+        method: 'GET',
+        headers: authHeaders(),
+      });
+      if (!response.ok) {
+        throw new Error('Error fetching profile');
+      }
+      const data = await response.json();
+      setProfile(data);
+      setPosts(data.posts.reverse());  // Reverse chronological order
+      setAbout(data.about || '');
+      setIsFollowing(data.is_following);  // Get follow status
     } catch (error) {
       console.error('Error fetching profile:', error);
     }
   };
 
-  // Handle editing "About Me" section
+  // Fetch a specific post's detail from the API
+  const fetchPostDetail = async (postId) => {
+    try {
+      const response = await fetch(`${BASE_URL}/posts/${postId}/`, {
+        method: 'GET',
+        headers: authHeaders(),
+      });
+      if (!response.ok) {
+        throw new Error('Error fetching post details');
+      }
+      const data = await response.json();
+      setEditPostContent(data.content);  // Load post content into the state for editing
+    } catch (error) {
+      console.error('Error fetching post details:', error);
+    }
+  };
+
+  // Handle follow/unfollow toggle
+  const handleFollowToggle = async () => {
+    if (!loggedInUsername) {
+      alert('You need to log in to follow users.');
+      return;
+    }
+
+    try {
+      const url = `${BASE_URL}/follow/${username}/`;
+      const method = isFollowing ? 'DELETE' : 'POST';
+      const response = await fetch(url, {
+        method: method,
+        headers: authHeaders(),
+      });
+      if (!response.ok) {
+        throw new Error('Error toggling follow status');
+      }
+      setIsFollowing(!isFollowing);  // Toggle follow/unfollow status
+    } catch (error) {
+      console.error('Error following/unfollowing user:', error);
+    }
+  };
+
+  // Handle profile picture click
+  const handleProfileClick = () => {
+    navigate(`/profile/${username}`);
+  };
+
+  // Handle "About Me" edit
   const handleAboutEdit = async () => {
     try {
-      const response = await axiosInstance.put(`/profile/${username}/`, { about });
-      setProfile({ ...profile, about: response.data.about });
+      const response = await fetch(`${BASE_URL}/profile/${username}/`, {
+        method: 'PUT',
+        headers: authHeaders(),
+        body: JSON.stringify({ about }),
+      });
+      if (!response.ok) {
+        throw new Error('Error updating About Me section');
+      }
+      const data = await response.json();
+      setProfile({ ...profile, about: data.about });
       setIsEditingAbout(false);  // Exit editing mode
     } catch (error) {
       console.error('Error updating About Me section:', error);
     }
   };
 
-  // Handle editing a post
-  const handleEditPost = (postId, content) => {
-    setEditPostId(postId);
-    setEditPostContent(content);
+  // Handle post edit initiation (fetch the post detail and set the post ID)
+  const handleEditPost = (postId) => {
+    setEditPostId(postId);  // Set the ID of the post being edited
+    fetchPostDetail(postId);  // Fetch the specific post's detail for editing
   };
 
-  // Save the edited post
+  // Handle saving the edited post
   const handleSavePost = async (postId) => {
     try {
-      const response = await axiosInstance.put(`/posts/${postId}/`, { content: editPostContent });
-      // Update the post in the posts state after successful save
-      setPosts(posts.map(post => post.id === postId ? { ...post, content: response.data.content } : post));
+      const response = await fetch(`${BASE_URL}/posts/${postId}/`, {
+        method: 'PUT',
+        headers: authHeaders(),
+        body: JSON.stringify({ content: editPostContent }),
+      });
+      if (!response.ok) {
+        throw new Error('Error saving post');
+      }
+      const data = await response.json();
+      // Update the post content in the posts state
+      setPosts(posts.map(post => post.id === postId ? { ...post, content: data.content } : post));
       setEditPostId(null);  // Exit edit mode
     } catch (error) {
       console.error('Error saving post:', error);
     }
   };
 
-  if (!profile) return <div>Loading...</div>;  // Display loading state
+  if (!profile) return <div>Loading...</div>;  // Display loading state while fetching profile data
 
   return (
     <div className="profile-container">
       <div className="profile-header">
         <img
-          src={profile.profile_pic || 'https://via.placeholder.com/150'}  // Default profile picture if not provided
+          onClick={handleProfileClick}
+          src={profile.profile_pic || 'https://via.placeholder.com/150'}  // Default profile picture
           alt={`${profile.user}'s profile`}
           className="profile-pic"
-          style={{ width: '150px', height: '150px', borderRadius: '50%' }}
+          style={{ width: '150px', height: '150px', borderRadius: '50%', cursor: 'pointer' }}
         />
         <h1>{profile.user}</h1>
         <p>Email: {profile.email}</p>
@@ -88,12 +169,19 @@ const Profile = () => {
           ) : (
             <div>
               <p>{about || 'No details provided yet.'}</p>
-              {username === localStorage.getItem('username') && (
+              {username === loggedInUsername && (
                 <button onClick={() => setIsEditingAbout(true)}>Edit About</button>
               )}
             </div>
           )}
         </div>
+
+        {/* Follow/Unfollow Button */}
+        {username !== loggedInUsername && (
+          <button onClick={handleFollowToggle}>
+            {isFollowing ? 'Unfollow' : 'Follow'}
+          </button>
+        )}
       </div>
 
       {/* User's Posts */}
@@ -120,8 +208,8 @@ const Profile = () => {
                   <p>{post.content}</p>
                   <p>{new Date(post.created_at).toLocaleString()}</p>
                   {/* Allow editing if the logged-in user is the creator */}
-                  {post.creator_username === localStorage.getItem('username') && (
-                    <button onClick={() => handleEditPost(post.id, post.content)}>Edit Post</button>
+                  {post.creator_username === loggedInUsername && (
+                    <button onClick={() => handleEditPost(post.id)}>Edit Post</button>
                   )}
                 </div>
               )}

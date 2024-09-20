@@ -16,7 +16,7 @@ urlpatterns = [
     path('register/', RegisterUser.as_view(), name='register'),
     
      path('create/', CreatePost.as_view(), name='create'),
-
+     path('posts/<int:post_id>/', PostDetail.as_view(), name='post-detail'),  # for viewing and editing individual posts
     
     # Profile endpoints (view or update a user's profile)
     path('profile/<str:username>/', ProfileDetail.as_view(), name='profile'),

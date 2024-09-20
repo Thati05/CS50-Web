@@ -30,6 +30,12 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_like_count(self, obj):
         return obj.post_likes.count()
+    
+class PostDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'content', 'created_at', 'updated_at']  # Fields to display/edit
+        read_only_fields = ['id', 'created_at', 'updated_at']  # These fields cannot be edited
 
 
 # Register user serializer

@@ -66,7 +66,7 @@ const Posts = ({ posts, next, previous, count }) => {
                   <div className='flex justify-between top-part-post p-2'>
                     <div className='flex items-center gap-5'>
                       {/* Profile image */}
-                      <Link>
+                      <Link to={`profile/${post.creator_username}`} >
                        <div className='bg-gradient'>
                         <div className='justify-center rounded-[11px] w-[59px] h-[59px] image-container img_border'>
                           <img

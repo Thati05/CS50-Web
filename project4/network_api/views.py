@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from network.models import Post, Profile, Follow, Like, User
-from .serializers import PostSerializer, RegisterUserSerializer, ProfileSerializer, FollowSerializer, LikeSerializer
+from .serializers import PostSerializer, RegisterUserSerializer, ProfileSerializer, FollowSerializer, LikeSerializer, PostDetailSerializer
 from django.shortcuts import get_object_or_404
 
 
@@ -19,6 +19,49 @@ class PostList(generics.ListCreateAPIView):
     def get_serializer_context(self):
       
         return {'request': self.request}
+    
+class PostDetail(APIView):
+    permission_classes = [AllowAny]  # Allow any user to access the view
+
+    def get(self, request, post_id):
+        """
+        Retrieve a post by its ID (accessible to everyone)
+        """
+        post = get_object_or_404(Post, id=post_id)
+        serializer = PostDetailSerializer(post)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, post_id):
+        """
+        Edit a post by its ID (only if the user owns the post and is authenticated)
+        """
+        post = get_object_or_404(Post, id=post_id)
+
+        # Check if the user is authenticated and owns the post
+        if request.user.is_authenticated and post.creator == request.user:
+            serializer = PostDetailSerializer(post, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"error": "You are not authorized to edit this post."}, status=status.HTTP_403_FORBIDDEN)
+
+    def delete(self, request, post_id):
+        """
+        Delete a post by its ID (only if the user owns the post and is authenticated)
+        """
+        post = get_object_or_404(Post, id=post_id)
+
+        # Check if the user is authenticated and owns the post
+        if request.user.is_authenticated and post.creator == request.user:
+            post.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({"error": "You are not authorized to delete this post."}, status=status.HTTP_403_FORBIDDEN)
+    
+
+
 
 
 # Register user view
@@ -132,8 +175,7 @@ class LikePost(APIView):
 class CreatePost(generics.CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.AllowAny]  # Ensure the user is logged in
-
+    permission_classes = [permissions.AllowAny] 
     def perform_create(self, serializer):
         try:
             # Automatically assign the logged-in user as the creator
