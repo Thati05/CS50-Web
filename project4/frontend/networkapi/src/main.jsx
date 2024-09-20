@@ -5,9 +5,11 @@ import Register from './components/Register.jsx';
 import './index.css';
 import Login from './components/Login.jsx';
 import Logout from './components/Logout.jsx';
-import Profile from './sections/Profile.jsx'
+import Profile from './components/Profile.jsx';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import FollowingPosts from './components/FollowingPosts.jsx';
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -20,7 +22,8 @@ createRoot(document.getElementById('root')).render(
           <Route path="/register" element={<Register />} />
           <Route path='/login' element={<Login/>} />
           <Route path='/logout' element={<Logout/>} />
-          <Route path='/profile' element={<Profile/>} />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path='/following' element={<FollowingPosts/>} />
         </Routes>
        
       </div>

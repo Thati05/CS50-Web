@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SidebarRight = () => {
   const [profile, setProfile] = useState(null); 
@@ -76,23 +77,23 @@ const SidebarRight = () => {
     <div className='  flex flex-col gap-10'>
  
 
-
- <div className=' flex items-center pb-5 pr-10 border-b-[#7575754c] border-b-[1px]  '>
-
- <div className="bg-gradient">
-  <div className="justify-center rounded-[11px] w-[59px] h-[59px] image-container img_border">
-    <img
-    src={profile.profile_pic || 'https://img.freepik.com/premium-photo/portrait-beautiful-young-asian-woman-neon-light_1308175-55057.jpg'}
-    className="rounded-md w-[50px] h-[50px] object-cover"
-     />
-     </div>
-     </div>
-  <div className=' ml-5'>
-    <p>{profile.user || 'Username'}</p>
-    <p className=' text-gray-400'>{profile.email || 'User@Email'}</p>
+    <Link to={`/profile/${profile.user}`}>
+  <div className='flex items-center pb-5 pr-10 border-b-[#7575754c] border-b-[1px]'>
+    <div className="bg-gradient">
+      <div className="justify-center rounded-[11px] w-[59px] h-[59px] image-container img_border">
+        <img
+          src={profile.profile_pic || 'https://img.freepik.com/premium-photo/portrait-beautiful-young-asian-woman-neon-light_1308175-55057.jpg'}
+          className="rounded-md w-[50px] h-[50px] object-cover"
+          alt={`${profile.user}'s profile`}
+        />
+      </div>
+    </div>
+    <div className='ml-5'>
+      <p>{profile.user || 'Username'}</p>
+      <p className='text-gray-400'>{profile.email || 'User@Email'}</p>
+    </div>
   </div>
-
- </div>
+</Link>
 
  <h3 className=' font-bold'>Suggested for You</h3>
 

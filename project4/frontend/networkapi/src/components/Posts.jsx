@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CreatePost from './CreatePost';
 import axiosInstance from '../axios';
 import Like from './Like';
+import { Link } from 'react-router-dom';
 
 const Posts = ({ posts, next, previous, count }) => {
   const [currentPosts, setCurrentPosts] = useState(posts);
@@ -45,7 +46,10 @@ const Posts = ({ posts, next, previous, count }) => {
     <section className='font-Nunito font-semibold text-lg CIK-posts'>
       <div className='text-xl mb-10 mt-10 font-Nunito flex justify-center gap-40'>
         <button className='btn-CIK'>All Posts</button>
-        <button>Following</button>
+        <Link to='/following' >
+          <button>Following</button>
+        </Link>
+      
       </div>
 
       <div className='flex-col flex justify-center px-20'>
@@ -62,7 +66,8 @@ const Posts = ({ posts, next, previous, count }) => {
                   <div className='flex justify-between top-part-post p-2'>
                     <div className='flex items-center gap-5'>
                       {/* Profile image */}
-                      <div className='bg-gradient'>
+                      <Link>
+                       <div className='bg-gradient'>
                         <div className='justify-center rounded-[11px] w-[59px] h-[59px] image-container img_border'>
                           <img
                             src={post.profile_pic || 'https://via.placeholder.com/50'}
@@ -71,6 +76,8 @@ const Posts = ({ posts, next, previous, count }) => {
                           />
                         </div>
                       </div>
+                      </Link>
+                     
 
                       <div className='items-start flex flex-col'>
                         <p>{post.creator_username}</p>

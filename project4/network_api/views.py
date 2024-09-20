@@ -17,7 +17,7 @@ class PostList(generics.ListCreateAPIView):
         serializer.save(creator=self.request.user)
     
     def get_serializer_context(self):
-        # Pass the request context to the serializer
+      
         return {'request': self.request}
 
 
@@ -36,15 +36,21 @@ class RegisterUser(APIView):
 
 # View to get and update the user's profile
 class ProfileDetail(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny]  
 
     def get(self, request, username):
         user = get_object_or_404(User, username=username)
         profile = get_object_or_404(Profile, user=user)
         serializer = ProfileSerializer(profile, context={'request': request})  
+         
+        
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, username):
+        # Ensure that only the profile owner can update their profile
+        if request.user.username != username:
+            return Response({"error": "You are not authorized to edit this profile"}, status=status.HTTP_403_FORBIDDEN)
+        
         profile = get_object_or_404(Profile, user=request.user)
         serializer = ProfileSerializer(profile, data=request.data, partial=True)
         if serializer.is_valid():
@@ -53,9 +59,10 @@ class ProfileDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
 # View to handle follow/unfollow actions
 class FollowUser(APIView):
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request, username):
         user_to_follow = get_object_or_404(User, username=username)
@@ -66,15 +73,29 @@ class FollowUser(APIView):
         if not created:
             return Response({"message": "You are already following this user"}, status=status.HTTP_400_BAD_REQUEST)
         
-        return Response({"message": "Followed user successfully"}, status=status.HTTP_201_CREATED)
+        # Get updated follower count
+        followers_count = user_to_follow.followers.count()
+
+        return Response({
+            "message": "Followed user successfully",
+            "followers_count": followers_count
+        }, status=status.HTTP_201_CREATED)
 
     def delete(self, request, username):
         user_to_unfollow = get_object_or_404(User, username=username)
         follow = Follow.objects.filter(user=request.user, followed_user=user_to_unfollow)
         if follow.exists():
             follow.delete()
-            return Response({"message": "Unfollowed user successfully"}, status=status.HTTP_200_OK)
+
+            # Get updated follower count
+            followers_count = user_to_unfollow.followers.count()
+
+            return Response({
+                "message": "Unfollowed user successfully",
+                "followers_count": followers_count
+            }, status=status.HTTP_200_OK)
         return Response({"error": "You are not following this user"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # View to handle likes and unlikes
@@ -83,21 +104,19 @@ class LikePost(APIView):
 
     def post(self, request, post_id):
         try:
-         
-            post = Post.objects.get(id=post_id)
+            post = get_object_or_404(Post, id=post_id)
             user = request.user
 
+            # Toggle like status
             like, created = Like.objects.get_or_create(user=user, post=post)
 
             if not created:
-                
                 like.delete()
                 liked = False
             else:
-               
                 liked = True
 
-           
+            # Return updated like count and like status
             like_count = post.post_likes.count()
 
             return Response({
@@ -109,10 +128,11 @@ class LikePost(APIView):
             return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
+
 class CreatePost(generics.CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.AllowAny]  
+    permission_classes = [permissions.AllowAny]  # Ensure the user is logged in
 
     def perform_create(self, serializer):
         try:

@@ -31,13 +31,13 @@ const SidebarLeft = () => {
       <p className='ml-5' >Messages</p>
      </div>
 
-     <Link to='/profile'>
+  
    
         <div className=' flex items-center side-item  '>
       <img  width={30} height={30} className=' object-contain'  src='https://cdn-icons-png.flaticon.com/512/266/266033.png'/>
       <p className='ml-5' >Profile</p>
      </div>
-   </Link>
+ 
 
 
 

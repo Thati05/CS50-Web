@@ -49,29 +49,40 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
 
 # Profile serializer
+
+
 class ProfileSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)  
+    user = serializers.StringRelatedField(read_only=True)
     email = serializers.EmailField(source='user.email', read_only=True)
-    follower_count = serializers.SerializerMethodField() 
-    following_count = serializers.SerializerMethodField() 
-    profile_pic = serializers.ImageField()  
+    follower_count = serializers.SerializerMethodField()
+    following_count = serializers.SerializerMethodField()
+    profile_pic = serializers.SerializerMethodField()  
+    posts = serializers.SerializerMethodField()  # To include user's posts
 
     class Meta:
         model = Profile
-        fields = ['user', 'email', 'about', 'profile_pic', 'follower_count', 'following_count']
+        fields = ['user', 'email', 'about', 'profile_pic', 'follower_count', 'following_count', 'posts']
 
-    # Get the full URL for the profile picture
+    # Get full URL for the profile picture
     def get_profile_pic(self, obj):
-        request = self.context.get('request')  
-        if obj.profile_pic:
+        request = self.context.get('request')  # Get request context
+        if obj.profile_pic and request:
             return request.build_absolute_uri(obj.profile_pic.url)
         return None
 
+    # Get follower count
     def get_follower_count(self, obj):
         return obj.user.followers.count()
 
+    # Get following count
     def get_following_count(self, obj):
         return obj.user.following.count()
+
+    # Get posts authored by the user
+    def get_posts(self, obj):
+        user_posts = Post.objects.filter(creator=obj.user) 
+        return PostSerializer(user_posts, many=True, context=self.context).data 
+
 
 
 # Follow serializer
