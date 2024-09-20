@@ -15,6 +15,10 @@ class PostList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+    
+    def get_serializer_context(self):
+        # Pass the request context to the serializer
+        return {'request': self.request}
 
 
 # Register user view
@@ -78,19 +82,32 @@ class LikePost(APIView):
     #permission_classes = [IsAuthenticated]
 
     def post(self, request, post_id):
-        post = get_object_or_404(Post, id=post_id)
-        like, created = Like.objects.get_or_create(user=request.user, post=post)
-        if not created:
-            return Response({"message": "You already liked this post"}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"message": "Post liked successfully"}, status=status.HTTP_201_CREATED)
+        try:
+            # Get the post by ID
+            post = Post.objects.get(id=post_id)
+            user = request.user
 
-    def delete(self, request, post_id):
-        post = get_object_or_404(Post, id=post_id)
-        like = Like.objects.filter(user=request.user, post=post)
-        if like.exists():
-            like.delete()
-            return Response({"message": "Post unliked successfully"}, status=status.HTTP_200_OK)
-        return Response({"error": "You haven't liked this post"}, status=status.HTTP_400_BAD_REQUEST)
+            # Check if the user has already liked the post
+            like, created = Like.objects.get_or_create(user=user, post=post)
+
+            if not created:
+                # If like already exists, unlike the post (remove the like)
+                like.delete()
+                liked = False
+            else:
+                # If no like exists, it means the user just liked the post
+                liked = True
+
+            # Return the updated like count
+            like_count = post.post_likes.count()
+
+            return Response({
+                'liked': liked,
+                'like_count': like_count
+            }, status=status.HTTP_200_OK)
+
+        except Post.DoesNotExist:
+            return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class CreatePost(generics.CreateAPIView):

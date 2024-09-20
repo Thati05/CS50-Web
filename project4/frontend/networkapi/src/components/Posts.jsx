@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CreatePost from './CreatePost';
 import axiosInstance from '../axios';
+import Like from './Like';
 
 const Posts = ({ posts, next, previous, count }) => {
   const [currentPosts, setCurrentPosts] = useState(posts);
@@ -86,10 +87,9 @@ const Posts = ({ posts, next, previous, count }) => {
 
                     {/* Bottom of post */}
                     <div className='mt-3 flex items-center gap-10'>
-                      <div className='flex gap-3 items-center'>
-                        <img width={35} className='object-contain' src='https://cdn-icons-png.flaticon.com/512/2589/2589197.png' alt='Like Icon' />
-                        <p>{post.like_count}</p>
-                      </div>
+                      <div key={post.id} >
+                        <Like post={post} />
+                       </div>
 
                       <div className='flex gap-3 items-center'>
                         <img width={35} className='object-contain' src='https://cdn-icons-png.flaticon.com/512/11820/11820052.png' alt='Comment Icon' />

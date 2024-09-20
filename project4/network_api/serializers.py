@@ -2,21 +2,38 @@ from rest_framework import serializers
 from network.models import *
 
 # Post serializer
+
+
 class PostSerializer(serializers.ModelSerializer):
     creator_username = serializers.CharField(source='creator.username', read_only=True)
     profile_pic = serializers.SerializerMethodField()
-    
+    liked = serializers.SerializerMethodField()
+    like_count = serializers.SerializerMethodField()  # Dynamically calculate like_count
+
     class Meta:
         model = Post
-        fields = ['id', 'creator', 'creator_username', 'profile_pic', 'content', 'created_at', 'updated_at', 'like_count']
+        fields = ['id', 'creator', 'creator_username', 'profile_pic', 'content', 'created_at', 'updated_at', 'like_count', 'liked']
         read_only_fields = ['id', 'creator', 'creator_username', 'profile_pic', 'created_at', 'updated_at', 'like_count']
-    
+
     def get_profile_pic(self, obj):
         # Get the profile picture from the user's profile
         if obj.creator.profile and obj.creator.profile.profile_pic:
             request = self.context.get('request')
             return request.build_absolute_uri(obj.creator.profile.profile_pic.url)
-        return None  # Return None if no profile picture exists
+        return None
+
+    def get_liked(self, obj):
+        # Check if the user has liked the post
+        request = self.context.get('request')
+        user = request.user
+        if user.is_authenticated:
+            return Like.objects.filter(user=user, post=obj).exists()
+        return False
+
+    def get_like_count(self, obj):
+        # Return the number of likes for the post
+        return obj.post_likes.count()
+
 
 # Register user serializer
 class RegisterUserSerializer(serializers.ModelSerializer):

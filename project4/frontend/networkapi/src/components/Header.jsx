@@ -82,7 +82,9 @@ const Header = () => {
       </div>
 
       {/* Profile Section */}
-      <div className="justify-center hidden mt-5 items-center mb-24 px-5"> {/*When the user has logged display the profile section  */}
+ {/*When the user has logged display the profile section  */}
+      {isAuthenticated ? (  
+             <div className="justify-center mt-5 items-center mb-24 px-5">
         <div className="flex items-center  justify-between gap-[98px]">
           {userProfile.map((profile) => (
             <div key={profile.alt}>
@@ -101,7 +103,19 @@ const Header = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div>) :(
+
+        <div className=" hidden"></div>
+      )
+
+      
+      
+      }
+     
+
+
+
+
     </section>
   );
 };
