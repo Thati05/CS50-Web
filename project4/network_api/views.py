@@ -83,22 +83,21 @@ class LikePost(APIView):
 
     def post(self, request, post_id):
         try:
-            # Get the post by ID
+         
             post = Post.objects.get(id=post_id)
             user = request.user
 
-            # Check if the user has already liked the post
             like, created = Like.objects.get_or_create(user=user, post=post)
 
             if not created:
-                # If like already exists, unlike the post (remove the like)
+                
                 like.delete()
                 liked = False
             else:
-                # If no like exists, it means the user just liked the post
+               
                 liked = True
 
-            # Return the updated like count
+           
             like_count = post.post_likes.count()
 
             return Response({
@@ -113,7 +112,7 @@ class LikePost(APIView):
 class CreatePost(generics.CreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.AllowAny]  # Ensure the user is logged in
+    permission_classes = [permissions.AllowAny]  
 
     def perform_create(self, serializer):
         try:
