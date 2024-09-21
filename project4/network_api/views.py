@@ -171,6 +171,23 @@ class LikePost(APIView):
             return Response({'error': 'Post not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
+class FollowingPostsView(APIView):
+    #permission_classes = [IsAuthenticated]  # Only authenticated users can access this
+
+    def get(self, request):
+        user = request.user
+
+        # Get all the users the logged-in user is following
+        followed_users = Follow.objects.filter(user=user).values_list('followed_user', flat=True)
+
+        # Fetch posts from followed users, ordered by creation date
+        posts = Post.objects.filter(creator__in=followed_users).order_by('-created_at')
+
+        # Serialize the posts and return them
+        serializer = PostSerializer(posts, many=True)
+
+        return Response({"posts": serializer.data}, status=200)
+
 
 class CreatePost(generics.CreateAPIView):
     queryset = Post.objects.all()

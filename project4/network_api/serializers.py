@@ -95,6 +95,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class FollowSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     followed_user = serializers.StringRelatedField(read_only=True)
+    
 
     class Meta:
         model = Follow

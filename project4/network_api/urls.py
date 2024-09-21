@@ -25,5 +25,8 @@ urlpatterns = [
     path('follow/<str:username>/', FollowUser.as_view(), name='follow'),
     
     # Like/unlike post endpoints
-    path('like/<int:post_id>/', LikePost.as_view(), name='like')
+    path('like/<int:post_id>/', LikePost.as_view(), name='like'),
+    
+    #Getting posts of followed users
+    path('follow/posts/', FollowingPostsView.as_view(), name='following-posts'),
 ]
