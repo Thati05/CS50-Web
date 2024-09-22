@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import SidebarLeft from './SidebarLeft'
+
 
 const BASE_URL = 'http://127.0.0.1:8000/api';  // Base URL for API requests
 
 const Profile = () => {
-  const { username } = useParams();  // Get the username from the URL
-  const navigate = useNavigate();  // Used for redirection
-  const [profile, setProfile] = useState(null);  // State to store profile data
-  const [posts, setPosts] = useState([]);  // Store user's posts
-  const [isFollowing, setIsFollowing] = useState(false);  // Follow/unfollow status
-  const [about, setAbout] = useState('');  // "About Me" section
-  const [isEditingAbout, setIsEditingAbout] = useState(false);  // Toggle for editing "About Me"
-  const [editPostId, setEditPostId] = useState(null);  // ID of the post being edited
-  const [editPostContent, setEditPostContent] = useState('');  // Store edited post content
-  const loggedInUsername = localStorage.getItem('username');  // Get the logged-in username
-  const accessToken = localStorage.getItem('access_token');  // Assume access token is stored here
-
+  const { username } = useParams();  // fetching  the username from the URL
+  const navigate = useNavigate();  
+  const [profile, setProfile] = useState(null);  
+  const [posts, setPosts] = useState([]); 
+  const [isFollowing, setIsFollowing] = useState(false); 
+  const [about, setAbout] = useState('');  
+  const [isEditingAbout, setIsEditingAbout] = useState(false);  
+  const [editPostId, setEditPostId] = useState(null); 
+  const [editPostContent, setEditPostContent] = useState(''); 
+  const loggedInUsername = localStorage.getItem('username');  
+  const accessToken = localStorage.getItem('access_token');  
   useEffect(() => {
     fetchProfile();
   }, [username]);
@@ -40,7 +41,7 @@ const Profile = () => {
       setProfile(data);
       setPosts(data.posts.reverse());  // Reverse chronological order
       setAbout(data.about || '');
-      setIsFollowing(data.is_following);  // Get follow status
+      setIsFollowing(data.is_following);  
     } catch (error) {
       console.error('Error fetching profile:', error);
     }
@@ -112,8 +113,8 @@ const Profile = () => {
 
   // Handle post edit initiation (fetch the post detail and set the post ID)
   const handleEditPost = (postId) => {
-    setEditPostId(postId);  // Set the ID of the post being edited
-    fetchPostDetail(postId);  // Fetch the specific post's detail for editing
+    setEditPostId(postId); 
+    fetchPostDetail(postId); 
   };
 
   // Handle saving the edited post
@@ -138,20 +139,51 @@ const Profile = () => {
 
   if (!profile) return <div>Loading...</div>;  // Display loading state while fetching profile data
 
+
+
+
+
+
+
+
+
+
+
   return (
-    <div className="profile-container">
-      <div className="profile-header">
+    <section className=' pt-10 px-5 font-Nunito ' >
+      <h2 className=' text-5xl font-bold'>Network </h2>
+
+<div className=" flex">
+      <div className=' mt-20'>
+         <SidebarLeft/>
+      </div>
+
+      <div className=' profile-detail mt-24 flex flex-col items-center w-full ' >
+
+ <div className="image-and-bg">
+      {/* Background Image */}
+      <div className="background-img justify-center flex">
+        <img src="/src/assets/image.svg" alt="Background" />
+      </div>
+
+      {/* Profile Image */}
+      <div className="profile-img-container">
         <img
+          src={profile?.profile_pic || 'https://via.placeholder.com/150'} // Default image
+          alt={`${profile?.user}'s profile`}
+          className="profile-img"
           onClick={handleProfileClick}
-          src={profile.profile_pic || 'https://via.placeholder.com/150'}  // Default profile picture
-          alt={`${profile.user}'s profile`}
-          className="profile-pic"
-          style={{ width: '150px', height: '150px', borderRadius: '50%', cursor: 'pointer' }}
         />
-        <h1>{profile.user}</h1>
+      </div>
+    </div>
+    <div className=' flex  justify-center mt-60 flex-col' >
+      <div>
+          <h1>{profile.user}</h1>
         <p>Email: {profile.email}</p>
         <p>Followers: {profile.follower_count}</p>
         <p>Following: {profile.following_count}</p>
+      </div>
+         
 
         {/* About Me Section */}
         <div>
@@ -183,41 +215,79 @@ const Profile = () => {
           </button>
         )}
       </div>
+   
+       
+   
 
       {/* User's Posts */}
       <h2>Posts</h2>
-      {posts.length === 0 ? (
-        <p>No posts available.</p>
-      ) : (
-        <ul>
-          {posts.map(post => (
-            <li key={post.id} className="post-item">
-              {editPostId === post.id ? (
-                <div>
-                  <textarea
-                    value={editPostContent}
-                    onChange={(e) => setEditPostContent(e.target.value)}
-                    rows={4}
-                    cols={50}
-                  />
-                  <button onClick={() => handleSavePost(post.id)}>Save</button>
-                  <button onClick={() => setEditPostId(null)}>Cancel</button>
-                </div>
-              ) : (
-                <div>
-                  <p>{post.content}</p>
-                  <p>{new Date(post.created_at).toLocaleString()}</p>
-                  {/* Allow editing if the logged-in user is the creator */}
-                  {post.creator_username === loggedInUsername && (
-                    <button onClick={() => handleEditPost(post.id)}>Edit Post</button>
-                  )}
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+<div className='flex'>
+  {posts.length === 0 ? (
+    <p>No posts available.</p>
+  ) : (
+    <div className='w-full'>
+      <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7   auto-rows-auto'>
+        {posts.map(post => (
+          <li key={post.id} className="CIK-post-item p-4 border  flex flex-col">
+            {editPostId === post.id ? (
+              <div>
+                <textarea
+                  value={editPostContent}
+                  onChange={(e) => setEditPostContent(e.target.value)}
+                  rows={4}
+                  cols={50}
+                  className="w-full border p-2 rounded"
+                />
+                <button 
+                  onClick={() => handleSavePost(post.id)} 
+                  className="mt-2 bg-blue-500 text-white py-1 px-3 rounded"
+                >
+                  Save
+                </button>
+                <button 
+                  onClick={() => setEditPostId(null)} 
+                  className="mt-2 ml-2 bg-gray-500 text-white py-1 px-3 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <div>
+                   <p className="text-gray-700">
+                  {post.content.length > 20 ? `${post.content.slice(0, 100)}...` : post.content}
+                </p>
+                <p className="text-gray-500 text-sm mt-2">
+                  {new Date(post.created_at).toLocaleString()}
+                </p>
+                {post.creator_username === loggedInUsername && (
+                  <button 
+                    onClick={() => handleEditPost(post.id)} 
+                    className="mt-2 text-blue-500 underline"
+                  >
+                    Edit Post
+                  </button>
+                )}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
+  )}
+</div>
+     
+
+      </div>
+     
+     
+
+    </div>
+
+
+
+
+    </section>
+    
   );
 };
 
