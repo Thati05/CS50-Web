@@ -64,10 +64,11 @@ class ProfileSerializer(serializers.ModelSerializer):
     following_count = serializers.SerializerMethodField()
     profile_pic = serializers.SerializerMethodField()  
     posts = serializers.SerializerMethodField()  # To include user's posts
+    following_posts = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = ['user', 'email', 'about', 'profile_pic', 'follower_count', 'following_count', 'posts']
+        fields = ['user', 'email', 'about', 'profile_pic','following_posts', 'follower_count', 'following_count', 'posts']
 
     # Get full URL for the profile picture
     def get_profile_pic(self, obj):
@@ -88,6 +89,20 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_posts(self, obj):
         user_posts = Post.objects.filter(creator=obj.user) 
         return PostSerializer(user_posts, many=True, context=self.context).data 
+    
+    # Get posts of users that the logged-in user is following
+    def get_following_posts(self, obj):
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return []  # Return an empty list if the user is not authenticated
+        
+        # Get all users the logged-in user is following
+        followed_users = Follow.objects.filter(user=request.user).values_list('followed_user', flat=True)
+
+        # Fetch posts from the followed users
+        following_posts = Post.objects.filter(creator__in=followed_users).order_by('-created_at')
+
+        return PostSerializer(following_posts, many=True, context=self.context).data
 
 
 
