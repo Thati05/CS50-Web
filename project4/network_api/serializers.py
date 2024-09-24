@@ -64,7 +64,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     following_count = serializers.SerializerMethodField()
     profile_pic = serializers.SerializerMethodField()  
     posts = serializers.SerializerMethodField()  # To include user's posts
-    
 
     class Meta:
         model = Profile
@@ -96,16 +95,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 class FollowSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     followed_user = serializers.StringRelatedField(read_only=True)
-    followings_posts = serializers.SerializerMethodField()  # Use SerializerMethodField to customize the output
+    
 
     class Meta:
         model = Follow
-        fields = ['user', 'followed_user', 'followings_posts']  # Include followings_posts in fields
+        fields = ['user', 'followed_user']
 
-    def get_followings_posts(self, obj):
-        # Get all posts from the followed user
-        following_posts = Post.objects.filter(creator=obj.followed_user).order_by('-created_at')  # Get posts by followed users
-        return PostSerializer(following_posts, many=True, context=self.context).data  # Serialize the posts
 
 # Like serializer
 class LikeSerializer(serializers.ModelSerializer):
