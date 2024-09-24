@@ -37,7 +37,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center h-screen">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded shadow-md w-fit"
@@ -48,6 +48,7 @@ export const Register = () => {
             Email
           </label>
           <input
+          autoComplete="off"
             type="email"
             id="email"
             name="email"
@@ -61,6 +62,7 @@ export const Register = () => {
             Username
           </label>
           <input
+            autoComplete="off"
             type="text"
             id="username"
             name="username"
@@ -74,6 +76,7 @@ export const Register = () => {
             Password
           </label>
           <input
+             autoComplete="off"
             type="password"
             id="password"
             name="password"
@@ -84,11 +87,12 @@ export const Register = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          className="bg-black text-white py-2 px-4 rounded"
         >
           Register
         </button>
       </form>
+      <div className=" mt-10">Already have an account? <span onClick={() => (navigate('/login'))} className=" cursor-pointer hover:underline" > Login here</span></div>
     </div>
   );
 };

@@ -200,7 +200,7 @@ const Profile = () => {
             <div>
               <p>{about || 'No details provided yet.'}</p>
               {username === loggedInUsername && (
-                <button onClick={() => setIsEditingAbout(true)}>Edit About</button>
+                <button onClick={() => setIsEditingAbout(true)}><img className=' opacity-60' width={15} src='https://cdn-icons-png.flaticon.com/512/1159/1159633.png'/></button>
               )}
             </div>
           )}</div>
@@ -268,16 +268,16 @@ const Profile = () => {
 
 
 <div className=' flex justify-center items-center gap-20 mt-20 mb-10 border-b  w-max'>
-  <div className='CIK-post-icon  '>
+  <div className='CIK-post-icon cursor-pointer  '>
     <img className=' mb-[25px]' width={30} src='https://cdn-icons-png.flaticon.com/512/168/168214.png'/>
   </div>
-  <div className=' opacity-70'>
+  <div className=' opacity-70 cursor-pointer'>
     <img  className=' mb-[17px] object-contain ' width={40} src='https://cdn-icons-png.flaticon.com/512/5346/5346453.png'/>
   </div>
-  <div className=' opacity-70' >
+  <div className=' opacity-70 cursor-pointer' >
     <img  className=' mb-[17px] object-contain' width={35} src='https://cdn-icons-png.flaticon.com/512/14105/14105429.png'/>
   </div>
-  <div className=' opacity-70'>
+  <div className=' opacity-70 cursor-pointer'>
     <img  className=' mb-[17px]' width={30} src='https://cdn-icons-png.flaticon.com/128/9511/9511721.png'/>
   </div>
 </div>
@@ -291,7 +291,7 @@ const Profile = () => {
         {posts.map(post => (
           <li key={post.id} className="CIK-post-item p-4 border  flex flex-col">
             {editPostId === post.id ? (
-              <div>
+              <div className=' flex flex-col justify-center items-center'>
                 <textarea
                   value={editPostContent}
                   onChange={(e) => setEditPostContent(e.target.value)}
@@ -299,18 +299,21 @@ const Profile = () => {
                   cols={50}
                   className="w-full border p-2 rounded"
                 />
-                <button 
+                <div>
+                  <button 
                   onClick={() => handleSavePost(post.id)} 
-                  className="mt-2 bg-blue-500 text-white py-1 px-3 rounded"
+                  className="mt-2 bg-black text-white py-1 px-3 rounded"
                 >
                   Save
                 </button>
                 <button 
                   onClick={() => setEditPostId(null)} 
-                  className="mt-2 ml-2 bg-gray-500 text-white py-1 px-3 rounded"
+                  className="mt-2 ml-2 bg-white border text-black py-1 px-3 rounded"
                 >
                   Cancel
                 </button>
+                </div>
+                
               </div>
             ) : (
               <div>
@@ -323,9 +326,9 @@ const Profile = () => {
                 {post.creator_username === loggedInUsername && (
                   <button 
                     onClick={() => handleEditPost(post.id)} 
-                    className="mt-2 text-blue-500 underline"
+                    className="mt-2"
                   >
-                    Edit Post
+                   <img className=' opacity-60' width={15} src='https://cdn-icons-png.flaticon.com/512/1159/1159633.png'/>
                   </button>
                 )}
               </div>

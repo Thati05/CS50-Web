@@ -46,7 +46,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center h-screen">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded shadow-md w-fit"
@@ -58,6 +58,8 @@ export const Login = () => {
             Username
           </label>
           <input
+             autoComplete="off"
+          
             type="text"
             id="username"
             name="username"
@@ -71,6 +73,7 @@ export const Login = () => {
             Password
           </label>
           <input
+             autoComplete="off"
             type="password"
             id="password"
             name="password"
@@ -81,11 +84,12 @@ export const Login = () => {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          className="  bg-white border text-black py-2 px-4 rounded font-semibold"
         >
           Login
         </button>
       </form>
+      <div className=" mt-10">Haven't signed up yet? <span onClick={() => (navigate('/register'))} className=" cursor-pointer hover:underline" > Sign up here</span></div>
     </div>
   );
 };
