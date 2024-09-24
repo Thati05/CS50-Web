@@ -111,27 +111,40 @@ const Posts = ({ posts, next, previous, count }) => {
         </div>
 
         {/* Pagination */}
-        <div className='pagination flex justify-between items-center'>
+        <div className='pagination flex justify-between items-center py-5'>
           {/* Previous Button */}
-          <button
+          <div>
+             <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={!prevPage}
+            className=' active:bg-gray-100 rounded-full items-center '
           >
-            Previous
+            <img width={30} src='https://cdn-icons-png.flaticon.com/512/2989/2989985.png'/>
           </button>
 
-          {/* Display Current Page and Total Pages */}
-          <span>
+          </div>
+
+
+          <div>
+             {/* Display Current Page and Total Pages */}
+          <span className=' text-gray-500'>
             {currentPage} of {totalPages}
           </span>
-
-          {/* Next Button */}
+          </div>
+         
+         <div>
+            {/* Next Button */}
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={!nextPage}
+            className=' active:bg-gray-100 rounded-full items-center '
           >
-            Next
+           <img width={30} src='https://cdn-icons-png.flaticon.com/128/2989/2989988.png'/>
           </button>
+         </div>
+         
+
+        
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import SidebarLeft from './SidebarLeft'
+import Like from './Like';
 
 
 const BASE_URL = 'http://127.0.0.1:8000/api';  // Base URL for API requests
@@ -320,9 +321,17 @@ const Profile = () => {
                    <p className="text-gray-700">
                   {post.content.length > 20 ? `${post.content.slice(0, 100)}...` : post.content}
                 </p>
-                <p className="text-gray-500 text-sm mt-2">
-                  {new Date(post.created_at).toLocaleString()}
-                </p>
+               
+                <div className='mt-3 flex items-center gap-10'>
+                      <div key={post.id} >
+                        <Like post={post} />
+                       </div>
+
+                      <div className='flex gap-3 items-center'>
+                        <img width={35} className='object-contain' src='https://cdn-icons-png.flaticon.com/512/11820/11820052.png' alt='Comment Icon' />
+                        <p>0</p>
+                      </div>
+                    </div>
                 {post.creator_username === loggedInUsername && (
                   <button 
                     onClick={() => handleEditPost(post.id)} 
