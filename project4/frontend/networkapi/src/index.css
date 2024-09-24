@@ -28,6 +28,14 @@ padding: 20px ;
 height: fit-content;
 border-radius: 15px;
 }
+.CIL-profile-detail{
+  border-right: 1px solid rgb(216, 215, 215) ;
+  
+}
+
+.CIK-post-icon{
+  border-bottom: 2px solid black;
+}
 
 .btn-CIK{
 border-bottom: black solid 3px;

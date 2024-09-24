@@ -176,18 +176,16 @@ const Profile = () => {
         />
       </div>
     </div>
-    <div className=' flex  justify-center mt-60 flex-col' >
-      <div>
-          <h1>{profile.user}</h1>
-        <p>Email: {profile.email}</p>
-        <p>Followers: {profile.follower_count}</p>
-        <p>Following: {profile.following_count}</p>
-      </div>
-         
 
-        {/* About Me Section */}
-        <div>
-          {isEditingAbout ? (
+    <div className=' flex  justify-center mt-[110px] flex-col' >
+     
+         
+   {/* About Me Section */}
+   <div className=' flex flex-col justify-center text-center w-[500px]  '>
+     <h1 className=' text-3xl font-bold mb-5 '>{profile.user}</h1>
+          <div className=' text-gray-500 pb-12'>
+            
+            {isEditingAbout ? (
             <div>
               <textarea
                 value={about}
@@ -205,22 +203,85 @@ const Profile = () => {
                 <button onClick={() => setIsEditingAbout(true)}>Edit About</button>
               )}
             </div>
-          )}
+          )}</div>
         </div>
 
-        {/* Follow/Unfollow Button */}
-        {username !== loggedInUsername && (
-          <button onClick={handleFollowToggle}>
+      <div className=' mt-5 flex flex-row justify-center gap-20 text-center'> 
+       {/*} <p> {profile.email}</p>*/}
+       <div className='CIL-profile-detail pr-10 '>
+        <span className=' font-bold text-xl'> {profile.follower_count}</span>
+         <p className=' text-gray-500 font-bold ' >Followers</p>
+       </div>
+
+       <div className='CIL-profile-detail pr-20'>
+        <span  className=' font-bold text-xl' >
+          {profile.following_count}
+        </span>
+         <p className=' text-gray-500 font-bold ' >Following </p>
+       </div>
+
+       <div >
+        <span  className=' font-bold text-xl'>
+          {posts.length}
+        </span>
+       <p className=' text-gray-500 font-bold ' >Posts</p>
+       </div>
+       
+    
+      </div>
+         
+
+     
+
+       
+       
+      </div>
+
+    {/* Follow/Unfollow Button */}
+       {username !== loggedInUsername && (
+               <div className=' flex  items-center justify-center gap-20 my-14  ' >
+                  <div>
+          <button  className=' font-bold text-xl bg-gray-50 px-8 py-2 rounded-md' onClick={handleFollowToggle}>
             {isFollowing ? 'Unfollow' : 'Follow'}
           </button>
-        )}
-      </div>
-   
+          </div>
+            <div>
+            <button className=' font-bold text-xl bg-gray-100 px-5 py-2 rounded-md' >
+              Messages
+            </button>
+          </div>
+
+            </div>
+        )}  
+          
+         
+        
+      
        
    
 
       {/* User's Posts */}
-      <h2>Posts</h2>
+      
+
+
+
+
+
+<div className=' flex justify-center items-center gap-20 mt-20 mb-10 border-b  w-max'>
+  <div className='CIK-post-icon  '>
+    <img className=' mb-[25px]' width={30} src='https://cdn-icons-png.flaticon.com/512/168/168214.png'/>
+  </div>
+  <div className=' opacity-70'>
+    <img  className=' mb-[17px] object-contain ' width={40} src='https://cdn-icons-png.flaticon.com/512/5346/5346453.png'/>
+  </div>
+  <div className=' opacity-70' >
+    <img  className=' mb-[17px] object-contain' width={35} src='https://cdn-icons-png.flaticon.com/512/14105/14105429.png'/>
+  </div>
+  <div className=' opacity-70'>
+    <img  className=' mb-[17px]' width={30} src='https://cdn-icons-png.flaticon.com/128/9511/9511721.png'/>
+  </div>
+</div>
+
 <div className='flex'>
   {posts.length === 0 ? (
     <p>No posts available.</p>
