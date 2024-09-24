@@ -61,6 +61,13 @@ class Follow(models.Model):
     def __str__(self):
         return f"{self.user.username} follows {self.followed_user.username}"
 
+    @staticmethod
+    def get_followed_users_posts(user):
+        # Get all the users this user is following
+        followed_users = Follow.objects.filter(user=user).values_list('followed_user', flat=True)
+        # Get posts from the followed users
+        return Post.objects.filter(creator__in=followed_users).order_by('-created_at')
+    
 # Like Model
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes")

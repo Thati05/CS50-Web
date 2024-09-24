@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-const BASE_URL = 'http://127.0.0.1:8000/api';  // Base URL for API requests
+const BASE_URL = 'http://127.0.0.1:8000/api';
 
 const FollowingPosts = () => {
-  const [posts, setPosts] = useState([]);  // State to store posts
-  const accessToken = localStorage.getItem('access_token');  // Assume access token is stored here
+  const [posts, setPosts] = useState([]);
+  const accessToken = localStorage.getItem('access_token');  // Get the access token
 
   useEffect(() => {
-    fetchFollowingPosts();  // Fetch posts when the component is mounted
+    fetchFollowingPosts();
   }, []);
 
-  // Helper function to add authorization header if the user is logged in
   const authHeaders = () => ({
     'Content-Type': 'application/json',
-    ...(accessToken && { 'Authorization': `Bearer ${accessToken}` }),  // Include token if available
+    'Authorization': `Bearer ${accessToken}`,  // Add the Authorization header with Bearer token
   });
 
-  // Fetch posts of users the current user is following
   const fetchFollowingPosts = async () => {
     try {
       const response = await fetch(`${BASE_URL}/follow/posts/`, {
@@ -27,7 +25,7 @@ const FollowingPosts = () => {
         throw new Error('Error fetching posts');
       }
       const data = await response.json();
-      setPosts(data.posts);  // Set the posts in state
+      setPosts(data.posts);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
