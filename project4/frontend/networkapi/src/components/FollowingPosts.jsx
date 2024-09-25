@@ -42,12 +42,21 @@ const FollowingPosts = () => {
   };
 
   return (
-    <section className='flex pt-10 justify-between'>
-      <div>
+    
+    <section className=' pt-10'>
+
+        <div className="font-Nunito flex gap-3 ml-10 items-center font-extrabold text-3xl">
+          <span><img width={50} src="https://cdn-icons-png.flaticon.com/512/957/957868.png"/></span>
+          <p> Network</p>
+         
+          </div>
+
+     
+
+      <div className="flex justify-between mt-20  ">
+         <div>
         <SidebarLeft />
       </div>
-
-      <div className="flex   ">
         
         {followingPosts.length === 0 ? (
           <p>No posts available from users you follow.</p>
@@ -113,11 +122,13 @@ const FollowingPosts = () => {
             ))}
           </div>
         )}
-      </div>
 
+        
       <div>
         <SidebarRight />
       </div>
+      </div>
+
     </section>
   );
 };

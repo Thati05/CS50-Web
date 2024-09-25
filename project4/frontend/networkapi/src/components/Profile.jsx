@@ -152,7 +152,11 @@ const Profile = () => {
 
   return (
     <section className=' pt-10 px-5 font-Nunito ' >
-      <h2 className=' text-5xl font-bold'>Network </h2>
+   <div className="font-Nunito flex gap-3 items-center font-extrabold text-3xl">
+          <span><img width={50} src="https://cdn-icons-png.flaticon.com/512/957/957868.png"/></span>
+          <p> Network</p>
+         
+          </div>
 
 <div className=" flex">
       <div className=' mt-20'>

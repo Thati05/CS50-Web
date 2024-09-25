@@ -46,18 +46,18 @@ width: fit-content;
 
 .CIK-leftside{
  padding-right: 30px;
-  height:500vh;
+  height:220vh;
 border-right: 1px solid #7575754c;
 margin-left: 20px;
 }
 .CIK-rightside{
   padding-left: 15px;
-  height:500vh;
+  height:220vh;
 border-left: 1px solid #7575754c;
 }
 
 .CIK-posts{
-  height:500vh;
+  height:200vh;
 }
 
 

@@ -26,7 +26,11 @@ const Header = () => {
   return (
     <section className=" font-Nunito">
       <div className="flex justify-between items-center p-10">
-        <div className="font-Nunito font-extrabold text-3xl">Network</div>
+        <div className="font-Nunito flex gap-3 items-center font-extrabold text-3xl">
+          <span><img width={50} src="https://cdn-icons-png.flaticon.com/512/957/957868.png"/></span>
+          <p> Network</p>
+         
+          </div>
        <div className="flex gap-7 items-center">
            {isAuthenticated ? (
             
