@@ -1,0 +1,74 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<h1>Following</h1>
+<hr/>
+
+<!-- Posts Section -->
+<div id="posts">
+    {% if page_obj %}
+        {% for post in page_obj %}
+        <div class="post border mb-4 p-3" data-post-id="{{ post.id }}">
+            <h5>
+                <a href="{% url 'profile' post.creator.username %}">{{ post.creator.username }}</a>
+            </h5>
+            <p id="post-content-{{ post.id }}">{{ post.content }}</p>
+            <small class="text-muted">
+                {{ post.created_at|date:"F j, Y, g:i a" }} | 
+                <span id="like-count-{{ post.id }}">{{ post.like_count }}</span> Likes
+            </small>
+            <div>
+                {% if user.is_authenticated %}
+                <button class="btn btn-sm btn-outline-primary like-btn">
+                    {% if user in post.likes.all %} Unlike {% else %} Like {% endif %}
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <h5 class="text-muted">No posts to display.</h5>
+    {% endif %}
+</div>
+
+<!-- Pagination -->
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-secondary">Previous</a>
+    {% else %}
+    <button class="btn btn-outline-secondary disabled">Previous</button>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-secondary">Next</a>
+    {% else %}
+    <button class="btn btn-outline-secondary disabled">Next</button>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]")?.value;
+
+    // Like/Unlike functionality
+    document.querySelectorAll(".like-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const postId = button.closest(".post").dataset.postId;
+
+            fetch(`/like_toggle/${postId}`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`like-count-${postId}`).textContent = data.like_count;
+                button.textContent = data.liked ? "Unlike" : "Like";
+            })
+            .catch(error => console.error("Error liking post:", error));
+        });
+    });
+});
+</script>
+{% endblock %}
